@@ -23,6 +23,8 @@ class Bullet(Model):
         G7_MULTI_BC = 'G7_MULTI_BC', 'G7_MULTI_BC'
         CUSTOM = 'CUSTOM', 'CUSTOM'
 
+
+
     id = AutoField(primary_key=True, unique=True)
     name = CharField(max_length=40, null=False, unique=True, blank=False)
     weight = FloatField(null=False, blank=False, default=0.168)
@@ -37,7 +39,7 @@ class Bullet(Model):
                                    blank=False,
                                    null=False)
 
-    drag_function_data = JSONField(blank=False, null=False)
+    drag_function_data = JSONField(blank=False, null=False, default={"value": 0.175})
 
     def __str__(self):
         return f'id: {self.id}, name: {self.name}, df: {self.drag_function_type}, diameter: {self.diameter.diameter}'
