@@ -2,6 +2,8 @@ from django.contrib import admin
 
 
 from . import diameter
+from . import caliber
+from . import bullet
 
 
 # title settings
