@@ -5,6 +5,7 @@ from . import diameter
 from . import caliber
 from . import bullet
 from . import cartridge
+from . import rifle
 
 
 # title settings

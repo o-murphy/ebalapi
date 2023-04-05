@@ -13,7 +13,8 @@ class Cartridge(Model):
     id = AutoField(primary_key=True, unique=True)
     name = CharField(max_length=40, null=False, unique=True, blank=False)
 
-    # TODO: temperature to velocity table
+    comment = TextField(blank=True, null=True)
+
     muzzle_velocity = FloatField(null=False, blank=False, default=800)
     temperature = FloatField(null=False, blank=False, default=15)
 

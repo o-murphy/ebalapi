@@ -10,20 +10,18 @@ from ebalapi_service.models import Diameter
 class Bullet(Model):
     __tablename__ = 'bullet'
 
-    class DragFunctionType(TextChoices):
-        G1 = 'G1', 'G1'
-        G2 = 'G2', 'G2'
-        G5 = 'G5', 'G5'
-        G6 = 'G6', 'G6'
-        G7 = 'G7', 'G7'
-        G8 = 'G8', 'G8'
-        GS = 'GS', 'GS'
-        GC = 'GC', 'GC'
-        G1_MULTI_BC = 'G1_MULTI_BC', 'G1_MULTI_BC'
-        G7_MULTI_BC = 'G7_MULTI_BC', 'G7_MULTI_BC'
-        CUSTOM = 'CUSTOM', 'CUSTOM'
-
-
+    class DragFunctionType(IntegerChoices):
+        G1 = 1, 'G1'
+        G2 = 2, 'G2'
+        G5 = 3, 'G5'
+        G6 = 4, 'G6'
+        G7 = 5, 'G7'
+        G8 = 6, 'G8'
+        GS = 7, 'GS'
+        GC = 8, 'GC'
+        G1_MULTI_BC = 9, 'G1 MULTI BC'
+        G7_MULTI_BC = 10, 'G7 MULTI BC'
+        CUSTOM = 11, 'CUSTOM'
 
     id = AutoField(primary_key=True, unique=True)
     name = CharField(max_length=40, null=False, unique=True, blank=False)
