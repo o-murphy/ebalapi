@@ -29,7 +29,7 @@ class Bullet(Model):
     length = FloatField(null=False, blank=False, default=1.2)
     comment = TextField(blank=True, null=True)
 
-    diameter = ForeignKey(Diameter, related_name='bullets', on_delete=SET_NULL, null=True)
+    diameter = ForeignKey(Diameter, related_name='bullets', on_delete=SET_NULL, null=True, blank=False)
 
     drag_function_type = CharField(max_length=20,
                                    choices=DragFunctionType.choices,

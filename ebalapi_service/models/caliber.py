@@ -12,7 +12,7 @@ class Caliber(Model):
     short_name = CharField(max_length=10, unique=True, null=False, blank=False)
     comment = TextField(blank=True, null=True)
 
-    diameter = ForeignKey(Diameter, related_name='calibers', on_delete=SET_NULL, null=True)
+    diameter = ForeignKey(Diameter, related_name='calibers', on_delete=SET_NULL, null=True, blank=False)
 
     def __str__(self):
         return f'id: {self.id}, name: {self.name}, diameter: {self.diameter.diameter}'
