@@ -1,8 +1,10 @@
 from django.db.models import *
 
 
-from ebalapi_service.models import Bullet, Caliber
+from ebalapi_service.models import Bullet, Caliber, Diameter
 from .cartridge_vendor import CartridgeVendor
+from smart_selects.db_fields import GroupedForeignKey, ChainedForeignKey
+
 
 
 # Create your models here.
@@ -23,6 +25,7 @@ class Cartridge(Model):
     temperature_sensitivity = JSONField(blank=False, null=False, default=[[15, 800], [0, 790]])
 
     caliber = ForeignKey(Caliber, related_name='cartridges', on_delete=SET_NULL, null=True, blank=False)
+
     bullet = ForeignKey(Bullet, related_name='cartridges', on_delete=SET_NULL, null=True, blank=False)
 
     def __str__(self):

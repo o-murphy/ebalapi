@@ -1,8 +1,7 @@
 from django.db.models import *
 
-
-from .diameter import Diameter
 from .bullet_vendor import BulletVendor
+from .diameter import Diameter
 
 
 # Create your models here.
@@ -33,11 +32,11 @@ class Bullet(Model):
 
     diameter = ForeignKey(Diameter, related_name='bullets', on_delete=SET_NULL, null=True, blank=False)
 
-    drag_function_type = CharField(max_length=20,
-                                   choices=DragFunctionType.choices,
-                                   default=DragFunctionType.G7,
-                                   blank=False,
-                                   null=False)
+    drag_function_type = IntegerField(max_length=20,
+                                      choices=DragFunctionType.choices,
+                                      default=DragFunctionType.G7,
+                                      blank=False,
+                                      null=False)
 
     drag_function_data = JSONField(blank=False, null=False, default={"value": 0.175})
 
