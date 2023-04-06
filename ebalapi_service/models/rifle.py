@@ -1,7 +1,8 @@
 from django.db.models import *
 
 
-from ebalapi_service.models import Caliber
+from .caliber import Caliber
+from .rifle_vendor import RifleVendor
 
 
 # Create your models here.
@@ -16,6 +17,7 @@ class Rifle(Model):
 
     id = AutoField(primary_key=True, unique=True)
     name = CharField(max_length=40, null=False, unique=True, blank=False)
+    vendor = ForeignKey(RifleVendor, related_name='rifles', on_delete=SET_NULL, null=True, blank=False)
 
     comment = TextField(blank=True, null=True)
 

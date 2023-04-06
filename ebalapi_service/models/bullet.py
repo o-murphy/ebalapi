@@ -1,7 +1,8 @@
 from django.db.models import *
 
 
-from ebalapi_service.models import Diameter
+from .diameter import Diameter
+from .bullet_vendor import BulletVendor
 
 
 # Create your models here.
@@ -25,6 +26,7 @@ class Bullet(Model):
 
     id = AutoField(primary_key=True, unique=True)
     name = CharField(max_length=40, null=False, unique=True, blank=False)
+    vendor = ForeignKey(BulletVendor, related_name='bullets', on_delete=SET_NULL, null=True, blank=False)
     weight = FloatField(null=False, blank=False, default=0.168)
     length = FloatField(null=False, blank=False, default=1.2)
     comment = TextField(blank=True, null=True)
@@ -40,4 +42,4 @@ class Bullet(Model):
     drag_function_data = JSONField(blank=False, null=False, default={"value": 0.175})
 
     def __str__(self):
-        return f'id: {self.id}, name: {self.name}, df: {self.drag_function_type}, diameter: {self.diameter.diameter}'
+        return self.name

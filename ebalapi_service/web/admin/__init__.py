@@ -6,6 +6,9 @@ from . import caliber
 from . import bullet
 from . import cartridge
 from . import rifle
+from . import bullet_vendor
+from . import rifle_vendor
+from . import carteidge_vendor
 
 
 # title settings
