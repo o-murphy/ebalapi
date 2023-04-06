@@ -15,4 +15,7 @@ class Caliber(Model):
     diameter = ForeignKey(Diameter, related_name='calibers', on_delete=SET_NULL, null=True, blank=False)
 
     def __str__(self):
-        return f'id: {self.id}, name: {self.name}, diameter: {self.diameter.diameter}'
+        return self.name
+
+    def get_absolute_url(self):
+        return f'/admin/ebalapi_service/caliber/{self.pk}'
