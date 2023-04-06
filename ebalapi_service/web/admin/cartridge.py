@@ -7,6 +7,7 @@ from ebalapi_service.models import Cartridge
 # Register your models here.
 
 
+@admin.register(Cartridge)
 class CartridgeAdmin(ImportExportModelAdmin):
 
     list_display_links = ['name']
