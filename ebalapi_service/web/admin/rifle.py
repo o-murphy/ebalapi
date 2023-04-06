@@ -7,6 +7,18 @@ from .tools import create_rel_link
 from ebalapi_service.models import Rifle
 
 
+class RifleStackedInline(admin.StackedInline):
+    extra = 0
+    model = Rifle
+    verbose_name = "Rifles"
+    verbose_name_plural = "Rifles"
+    fields = (
+        'id', 'name', 'barrel_length', 'rail_angle',
+        'twist_direction'
+    )
+
+
+
 @admin.register(Rifle)
 class RifleAdmin(ImportExportModelAdmin):
 

@@ -25,8 +25,7 @@ class Rifle(Model):
     rail_angle = FloatField(null=False, blank=False, default=20)
 
     twist_rate = FloatField(null=False, blank=False, default=10)
-    twist_direction = IntegerField(max_length=20,
-                                   choices=TwistDirection.choices,
+    twist_direction = IntegerField(choices=TwistDirection.choices,
                                    default=TwistDirection.Right,
                                    blank=False,
                                    null=False)

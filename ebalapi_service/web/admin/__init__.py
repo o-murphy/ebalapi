@@ -9,6 +9,7 @@ from . import rifle
 from . import bullet_vendor
 from . import rifle_vendor
 from . import carteidge_vendor
+from . import drag_function
 
 
 # title settings

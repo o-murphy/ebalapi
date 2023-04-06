@@ -6,3 +6,4 @@ from .rifle import Rifle
 from .bullet_vendor import BulletVendor
 from .rifle_vendor import RifleVendor
 from .cartridge_vendor import CartridgeVendor
+from .drag_function import DragFunction
