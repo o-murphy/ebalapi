@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.forms import ModelForm
+from django_ace import AceWidget
 from import_export.admin import ImportExportModelAdmin
 
 from ebalapi_service.models import Cartridge
@@ -6,6 +8,23 @@ from .tools import create_rel_link
 
 
 # Register your models here.
+
+class CartridgeAdminForm(ModelForm):
+    class Meta:
+        model = Cartridge
+        fields = '__all__'
+
+        # widgets = {
+        #     'temperature_sensitivity': Textarea(attrs={'cols': 40, 'rows': 1}),
+        # }
+        widgets = {
+            'temperature_sensitivity': AceWidget(
+                mode='json',
+                width="400px",
+                height="25px",
+                theme="twilight"
+            ),
+        }
 
 
 class CartridgeStackedInline(admin.TabularInline):
@@ -16,10 +35,12 @@ class CartridgeStackedInline(admin.TabularInline):
     # fields = (
     #     'id', 'name'
     # )
+    form = CartridgeAdminForm
 
 
 @admin.register(Cartridge)
 class CartridgeAdmin(ImportExportModelAdmin):
+    form = CartridgeAdminForm
 
     def _vendor(self, obj: Cartridge):
         if obj.vendor:

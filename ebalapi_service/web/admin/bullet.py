@@ -5,6 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 
 from ebalapi_service.models import Bullet
 from .cartridge import CartridgeStackedInline
+from .drag_function import DragFunctionStackedInline
 
 
 class BulletStackedInline(admin.StackedInline):
@@ -24,4 +25,4 @@ class BulletAdmin(ImportExportModelAdmin):
         'diameter'
     )
 
-    inlines = [CartridgeStackedInline]
+    inlines = [CartridgeStackedInline, DragFunctionStackedInline]

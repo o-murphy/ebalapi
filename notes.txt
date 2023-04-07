@@ -1,0 +1,16 @@
+TODO: add models of Sights and Reticles
+
+TODO: update api views for new object types
+TODO: connect external_ballistics C shared library
+TODO: init bot app
+TODO: create bot app models, admin views, api views
+
+TODO: find objects in base by tags
+TODO: find objects in base by message contains
+TODO: add/remove to/from favorites
+TODO: create ballistic profile template
+TODO: calculate trajectory by template
+TODO: calculate trajectory by direct data
+TODO: calculate trajectory by obj id's
+
+TODO: obj type -> obj property -> extended obj data
