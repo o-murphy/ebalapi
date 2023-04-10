@@ -22,7 +22,7 @@ class Rifle(Model):
     comment = TextField(blank=True, null=True)
 
     barrel_length = FloatField(null=False, blank=False, default=61)
-    rail_angle = FloatField(null=False, blank=False, default=20)
+    rail_angle = FloatField(null=True, blank=True, default=None)
 
     twist_rate = FloatField(null=False, blank=False, default=10)
     twist_direction = IntegerField(choices=TwistDirection.choices,
