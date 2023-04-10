@@ -16,4 +16,4 @@ class BulletVendor(Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'/admin/ebalapi_service/bullet_vendor/{self.pk}'
+        return f'/admin/ebalapi_service/bulletvendor/{self.pk}'

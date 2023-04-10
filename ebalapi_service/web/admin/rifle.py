@@ -7,12 +7,16 @@ from .tools import create_rel_link
 from ebalapi_service.models import Rifle
 
 
-class RifleStackedInline(admin.StackedInline):
+class RifleInline(admin.StackedInline):
     extra = 0
     model = Rifle
     verbose_name = "Rifles"
     verbose_name_plural = "Rifles"
     fields = (
+        'id', 'name', 'barrel_length', 'rail_angle',
+        'twist_direction'
+    )
+    readonly_fields = (
         'id', 'name', 'barrel_length', 'rail_angle',
         'twist_direction'
     )
@@ -51,12 +55,7 @@ class RifleAdmin(ImportExportModelAdmin):
     fieldsets = (
         (
             'Main Data', {
-                'fields': ('name', 'barrel_length', 'rail_angle', 'twist_direction', 'caliber')
-            }
-        ),
-        (
-            'Comment', {
-                'fields': ('comment',)
+                'fields': ('name', 'barrel_length', 'rail_angle', 'twist_direction', 'caliber','comment',)
             }
         ),
     )

@@ -27,14 +27,16 @@ class CartridgeAdminForm(ModelForm):
         }
 
 
-class CartridgeStackedInline(admin.TabularInline):
+class CartridgeInline(admin.TabularInline):
     extra = 0
     model = Cartridge
     verbose_name = "Cartridges"
     verbose_name_plural = "Cartridges"
-    # fields = (
-    #     'id', 'name'
-    # )
+    fields = (
+        'id', 'name', 'vendor', 'caliber', 'bullet', 'muzzle_velocity', 'temperature', 'temperature_sensitivity'
+    )
+    readonly_fields = (
+        'id', 'name', 'vendor', 'caliber', 'bullet', 'muzzle_velocity', 'temperature', 'temperature_sensitivity')
     form = CartridgeAdminForm
 
 
@@ -93,12 +95,8 @@ class CartridgeAdmin(ImportExportModelAdmin):
                     'temperature_sensitivity',
                     'caliber',
                     'bullet',
+                    'comment',
                 )
-            }
-        ),
-        (
-            'Comment', {
-                'fields': ('comment',)
             }
         ),
     )

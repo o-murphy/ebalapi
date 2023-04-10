@@ -4,13 +4,19 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 
 from ebalapi_service.models import Caliber
-from .rifle import RifleStackedInline
-from .cartridge import CartridgeStackedInline
-from .rifle import RifleStackedInline
+from .cartridge import CartridgeInline
+from .rifle import RifleInline
 
 
 @admin.register(Caliber)
 class RifleAdmin(ImportExportModelAdmin):
-    list_display = ('id', 'name', 'short_name')
+    list_display = ('id', 'name', 'short_name', 'diameter')
 
-    inlines = [RifleStackedInline, CartridgeStackedInline]
+    list_display_links = ('id', 'name', 'short_name')
+
+    search_fields = ('name', 'diameter')
+    list_filter = ('name', 'diameter')
+
+    fields = ('name', 'short_name', 'diameter', 'comment')
+
+    inlines = [RifleInline, CartridgeInline]

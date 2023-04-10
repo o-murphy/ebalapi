@@ -36,3 +36,9 @@ class DragFunction(Model):
                            null=False)
 
     df_data = JSONField(blank=False, null=False, default={"value": 0.175})
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return f'/admin/ebalapi_service/dragfunction/{self.pk}'

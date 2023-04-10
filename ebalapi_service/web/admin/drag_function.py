@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 # Register your models here.
 from django.forms import ModelForm
 from django_ace import AceWidget
@@ -27,14 +26,19 @@ class DragFunctionAdminForm(ModelForm):
         }
 
 
-class DragFunctionStackedInline(admin.TabularInline):
+class DragFunctionInline(admin.TabularInline):
     extra = 0
     model = DragFunction
     verbose_name = "DragFunctions"
     verbose_name_plural = "DragFunctions"
-    # fields = (
-    #     'id', 'name'
-    # )
+    fields = ('id', 'name',
+              'bullet',
+              'df_type',
+              'df_data',)
+    readonly_fields = ('id', 'name',
+                       'bullet',
+                       'df_type',
+                       'df_data',)
     form = DragFunctionAdminForm
 
 
@@ -43,7 +47,7 @@ class CartridgeAdmin(ImportExportModelAdmin):
     form = DragFunctionAdminForm
 
     def _bullet(self, obj: DragFunction):
-        if obj.caliber:
+        if obj.bullet:
             url = obj.bullet.get_absolute_url()
             return create_rel_link(url, obj.bullet.name)
         return f'{obj.bullet.name}'
@@ -73,13 +77,8 @@ class CartridgeAdmin(ImportExportModelAdmin):
                     'bullet',
                     'df_type',
                     'df_data',
+                    'comment'
                 )
             }
         ),
-        (
-            'Comment', {
-                'fields': ('comment',)
-            }
-        ),
     )
-

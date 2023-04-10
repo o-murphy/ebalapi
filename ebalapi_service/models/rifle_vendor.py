@@ -16,4 +16,4 @@ class RifleVendor(Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'/admin/ebalapi_service/rifle_vendor/{self.pk}'
+        return f'/admin/ebalapi_service/riflevendor/{self.pk}'

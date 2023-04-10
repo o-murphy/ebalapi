@@ -4,25 +4,52 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 
 from ebalapi_service.models import Bullet
-from .cartridge import CartridgeStackedInline
-from .drag_function import DragFunctionStackedInline
+from .cartridge import CartridgeInline
+from .drag_function import DragFunctionInline
+from .tools import create_rel_link
 
 
-class BulletStackedInline(admin.StackedInline):
+class BulletInline(admin.TabularInline):
     extra = 0
     model = Bullet
     verbose_name = "Bullets"
     verbose_name_plural = "Bullets"
     fields = (
-        'id', 'name'
+        'id', 'name', 'vendor', 'weight', 'length', 'g1', 'g7', 'diameter'
     )
+    readonly_fields = ('id', 'name', 'vendor', 'weight', 'length', 'g1', 'g7', 'diameter')
 
 
 @admin.register(Bullet)
 class BulletAdmin(ImportExportModelAdmin):
+
+    def _vendor(self, obj: Bullet):
+        if obj.vendor:
+            url = obj.vendor.get_absolute_url()
+            return create_rel_link(url, obj.vendor.name)
+        return f'{obj.vendor.name}'
+
+    _vendor.admin_order_field = 'caliber'
+    _vendor.short_description = "Caliber"
+
     list_display = (
-        'id', 'name',
-        'diameter'
+        'id', 'name', '_vendor', 'weight', 'length', 'g1', 'g7', 'diameter'
     )
 
-    inlines = [CartridgeStackedInline, DragFunctionStackedInline]
+    list_display_links = ['id', 'name']
+
+    search_fields = (
+        'name', '_vendor', 'weight', 'diameter'
+    )
+
+    list_filter = ('name', 'vendor', 'weight', 'diameter')
+
+    fieldsets = (
+        (
+            'Main Data', {
+                'fields': ('name', 'vendor', 'weight', 'length', 'g1', 'g7', 'diameter', 'comment',)
+            }
+        ),
+    )
+
+    inlines = [CartridgeInline, DragFunctionInline]
