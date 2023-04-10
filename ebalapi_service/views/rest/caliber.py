@@ -7,7 +7,7 @@ class CaliberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Caliber
-        fields = ['id', 'name', 'short_name', 'comment', 'diameter']
+        fields = ['id', 'name', 'short_name', 'comment', 'diameter', 'cartridges', 'rifles']
 
 
 class CaliberCRUDView(AbstractCRUDView):
