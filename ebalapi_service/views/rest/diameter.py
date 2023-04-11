@@ -1,5 +1,5 @@
 from .abstract_view import AbstractListItemView, AbstractCRUDView
-from .serializers import DiameterSerializer
+from ebalapi_service.views.rest.serializers.diameter import DiameterSerializer
 from ebalapi_service.models import Diameter
 
 

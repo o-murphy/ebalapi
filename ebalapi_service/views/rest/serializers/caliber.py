@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
 from ebalapi_service.models import Caliber
-from ebalapi_service.views.rest.bullet import DiameterSerialize
+from ebalapi_service.views.rest.diameter import DiameterSerializer
 
 
 class CaliberSerializer(serializers.ModelSerializer):
-    diameter = DiameterSerialize(many=False, read_only=True)
+    diameter = DiameterSerializer(many=False, read_only=True)
 
     class Meta:
         model = Caliber

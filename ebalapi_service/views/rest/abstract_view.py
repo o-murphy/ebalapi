@@ -14,6 +14,7 @@ from .token_auth import GetTokenAuthentication
 
 class AbstractCRUDView(generics.RetrieveUpdateDestroyAPIView,
                        mixins.CreateModelMixin):
+
     authentication_classes = [
         # SessionAuthentication,
         BasicAuthentication,
@@ -34,6 +35,7 @@ class AbstractCRUDView(generics.RetrieveUpdateDestroyAPIView,
         try:
             queryset = self.filter_queryset(self.get_queryset())
             query_params = self.request.query_params.dict()
+
             if isinstance(self.request.data, dict):
                 query_params.update(**self.request.data)
             if not query_params:

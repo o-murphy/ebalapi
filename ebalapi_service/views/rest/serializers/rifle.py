@@ -30,6 +30,6 @@ class RifleDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rifle
-        fields = ('id', 'name', 'caliber' 'twist_rate', 'twist_direction', 'twist_direction_type', 'vendor',
+        fields = ('id', 'name', 'caliber', 'twist_rate', 'twist_direction', 'twist_direction_type', 'vendor',
                   'barrel_length', 'rail_angle',
                   'comment')
