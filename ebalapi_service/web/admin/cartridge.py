@@ -48,19 +48,19 @@ class CartridgeAdmin(ImportExportModelAdmin):
         if obj.vendor:
             url = obj.vendor.get_absolute_url()
             return create_rel_link(url, obj.vendor.name)
-        return f'{obj.vendor.name}'
+        return
 
     def _caliber(self, obj: Cartridge):
         if obj.caliber:
             url = obj.caliber.get_absolute_url()
             return create_rel_link(url, obj.caliber.name)
-        return f'{obj.caliber.name}'
+        return
 
     def _bullet(self, obj: Cartridge):
         if obj.caliber:
             url = obj.bullet.get_absolute_url()
             return create_rel_link(url, obj.bullet.name)
-        return f'{obj.bullet.name}'
+        return
 
     _caliber.admin_order_field = 'caliber'
     _caliber.short_description = "Caliber"

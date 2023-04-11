@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from ebalapi_service.models import Bullet, Cartridge, Vendor, Caliber, Diameter, DragFunction
 from .abstract_view import AbstractCRUDView, AbstractListItemView
-from .drag_function import DragFunctionInfoSerializer
+# from .serializers import DragFunctionSerializer
 
 
 # TODO: temporary
@@ -27,7 +27,7 @@ class BulletListSerializer(serializers.ModelSerializer):
 
     # diameter = DiameterSerialize(many=False, read_only=True)
     # cartridges = CartSerialize(many=True, read_only=True)
-    # drag_functions = DragFunctionSerialize(many=True, read_only=True)
+    # drag_functions = DragFunctionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Bullet
@@ -50,7 +50,7 @@ class BulletSerializer(serializers.ModelSerializer):
 
     diameter = DiameterSerialize(many=False, read_only=True)
     cartridges = CartSerialize(many=True, read_only=True)
-    drag_functions = DragFunctionInfoSerializer(many=True, read_only=True)
+    # drag_functions = DragFunctionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Bullet

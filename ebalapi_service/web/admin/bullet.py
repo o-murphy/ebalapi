@@ -27,10 +27,10 @@ class BulletAdmin(ImportExportModelAdmin):
         if obj.vendor:
             url = obj.vendor.get_absolute_url()
             return create_rel_link(url, obj.vendor.name)
-        return f'{obj.vendor.name}'
+        return
 
-    _vendor.admin_order_field = 'caliber'
-    _vendor.short_description = "Caliber"
+    _vendor.admin_order_field = 'vendor'
+    _vendor.short_description = "Vendor"
 
     list_display = (
         'id', 'name', '_vendor', 'weight', 'length', 'g1', 'g7', 'diameter'

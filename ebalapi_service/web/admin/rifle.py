@@ -30,14 +30,23 @@ class RifleAdmin(ImportExportModelAdmin):
         if obj.caliber:
             url = obj.caliber.get_absolute_url()
             return create_rel_link(url, obj.caliber.name)
-        return f'{obj.caliber.name}'
+        return
 
     _caliber.admin_order_field = 'caliber'
     _caliber.short_description = "Caliber"
 
+    def _vendor(self, obj: Rifle):
+        if obj.vendor:
+            url = obj.vendor.get_absolute_url()
+            return create_rel_link(url, obj.vendor.name)
+        return
+
+    _vendor.admin_order_field = 'vendor'
+    _vendor.short_description = "Vendor"
+
     list_display = (
         'id', 'name', 'barrel_length', 'rail_angle',
-        'twist_direction', '_caliber'
+        'twist_direction', '_caliber', '_vendor'
     )
 
     list_display_links = ['id', 'name']
@@ -49,13 +58,14 @@ class RifleAdmin(ImportExportModelAdmin):
 
     search_fields = (
         'name',
-        '_caliber'
+        '_caliber',
+        '_vendor'
     )
 
     fieldsets = (
         (
             'Main Data', {
-                'fields': ('name', 'barrel_length', 'rail_angle', 'twist_direction', 'caliber','comment',)
+                'fields': ('name', 'barrel_length', 'rail_angle', 'twist_direction', 'caliber', 'vendor', 'comment',)
             }
         ),
     )

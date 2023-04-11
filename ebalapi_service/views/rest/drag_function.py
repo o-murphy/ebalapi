@@ -1,15 +1,13 @@
-from rest_framework import serializers
-
+from .abstract_view import AbstractListItemView, AbstractCRUDView
+from .serializers import DragFunctionSerializer, DragFunctionDetailSerializer
 from ebalapi_service.models import DragFunction
 
 
-# TODO: temporary
-class DragFunctionInfoSerializer(serializers.ModelSerializer):
-    df_type_string = serializers.SerializerMethodField(read_only=True)
+class DragFunctionCRUDView(AbstractCRUDView):
+    serializer_class = DragFunctionDetailSerializer
+    queryset = DragFunction.objects.all()
 
-    def get_df_type_string(self, obj: DragFunction):
-        return obj.DragFunctionType(obj.df_type).name
 
-    class Meta:
-        model = DragFunction
-        fields = ('id', 'name', 'comment', 'df_type', 'df_type_string', 'df_data')
+class DragFunctionView(AbstractListItemView):
+    serializer_class = DragFunctionSerializer
+    queryset = DragFunction.objects.all()
