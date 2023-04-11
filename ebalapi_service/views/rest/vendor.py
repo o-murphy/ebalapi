@@ -1,4 +1,5 @@
 from rest_framework.generics import RetrieveAPIView
+from rest_framework.response import Response
 
 from ebalapi_service.models import Vendor
 from .abstract_view import AbstractListItemView, AbstractCRUDView
@@ -13,9 +14,3 @@ class VendorCRUDView(AbstractCRUDView):
 class VendorView(AbstractListItemView):
     serializer_class = VendorSerializer
     queryset = Vendor.objects.all()
-
-
-class VendorDetailView(RetrieveAPIView):
-    queryset = Vendor.objects.all()
-    serializer_class = VendorDetailSerializer
-    lookup_field = 'id'

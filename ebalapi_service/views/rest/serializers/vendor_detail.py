@@ -5,7 +5,7 @@ from .bullet import BulletSerializer
 from .catridge import CartridgeSerializer
 
 
-class VendorDetailSerializer(serializers.ModelSerializer):
+class VendorDetailSerializer(serializers.HyperlinkedModelSerializer):
 
     cartridges = CartridgeSerializer(many=True, read_only=True)
     bullets = BulletSerializer(many=True, read_only=True)

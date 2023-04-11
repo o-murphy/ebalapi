@@ -24,7 +24,8 @@ urlpatterns = [
 
     path('vendors/', views.rest.VendorView.as_view()),
     path('vendor/', views.rest.VendorCRUDView.as_view()),
-    path('vendor/<int:id>/', views.rest.CaliberCRUDView.as_view(), name='vendor-detail'),
+    path('vendor/<int:id>/', views.rest.VendorCRUDView.as_view(), name='vendor-detail'),
+
     # path('vendor/<int:id>/', views.rest.VendorDetailView.as_view(), name='vendor-detail'),
 
     path('rifles/', views.rest.RifleView.as_view()),

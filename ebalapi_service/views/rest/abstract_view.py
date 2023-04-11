@@ -1,7 +1,7 @@
 from django.core import exceptions
 from django.db.models import QuerySet
 from django.utils.decorators import method_decorator
-from rest_framework import exceptions as rest_exception, mixins
+from rest_framework import exceptions as rest_exception, mixins, status
 from rest_framework import generics
 from rest_framework import serializers
 from rest_framework.authentication import BasicAuthentication, TokenAuthentication
@@ -65,6 +65,13 @@ class AbstractCRUDView(generics.RetrieveUpdateDestroyAPIView,
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
@@ -121,6 +128,33 @@ class AbstractCRUDView(generics.RetrieveUpdateDestroyAPIView,
 #             raise rest_exception.NotFound
 
 
+# class AbstractListItemView(generics.ListAPIView):
+#     authentication_classes = [
+#         # SessionAuthentication,
+#         BasicAuthentication,
+#         TokenAuthentication,
+#         GetTokenAuthentication
+#     ]
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = serializers.ModelSerializer
+#     queryset = QuerySet
+#
+#     def get_queryset(self):
+#         queryset = self.queryset.all()
+#         query_params = self.request.query_params
+#         if isinstance(self.request.data, dict):
+#             query_params.update(self.request.data)
+#         return queryset.filter(**query_params)
+#
+#     def get(self, request, *args, **kwargs):
+#         queryset = self.get_queryset()
+#         serialized = self.serializer_class(queryset, many=True,  context={'request': request})
+#         content = {
+#             "totalItems": queryset.count(),
+#             "items": serialized.data
+#         }
+#         return Response(content)
+
 class AbstractListItemView(generics.ListAPIView):
     authentication_classes = [
         # SessionAuthentication,
@@ -141,7 +175,7 @@ class AbstractListItemView(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
         queryset = self.get_queryset()
-        serialized = self.serializer_class(queryset, many=True)
+        serialized = self.serializer_class(queryset, many=True,  context={'request': request})
         content = {
             "totalItems": queryset.count(),
             "items": serialized.data
