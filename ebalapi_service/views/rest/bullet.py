@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ebalapi_service.models import Bullet, Cartridge, CartridgeVendor, Caliber, Diameter, DragFunction
+from ebalapi_service.models import Bullet, Cartridge, Vendor, Caliber, Diameter, DragFunction
 from .abstract_view import AbstractCRUDView, AbstractListItemView
 from .drag_function import DragFunctionInfoSerializer
 
@@ -10,13 +10,6 @@ class DiameterSerialize(serializers.ModelSerializer):
     class Meta:
         model = Diameter
         fields = ('id', 'diameter')
-
-
-# TODO: temporary
-class CartridgeVendorSerialize(serializers.ModelSerializer):
-    class Meta:
-        model = CartridgeVendor
-        fields = ('id', 'name', 'comment')
 
 
 # TODO: temporary

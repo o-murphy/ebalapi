@@ -1,14 +1,15 @@
 from django.contrib import admin
-
 # Register your models here.
 from import_export.admin import ImportExportModelAdmin
 
-from ebalapi_service.models import RifleVendor
+from ebalapi_service.models import Vendor
+from .bullet import BulletInline
 from .rifle import RifleInline
+from .cartridge import CartridgeInline
 
 
-@admin.register(RifleVendor)
-class BulletVendorAdmin(ImportExportModelAdmin):
+@admin.register(Vendor)
+class VendorAdmin(ImportExportModelAdmin):
     list_display = ('id', 'name')
 
     list_display_links = ('id', 'name')
@@ -18,4 +19,4 @@ class BulletVendorAdmin(ImportExportModelAdmin):
 
     fields = ('name', 'comment')
 
-    inlines = [RifleInline]
+    inlines = [BulletInline, CartridgeInline, RifleInline]

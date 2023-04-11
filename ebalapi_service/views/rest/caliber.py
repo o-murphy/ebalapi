@@ -1,7 +1,9 @@
 from rest_framework import serializers
 
-from ebalapi_service.models import Caliber, Rifle, Diameter, Cartridge, CartridgeVendor
+from ebalapi_service.models import Caliber, Rifle, Diameter, Cartridge, Vendor
 from .abstract_view import AbstractCRUDView, AbstractListItemView
+
+from .serializers import VendorSerializer
 
 
 # TODO: temporary
@@ -24,13 +26,6 @@ class RifleSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'twist_rate', 'twist_direction', 'twist_direction_type', 'vendor',
                   'barrel_length', 'rail_angle',
                   'comment')
-
-
-# TODO: temporary
-class CartridgeVendorSerialize(serializers.ModelSerializer):
-    class Meta:
-        model = CartridgeVendor
-        fields = ('id', 'name', 'comment')
 
 
 # # TODO: temporary
@@ -72,7 +67,7 @@ class CartridgeVendorSerialize(serializers.ModelSerializer):
 # TODO: temporary
 class CartSerialize(serializers.ModelSerializer):
 
-    vendor = CartridgeVendorSerialize(many=False, read_only=True)
+    vendor = VendorSerializer(many=False, read_only=True)
 
     class Meta:
         model = Cartridge

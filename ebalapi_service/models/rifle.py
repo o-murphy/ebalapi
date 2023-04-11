@@ -2,7 +2,7 @@ from django.db.models import *
 
 
 from .caliber import Caliber
-from .rifle_vendor import RifleVendor
+from .vendor import Vendor
 
 
 # Create your models here.
@@ -17,7 +17,7 @@ class Rifle(Model):
 
     id = AutoField(primary_key=True, unique=True)
     name = CharField(max_length=40, null=False, unique=True, blank=False)
-    vendor = ForeignKey(RifleVendor, related_name='rifles', on_delete=SET_NULL, null=True, blank=False)
+    vendor = ForeignKey(Vendor, related_name='rifles', on_delete=SET_NULL, null=True, blank=False)
 
     comment = TextField(blank=True, null=True)
 

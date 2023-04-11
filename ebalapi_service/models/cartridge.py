@@ -1,7 +1,7 @@
 from django.db.models import *
 
 from ebalapi_service.models import Bullet, Caliber
-from .cartridge_vendor import CartridgeVendor
+from .vendor import Vendor
 
 
 # Create your models here.
@@ -12,7 +12,7 @@ class Cartridge(Model):
 
     id = AutoField(primary_key=True, unique=True)
     name = CharField(max_length=40, null=False, unique=True, blank=False)
-    vendor = ForeignKey(CartridgeVendor, related_name='cartridges', on_delete=SET_NULL, null=True, blank=False)
+    vendor = ForeignKey(Vendor, related_name='cartridges', on_delete=SET_NULL, null=True, blank=False)
 
     comment = CharField(max_length=280, blank=True, null=True)
 

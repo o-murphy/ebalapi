@@ -4,8 +4,8 @@ from django.db.models import *
 # Create your models here.
 
 
-class CartridgeVendor(Model):
-    __tablename__ = 'cartridge_ven'
+class Vendor(Model):
+    __tablename__ = 'bullet_ven'
 
     id = AutoField(primary_key=True, unique=True)
     name = CharField(max_length=40, null=False, unique=True, blank=False)
@@ -16,4 +16,4 @@ class CartridgeVendor(Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'/admin/ebalapi_service/cartridgevendor/{self.pk}'
+        return f'/admin/ebalapi_service/bulletvendor/{self.pk}'
