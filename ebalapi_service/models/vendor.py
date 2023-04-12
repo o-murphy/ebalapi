@@ -2,6 +2,7 @@ from django.db.models import *
 
 
 # Create your models here.
+from django.urls import reverse
 
 
 class Vendor(Model):
@@ -16,4 +17,4 @@ class Vendor(Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'/admin/ebalapi_service/bulletvendor/{self.pk}'
+        return reverse('ebalapi_service:vendor-detail', args=[self.id])

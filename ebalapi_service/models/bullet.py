@@ -1,4 +1,5 @@
 from django.db.models import *
+from django.urls import reverse
 
 from .vendor import Vendor
 from .diameter import Diameter
@@ -27,4 +28,4 @@ class Bullet(Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'/admin/ebalapi_service/bullet/{self.pk}'
+        return reverse('ebalapi_service:bullet-detail', args=[self.id])

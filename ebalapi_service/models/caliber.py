@@ -1,5 +1,7 @@
 
 from django.db.models import *
+from django.urls import reverse
+
 from .diameter import Diameter
 
 # Create your models here.
@@ -18,4 +20,4 @@ class Caliber(Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'/admin/ebalapi_service/caliber/{self.pk}'
+        return reverse('ebalapi_service:caliber-detail', args=[self.id])

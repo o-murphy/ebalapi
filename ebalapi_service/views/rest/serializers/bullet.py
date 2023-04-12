@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 from ebalapi_service.models import Bullet
 from .diameter import DiameterSerializer
-from .catridge import CartridgeLinkSerializer
 
 
 class BulletSerializer(serializers.ModelSerializer):

@@ -1,4 +1,5 @@
 from django.db.models import *
+from django.urls import reverse
 
 from .bullet import Bullet
 
@@ -41,4 +42,4 @@ class DragFunction(Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'/admin/ebalapi_service/dragfunction/{self.pk}'
+        return reverse('ebalapi_service:dragfunction-detail', args=[self.id])

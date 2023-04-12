@@ -26,7 +26,9 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('api/', include(('ebalapi_service.urls', 'ebalapi_service'), namespace='ebalapi_service')),
+    path('api/', include(('ebalapi_service.urls', 'ebalapi_service'),
+                         namespace='ebalapi_service'
+                         )),
 ]
 
 urlpatterns += [

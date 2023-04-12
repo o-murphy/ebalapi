@@ -1,4 +1,5 @@
 from django.db.models import *
+from django.urls import reverse
 
 from ebalapi_service.models import Bullet, Caliber
 from .vendor import Vendor
@@ -30,4 +31,4 @@ class Cartridge(Model):
         return f'id: {self.id}, name: {self.name}, bullet: {self.bullet.name}, diameter: {self.caliber.name}'
 
     def get_absolute_url(self):
-        return f'/admin/ebalapi_service/cartridge/{self.pk}'
+        return reverse('ebalapi_service:cartridge-detail', args=[self.id])
