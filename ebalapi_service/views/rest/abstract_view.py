@@ -171,6 +171,7 @@ class AbstractListItemView(generics.ListAPIView):
         query_params = self.request.query_params
         if isinstance(self.request.data, dict):
             query_params.update(self.request.data)
+        print(query_params)
         return queryset.filter(**query_params)
 
     def get(self, request, *args, **kwargs):
