@@ -1,4 +1,3 @@
-from django.core import exceptions
 from django.db.models import QuerySet
 from django.utils.decorators import method_decorator
 from rest_framework import exceptions as rest_exception, mixins, status
@@ -8,7 +7,6 @@ from rest_framework.authentication import BasicAuthentication, TokenAuthenticati
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.request import Request
 from rest_framework.response import Response
 
 from .token_auth import GetTokenAuthentication
@@ -56,7 +54,6 @@ from .token_auth import GetTokenAuthentication
 
 class AbstractCRUDView(generics.RetrieveUpdateDestroyAPIView,
                        mixins.CreateModelMixin):
-
     serializer_class = serializers.ModelSerializer
     queryset = QuerySet
 
@@ -128,7 +125,7 @@ class AbstractCRUDView(generics.RetrieveUpdateDestroyAPIView,
 #             raise rest_exception.NotFound
 
 
-# class AbstractListItemView(generics.ListAPIView):
+# class AbstractListItemView(generics.ListAPIView): # GPT 3 optimized 1
 #     authentication_classes = [
 #         # SessionAuthentication,
 #         BasicAuthentication,
@@ -155,7 +152,9 @@ class AbstractCRUDView(generics.RetrieveUpdateDestroyAPIView,
 #         }
 #         return Response(content)
 
-class AbstractListItemView(generics.ListAPIView):
+
+class AbstractListItemView(generics.ListAPIView):  # GPT 3 optimized 2
+
     authentication_classes = [
         # SessionAuthentication,
         BasicAuthentication,
@@ -168,15 +167,15 @@ class AbstractListItemView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = self.queryset.all()
-        query_params = self.request.query_params
+        query_params = self.request.query_params.dict()
+
         if isinstance(self.request.data, dict):
             query_params.update(self.request.data)
-        print(query_params)
         return queryset.filter(**query_params)
 
     def get(self, request, *args, **kwargs):
         queryset = self.get_queryset()
-        serialized = self.serializer_class(queryset, many=True,  context={'request': request})
+        serialized = self.serializer_class(queryset, many=True, context={'request': request})
         content = {
             "totalItems": queryset.count(),
             "items": serialized.data
