@@ -49,10 +49,10 @@ class BulletAdmin(ImportExportModelAdmin):
     list_display_links = ['id', 'name']
 
     search_fields = (
-        'name', '_vendor', 'weight', 'diameter'
+        'id', 'name'
     )
 
-    list_filter = ('name', 'vendor', 'weight', 'diameter')
+    list_filter = ('id', 'name', 'vendor', 'weight', 'diameter')
     # sortable_by = ('drag_functions', )
 
     fieldsets = (
