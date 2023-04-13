@@ -29,11 +29,21 @@ class BulletAdmin(ImportExportModelAdmin):
             return create_rel_link(url, obj.vendor.name)
         return
 
+    def _has_drag_functions(self, obj: Bullet):
+        if obj.drag_functions.count() > 0:
+            return True
+        else:
+            return False
+
     _vendor.admin_order_field = 'vendor'
     _vendor.short_description = "Vendor"
 
+    _has_drag_functions.short_description = "Drag Funcs"
+    _has_drag_functions.admin_order_field = "drag_functions"
+    _has_drag_functions.boolean = True
+
     list_display = (
-        'id', 'name', '_vendor', 'weight', 'length', 'g1', 'g7', 'diameter'
+        'id', 'name', '_vendor', 'weight', 'length', 'g1', 'g7', 'diameter', '_has_drag_functions'
     )
 
     list_display_links = ['id', 'name']
@@ -43,6 +53,7 @@ class BulletAdmin(ImportExportModelAdmin):
     )
 
     list_filter = ('name', 'vendor', 'weight', 'diameter')
+    # sortable_by = ('drag_functions', )
 
     fieldsets = (
         (

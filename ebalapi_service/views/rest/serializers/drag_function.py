@@ -32,7 +32,7 @@ class DragFunctionSerializer(serializers.ModelSerializer):
 
 class DragFunctionDetailSerializer(serializers.ModelSerializer):
     # TODO:
-    bullets = BulletSerializer(many=True, read_only=True)
+    bullet = BulletSerializer(many=False, read_only=True)
 
     url = serializers.HyperlinkedIdentityField(view_name='ebalapi_service:rifle-detail', lookup_field='id')
 

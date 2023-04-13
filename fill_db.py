@@ -1,5 +1,6 @@
 import csv
 import os
+import re
 import traceback
 from typing import NamedTuple
 
@@ -34,10 +35,29 @@ class BulletTuple(NamedTuple):
     speed5: float
 
 
+class Bullet7Tuple(NamedTuple):
+    id: int
+    name: str
+    vendor: str
+    vendor_id: int
+    diameter: float
+    diameter_id: int
+    weight: float
+    length: float
+    g7: float
+
+
 def get_bullets() -> list[BulletTuple]:
     with open('bullets.csv', 'r') as fp:
         data = csv.reader(fp, delimiter=',')
         bullets = [BulletTuple(*row) for row in data]
+    return bullets
+
+
+def get_bullets7() -> list[Bullet7Tuple]:
+    with open('bullets7.csv', 'r') as fp:
+        data = csv.reader(fp, delimiter=',')
+        bullets = [Bullet7Tuple(*row) for row in data]
     return bullets
 
 
@@ -130,13 +150,37 @@ def add_bullets(bullets: list[BulletTuple]) -> None:
                 print(f"{tb_string} object: BulletTuple, id: {b.id}".replace('\n object', ' object'))
 
 
+def find_g1_bullet_for_g7(bullets7: list[Bullet7Tuple]):
+    bullets = Bullet.objects.all()
+
+    bullets1 = {}
+
+    for b in bullets:
+        name1 = re.sub(r'\W', '', b.name.lower())
+        vendor1 = re.sub(r'\W', '', b.vendor.name.lower())
+        bullets1[f"{name1}{vendor1}{b.diameter.diameter}{b.weight}"] = b.id
+        # print('G1', f"{name1}{vendor1}{b.diameter.diameter}{b.weight}")
+
+    for b in bullets7:
+        name7 = re.sub(r'\W', '', b.name.lower())
+        vendor7 = re.sub(r'\W', '', b.vendor.lower())
+        bul = f"{name7}{vendor7}{float(b.diameter)}{float(b.weight)}"
+
+        if bul in bullets1:
+            print('FOUND', bul, b.id, bullets1.get(bul))
+        else:
+            # print('NOT', bul)
+            pass
+
+
 if __name__ == '__main__':
-    buls = get_bullets()
-    vens = get_vendors_by_bullet(buls)
-    add_vendors_to_db(vens)
-    diams = get_diameters_by_bullet(buls)
-    add_diameters_to_db(diams)
+    # buls = get_bullets()
+    # vens = get_vendors_by_bullet(buls)
+    # add_vendors_to_db(vens)
+    # diams = get_diameters_by_bullet(buls)
+    # add_diameters_to_db(diams)
+    #
+    # add_bullets(buls)
 
-    add_bullets(buls)
-
-    # print(vens)
+    buls7 = get_bullets7()
+    find_g1_bullet_for_g7(buls7)
