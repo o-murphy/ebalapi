@@ -10,6 +10,8 @@ from .bullet import BulletInline
 class DiameterAdmin(ImportExportModelAdmin):
     list_display = ('id', 'diameter')
 
+    ordering = ('id',)
+    list_display_links = ['id', 'diameter']
     search_fields = ('diameter',)
     list_filter = ('diameter',)
 

@@ -68,12 +68,14 @@ class CartridgeAdmin(ImportExportModelAdmin):
     _bullet.admin_order_field = 'bullet'
     _bullet.short_description = "Bullet"
 
-    list_display_links = ['name']
+    list_display_links = ['id', 'name']
 
     list_display = (
-        'name', '_vendor', '_caliber', '_bullet', 'muzzle_velocity',
+        'id', 'name', '_vendor', '_caliber', '_bullet', 'muzzle_velocity',
         'temperature', 'temperature_sensitivity'
     )
+
+    ordering = ('id',)
 
     list_filter = (
         'id', 'name', 'caliber'

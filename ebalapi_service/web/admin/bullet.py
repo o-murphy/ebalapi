@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 # Register your models here.
 from import_export.admin import ImportExportModelAdmin
 
@@ -45,6 +44,8 @@ class BulletAdmin(ImportExportModelAdmin):
     list_display = (
         'id', 'name', '_vendor', 'weight', 'length', 'g1', 'g7', 'diameter', '_has_drag_functions'
     )
+
+    ordering = ('id',)
 
     list_display_links = ['id', 'name']
 

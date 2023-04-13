@@ -20,4 +20,4 @@ class Caliber(Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('ebalapi_service:caliber-detail', args=[self.id])
+        return reverse(f'admin:{self._meta.app_label}_{self._meta.model_name}_change', args=[self.id])

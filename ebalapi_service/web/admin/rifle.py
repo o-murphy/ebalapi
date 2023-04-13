@@ -1,10 +1,11 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-from .tools import create_rel_link
-
-# Register your models here.
 
 from ebalapi_service.models import Rifle
+from .tools import create_rel_link
+
+
+# Register your models here.
 
 
 class RifleInline(admin.StackedInline):
@@ -20,7 +21,6 @@ class RifleInline(admin.StackedInline):
         'id', 'name', 'barrel_length', 'rail_angle',
         'twist_direction'
     )
-
 
 
 @admin.register(Rifle)
@@ -50,6 +50,8 @@ class RifleAdmin(ImportExportModelAdmin):
     )
 
     list_display_links = ['id', 'name']
+
+    ordering = ('id',)
 
     list_filter = (
         'id', 'name', 'barrel_length', 'rail_angle',

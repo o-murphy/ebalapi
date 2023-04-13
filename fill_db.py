@@ -113,7 +113,7 @@ def create_multibc(bullet: Bullet, mbc: list[dict[float, float]]) -> None:
     new_df = DragFunction.objects.create(
         name=bullet.name,
         bullet=bullet,
-        df_type=DragFunction.DragFunctionType.G1,
+        df_type=DragFunction.DragFunctionType.G1_MULTI_BC,
         df_data=mbc,
         comment='default',
     )
@@ -174,13 +174,18 @@ def find_g1_bullet_for_g7(bullets7: list[Bullet7Tuple]):
 
 
 if __name__ == '__main__':
-    # buls = get_bullets()
-    # vens = get_vendors_by_bullet(buls)
-    # add_vendors_to_db(vens)
-    # diams = get_diameters_by_bullet(buls)
-    # add_diameters_to_db(diams)
+    # # buls = get_bullets()
+    # # vens = get_vendors_by_bullet(buls)
+    # # add_vendors_to_db(vens)
+    # # diams = get_diameters_by_bullet(buls)
+    # # add_diameters_to_db(diams)
+    # #
+    # # add_bullets(buls)
     #
-    # add_bullets(buls)
+    # buls7 = get_bullets7()
+    # find_g1_bullet_for_g7(buls7)
 
-    buls7 = get_bullets7()
-    find_g1_bullet_for_g7(buls7)
+    dfs = DragFunction.objects.filter(df_type=DragFunction.DragFunctionType.G1)
+    for df in dfs:
+        df.df_type = DragFunction.DragFunctionType.G1_MULTI_BC
+        df.save()

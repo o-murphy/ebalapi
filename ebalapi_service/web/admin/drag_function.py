@@ -55,14 +55,16 @@ class CartridgeAdmin(ImportExportModelAdmin):
     _bullet.admin_order_field = 'bullet'
     _bullet.short_description = "Bullet"
 
-    list_display_links = ['name']
+    list_display_links = ['id', 'name']
 
     list_display = (
-        'name', '_bullet', 'df_data'
+        'id', 'name', '_bullet', 'df_type'
     )
 
+    ordering = ('id',)
+
     list_filter = (
-        'id', 'name', 'bullet',
+        'id', 'name', 'bullet', 'df_type'
     )
 
     search_fields = (

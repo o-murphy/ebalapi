@@ -28,7 +28,7 @@ class Cartridge(Model):
     bullet = ForeignKey(Bullet, related_name='cartridges', on_delete=SET_NULL, null=True, blank=False)
 
     def __str__(self):
-        return f'id: {self.id}, name: {self.name}, bullet: {self.bullet.name}, diameter: {self.caliber.name}'
+        return self.name
 
     def get_absolute_url(self):
-        return reverse('ebalapi_service:cartridge-detail', args=[self.id])
+        return reverse(f'admin:{self._meta.app_label}_{self._meta.model_name}_change', args=[self.id])
