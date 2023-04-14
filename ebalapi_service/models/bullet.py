@@ -25,7 +25,10 @@ class Bullet(Model):
     diameter = ForeignKey(Diameter, related_name='bullets', on_delete=SET_NULL, null=True, blank=False)
 
     def __str__(self):
-        return self.name
+        if self.vendor:
+            return f'{self.vendor.name} {self.name} {self.weight}'
+        else:
+            return f'{self.name} {self.weight}'
 
     def get_absolute_url(self):
         return reverse(f'admin:{self._meta.app_label}_{self._meta.model_name}_change', args=[self.id])

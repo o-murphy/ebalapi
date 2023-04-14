@@ -185,7 +185,12 @@ if __name__ == '__main__':
     # buls7 = get_bullets7()
     # find_g1_bullet_for_g7(buls7)
 
-    dfs = DragFunction.objects.filter(df_type=DragFunction.DragFunctionType.G1)
-    for df in dfs:
-        df.df_type = DragFunction.DragFunctionType.G1_MULTI_BC
-        df.save()
+    # dfs = DragFunction.objects.filter(df_type=DragFunction.DragFunctionType.G1)
+    # for df in dfs:
+    #     df.df_type = DragFunction.DragFunctionType.G1_MULTI_BC
+    #     df.save()
+
+    # bullets = Bullet.objects.all()
+    # for b in bullets:
+    #     b.name = f'{b.vendor.name} {b.name}'
+    #     b.save()

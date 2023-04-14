@@ -21,7 +21,7 @@ class Cartridge(Model):
     temperature = FloatField(null=False, blank=False, default=15)
 
     # TODO: json field height
-    temperature_sensitivity = JSONField(blank=False, null=False, default=[[15, 800], [0, 790]])
+    temperature_sensitivity = JSONField(blank=True, null=True, )
 
     caliber = ForeignKey(Caliber, related_name='cartridges', on_delete=SET_NULL, null=True, blank=False)
 
