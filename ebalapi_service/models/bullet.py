@@ -12,7 +12,7 @@ class Bullet(Model):
     __tablename__ = 'bullet'
 
     id = AutoField(primary_key=True, unique=True)
-    name = CharField(max_length=40, null=False, unique=True, blank=False)
+    name = CharField(max_length=40, null=False, unique=False, blank=False)
     vendor = ForeignKey(Vendor, related_name='bullets', on_delete=SET_NULL, null=True, blank=False)
     weight = FloatField(null=False, blank=False, default=0.168)
     length = FloatField(null=False, blank=False, default=1.2)

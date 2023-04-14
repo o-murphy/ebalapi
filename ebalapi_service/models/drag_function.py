@@ -11,7 +11,6 @@ class DragFunction(Model):
     __tablename__ = 'drag_function'
 
     id = AutoField(primary_key=True, unique=True)
-    name = CharField(max_length=40, null=False, unique=True, blank=False)
 
     bullet = ForeignKey(Bullet, related_name='drag_functions', on_delete=SET_NULL, null=True, blank=False)
 
@@ -39,7 +38,7 @@ class DragFunction(Model):
     df_data = JSONField(blank=False, null=False, default={"value": 0.175})
 
     def __str__(self):
-        return self.name
+        return self.id
 
     def get_absolute_url(self):
         return reverse(f'admin:{self._meta.app_label}_{self._meta.model_name}_change', args=[self.id])

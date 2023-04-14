@@ -31,11 +31,11 @@ class DragFunctionInline(admin.TabularInline):
     model = DragFunction
     verbose_name = "DragFunctions"
     verbose_name_plural = "DragFunctions"
-    fields = ('id', 'name',
+    fields = ('id',
               'bullet',
               'df_type',
               'df_data',)
-    readonly_fields = ('id', 'name',
+    readonly_fields = ('id',
                        'bullet',
                        'df_type',
                        'df_data',)
@@ -55,27 +55,26 @@ class CartridgeAdmin(ImportExportModelAdmin):
     _bullet.admin_order_field = 'bullet'
     _bullet.short_description = "Bullet"
 
-    list_display_links = ['id', 'name']
+    list_display_links = ['id', ]
 
     list_display = (
-        'id', 'name', '_bullet', 'df_type'
+        'id', '_bullet', 'df_type'
     )
 
     ordering = ('id',)
 
     list_filter = (
-        'id', 'name', 'bullet', 'df_type'
+        'id', 'bullet', 'df_type'
     )
 
     search_fields = (
-        'id', 'name', 'bullet',
+        'id', 'bullet',
     )
 
     fieldsets = (
         (
             'Main Data', {
                 'fields': (
-                    'name',
                     'bullet',
                     'df_type',
                     'df_data',

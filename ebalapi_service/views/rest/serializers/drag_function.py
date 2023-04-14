@@ -27,7 +27,7 @@ class DragFunctionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DragFunction
-        fields = ('id', 'url', 'name', 'df_type', 'df_type_string', 'df_data', 'bullet', 'comment',)
+        fields = ('id', 'url', 'df_type', 'df_type_string', 'df_data', 'bullet', 'comment',)
 
 
 class DragFunctionDetailSerializer(serializers.ModelSerializer):
@@ -43,4 +43,4 @@ class DragFunctionDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DragFunction
-        fields = ('id', 'url', 'name', 'df_type', 'df_type_string', 'df_data', 'bullet', 'comment',)
+        fields = ('id', 'url', 'df_type', 'df_type_string', 'df_data', 'bullet', 'comment',)

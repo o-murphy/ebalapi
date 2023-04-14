@@ -111,22 +111,21 @@ def find_multibc(bullet: BulletTuple) -> (list[dict[float, float]], bool):
 
 def create_multibc(bullet: Bullet, mbc: list[dict[float, float]]) -> None:
     new_df = DragFunction.objects.create(
-        name=bullet.name,
         bullet=bullet,
         df_type=DragFunction.DragFunctionType.G1_MULTI_BC,
         df_data=mbc,
         comment='default',
     )
-    print(new_df)
+    # print(f'{new_df}')
 
 
 def add_bullets(bullets: list[BulletTuple]) -> None:
+    print('bullets total count', len(bullets))
     for b in bullets:
-        v = b.vendor
-        vendor = Vendor.objects.filter(name=v).first()
+        vendor = Vendor.objects.filter(name=b.vendor).first()
         diameter = Diameter.objects.filter(diameter=b.diameter).first()
 
-        exists = Bullet.objects.filter(name=b.name)
+        exists = Bullet.objects.filter(name=b.name, vendor=vendor, diameter=diameter)
         if exists.count() == 0:
 
             try:
@@ -148,6 +147,8 @@ def add_bullets(bullets: list[BulletTuple]) -> None:
             except ValueError as err:
                 tb_string = traceback.format_list(traceback.extract_tb(err.__traceback__))[0]
                 print(f"{tb_string} object: BulletTuple, id: {b.id}".replace('\n object', ' object'))
+        else:
+            print(b.name)
 
 
 def find_g1_bullet_for_g7(bullets7: list[Bullet7Tuple]):
@@ -167,23 +168,26 @@ def find_g1_bullet_for_g7(bullets7: list[Bullet7Tuple]):
         bul = f"{name7}{vendor7}{float(b.diameter)}{float(b.weight)}"
 
         if bul in bullets1:
-            print('FOUND', bul, b.id, bullets1.get(bul))
+            print('FOUND', f"{bul}, {b.id}, {bullets1.get(bul)}, {b.g7}")
+            ed = Bullet.objects.filter(id=bullets1.get(bul)).first()
+            ed.g7 = b.g7
+            ed.save()
         else:
             # print('NOT', bul)
             pass
 
 
 if __name__ == '__main__':
-    # # buls = get_bullets()
+    buls = get_bullets()
     # # vens = get_vendors_by_bullet(buls)
     # # add_vendors_to_db(vens)
     # # diams = get_diameters_by_bullet(buls)
     # # add_diameters_to_db(diams)
     # #
-    # # add_bullets(buls)
+    # add_bullets(buls)
     #
-    # buls7 = get_bullets7()
-    # find_g1_bullet_for_g7(buls7)
+    buls7 = get_bullets7()
+    find_g1_bullet_for_g7(buls7)
 
     # dfs = DragFunction.objects.filter(df_type=DragFunction.DragFunctionType.G1)
     # for df in dfs:
@@ -192,5 +196,5 @@ if __name__ == '__main__':
 
     # bullets = Bullet.objects.all()
     # for b in bullets:
-    #     b.name = f'{b.vendor.name} {b.name}'
+    #     b.name = re.sub(rf'{b.vendor.name} ', '', b.name)
     #     b.save()
