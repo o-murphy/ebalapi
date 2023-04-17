@@ -66,7 +66,7 @@ class BulletAdmin(
     _has_drag_functions.boolean = True
 
     list_display = (
-        'id', 'name', '_vendor', 'weight', 'length', 'g1', 'g7', 'diameter', '_has_drag_functions'
+        'id', 'name', 'vendor', '_vendor', 'weight', 'length', 'g1', 'g7', 'diameter', '_has_drag_functions'
     )
 
     ordering = ('id',)

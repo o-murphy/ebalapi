@@ -171,6 +171,7 @@ class AbstractListItemView(generics.ListAPIView):  # GPT 3 optimized 2
 
         if isinstance(self.request.data, dict):
             query_params.update(self.request.data)
+        query_params.pop('search')
         return queryset.filter(**query_params)
 
     def get(self, request, *args, **kwargs):

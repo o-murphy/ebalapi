@@ -15,7 +15,7 @@ urlpatterns = [
     path('dragfunc/<int:id>/', views.rest.DragFunctionCRUDView.as_view(), name='dragfunction-detail'),
 
     path('diameters/', views.rest.DiameterView.as_view()),
-    # path('diameter/', views.rest.DiameterCRUDView.as_view()),
+    path('diameter/<int:id>/', views.rest.DiameterCRUDView.as_view(), name='diameter-detail'),
 
     path('calibers/', views.rest.CaliberView.as_view()),
     path('caliber/', views.rest.CaliberCRUDView.as_view()),
@@ -32,14 +32,14 @@ urlpatterns = [
     path('rifle/', views.rest.RifleCRUDView.as_view()),
     path('rifle/<int:id>/', views.rest.RifleCRUDView.as_view(), name='rifle-detail'),
 
-    path('bullets/', views.rest.BulletView.as_view()),
-    path('bullet/', views.rest.BulletCRUDView.as_view()),
-    path('bullet/<int:id>/', views.rest.BulletCRUDView.as_view(), name='bullet-detail'),
-    path('search_bullet/', views.rest.BulletSearchListView.as_view(), name='bullet-search'),
+    # path('bullets/', views.rest.BulletView.as_view(), name='bullet-search'),
+    # path('bullet/', views.rest.BulletCRUDView.as_view()),
+    path('bullets/', views.rest.BulletSearchListView.as_view(), name='bullet-search'),
+    path('bullets/<int:id>/', views.rest.BulletCRUDView.as_view(), name='bullet-detail'),
 
-    path('cartridges/', views.rest.CartridgeView.as_view()),
-    path('cartridge/', views.rest.CartridgeCRUDView.as_view()),
-    path('cartridge/<int:id>/', views.rest.CartridgeCRUDView.as_view(), name='cartridge-detail'),
-    path('search_cartridge/', views.rest.CartridgeSearchListView.as_view(), name='cartridge-search'),
+    path('cartridges/', views.rest.CartridgeView.as_view(), name='cartridge-search'),
+    # path('cartridge/', views.rest.CartridgeCRUDView.as_view()),
+    path('cartridges/<int:id>/', views.rest.CartridgeCRUDView.as_view(), name='cartridge-detail'),
+    # path('cartridges/', views.rest.CartridgeSearchListView.as_view(), name='cartridge-search'),
 
 ]
