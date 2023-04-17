@@ -14,4 +14,3 @@ class Diameter(Model):
 
     def get_absolute_url(self):
         return reverse(f'admin:{self._meta.app_label}_{self._meta.model_name}_change', args=[self.id])
-

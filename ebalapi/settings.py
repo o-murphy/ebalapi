@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'import_export',
-    'watson'
+    'watson',
+    'django_filters'
 ]
 
 MIDDLEWARE = [

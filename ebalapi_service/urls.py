@@ -35,6 +35,7 @@ urlpatterns = [
     path('bullets/', views.rest.BulletView.as_view()),
     path('bullet/', views.rest.BulletCRUDView.as_view()),
     path('bullet/<int:id>/', views.rest.BulletCRUDView.as_view(), name='bullet-detail'),
+    path('search_bullet/', views.rest.BulletSearchListView.as_view(), name='bullet-search'),
 
     path('cartridges/', views.rest.CartridgeView.as_view()),
     path('cartridge/', views.rest.CartridgeCRUDView.as_view()),
