@@ -74,7 +74,9 @@ class BulletAdmin(
     list_display_links = ['id', 'name']
 
     search_fields = (
-        'id', 'name', 'vendor__name'
+        'id',
+        'name', 'name_no_punc',
+        'vendor__name',
         # 'metadata',
     )
 

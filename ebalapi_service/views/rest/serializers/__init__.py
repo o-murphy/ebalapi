@@ -9,4 +9,3 @@ from .drag_function import DragFunctionSerializer, DragFunctionDetailSerializer
 from .rifle import RifleSerializer, RifleDetailSerializer
 from .vendor import VendorSerializer
 from .vendor_detail import VendorDetailSerializer
-from .bullet_search import BulletSearchSerializer

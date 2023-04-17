@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.forms import ModelForm
 from django_ace import AceWidget
 from import_export.admin import ImportExportModelAdmin
+from watson.admin import SearchAdmin
 
 from ebalapi_service.models import Cartridge
 from .tools import create_rel_link
@@ -41,7 +42,10 @@ class CartridgeInline(admin.TabularInline):
 
 
 @admin.register(Cartridge)
-class CartridgeAdmin(ImportExportModelAdmin):
+class CartridgeAdmin(
+    SearchAdmin,
+    ImportExportModelAdmin
+):
     form = CartridgeAdminForm
 
     def _vendor(self, obj: Cartridge):
@@ -78,12 +82,14 @@ class CartridgeAdmin(ImportExportModelAdmin):
     ordering = ('id',)
 
     list_filter = (
-        'id', 'name', 'caliber'
+        'name', 'caliber'
     )
 
     search_fields = (
         'name',
-        'caliber', 'bullet'
+        'caliber__name',
+        'bullet__name',
+        'vendor__name',
     )
 
     fieldsets = (

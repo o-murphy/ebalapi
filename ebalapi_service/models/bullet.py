@@ -26,6 +26,10 @@ class Bullet(Model):
 
     metadata = JSONField(blank=True, null=True, default={})
 
+    # for full text search
+    name_no_punc = CharField(max_length=40, null=True, blank=True)
+    comment_no_punc = CharField(max_length=280, null=True, blank=True)
+
     def __str__(self):
         if self.vendor:
             return f'{self.vendor.name} {self.name} {self.weight}'

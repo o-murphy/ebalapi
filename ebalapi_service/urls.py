@@ -40,5 +40,6 @@ urlpatterns = [
     path('cartridges/', views.rest.CartridgeView.as_view()),
     path('cartridge/', views.rest.CartridgeCRUDView.as_view()),
     path('cartridge/<int:id>/', views.rest.CartridgeCRUDView.as_view(), name='cartridge-detail'),
+    path('search_cartridge/', views.rest.CartridgeSearchListView.as_view(), name='cartridge-search'),
 
 ]
