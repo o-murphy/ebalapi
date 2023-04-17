@@ -10,3 +10,6 @@ class EbalapiServiceConfig(AppConfig):
         from ebalapi_service.web import signals
         assert signals
         assert admin
+
+        import ebalapi_service.search_indexes
+        assert ebalapi_service.search_indexes

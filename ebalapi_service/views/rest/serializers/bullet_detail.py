@@ -13,6 +13,7 @@ class BulletDetailSerializer(serializers.ModelSerializer):
     diameter = DiameterSerializer(many=False, read_only=True)
     cartridges = CartridgeSerializer(many=True, read_only=True)
     drag_functions = DragFunctionSerializer(many=True, read_only=True)
+    metadata = serializers.JSONField(read_only=True)
 
     class Meta:
         model = Bullet
@@ -29,4 +30,5 @@ class BulletDetailSerializer(serializers.ModelSerializer):
             'comment',
             'drag_functions',
             'cartridges',
+            'metadata'
         )

@@ -1,6 +1,9 @@
 from django.contrib import admin
 # Register your models here.
+from django.forms import ModelForm
+from django_ace import AceWidget
 from import_export.admin import ImportExportModelAdmin
+from watson.admin import SearchAdmin
 
 from ebalapi_service.models import Bullet
 from .cartridge import CartridgeInline
@@ -19,8 +22,29 @@ class BulletInline(admin.TabularInline):
     readonly_fields = ('id', 'name', 'vendor', 'weight', 'length', 'g1', 'g7', 'diameter')
 
 
+class BulletAdminForm(ModelForm):
+    class Meta:
+        model = Bullet
+        fields = '__all__'
+
+        # widgets = {
+        #     'temperature_sensitivity': Textarea(attrs={'cols': 40, 'rows': 1}),
+        # }
+        widgets = {
+            'metadata': AceWidget(
+                mode='json',
+                width="400px",
+                height="100px",
+                theme="twilight"
+            ),
+        }
+
+
 @admin.register(Bullet)
-class BulletAdmin(ImportExportModelAdmin):
+class BulletAdmin(
+    SearchAdmin,
+    ImportExportModelAdmin
+):
 
     def _vendor(self, obj: Bullet):
         if obj.vendor:
@@ -50,7 +74,8 @@ class BulletAdmin(ImportExportModelAdmin):
     list_display_links = ['id', 'name']
 
     search_fields = (
-        'id', 'name'
+        'id', 'name', 'vendor__name'
+        # 'metadata',
     )
 
     list_filter = ('id', 'name', 'vendor', 'weight', 'diameter')
@@ -59,9 +84,11 @@ class BulletAdmin(ImportExportModelAdmin):
     fieldsets = (
         (
             'Main Data', {
-                'fields': ('name', 'vendor', 'weight', 'length', 'g1', 'g7', 'diameter', 'comment',)
+                'fields': ('name', 'vendor', 'weight', 'length', 'g1', 'g7', 'diameter', 'comment', 'metadata')
             }
         ),
     )
+
+    form = BulletAdminForm
 
     inlines = [CartridgeInline, DragFunctionInline]

@@ -26,4 +26,5 @@ class BulletSerializer(serializers.ModelSerializer):
             'comment',
             'drag_functions',
             'cartridges',
+            # 'metadata'
         )

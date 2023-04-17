@@ -24,6 +24,8 @@ class Bullet(Model):
 
     diameter = ForeignKey(Diameter, related_name='bullets', on_delete=SET_NULL, null=True, blank=False)
 
+    metadata = JSONField(blank=True, null=True, default={})
+
     def __str__(self):
         if self.vendor:
             return f'{self.vendor.name} {self.name} {self.weight}'

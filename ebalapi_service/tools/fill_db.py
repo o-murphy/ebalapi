@@ -176,9 +176,28 @@ def find_g1_bullet_for_g7(bullets7: list[Bullet7Tuple]):
             # print('NOT', bul)
             pass
 
+def set_bullets():
+
+    bullets = Bullet.objects.all()
+
+    for b in bullets:
+
+        matches = Bullet.objects.filter(
+            diameter=b.diameter.diameter,
+            weight=b.weight,
+            # length=b.length,
+            g1=b.g1
+        )
+
+        if matches.count() > 1:
+            print(matches.count())
+            for m in matches:
+                print(m.__dict__)
+            break
+
 
 if __name__ == '__main__':
-    buls = get_bullets()
+    # buls = get_bullets()
     # # vens = get_vendors_by_bullet(buls)
     # # add_vendors_to_db(vens)
     # # diams = get_diameters_by_bullet(buls)
@@ -186,15 +205,17 @@ if __name__ == '__main__':
     # #
     # add_bullets(buls)
     #
-    buls7 = get_bullets7()
-    find_g1_bullet_for_g7(buls7)
+    # buls7 = get_bullets7()
+    # find_g1_bullet_for_g7(buls7)
 
     # dfs = DragFunction.objects.filter(df_type=DragFunction.DragFunctionType.G1)
     # for df in dfs:
     #     df.df_type = DragFunction.DragFunctionType.G1_MULTI_BC
     #     df.save()
 
-    # bullets = Bullet.objects.all()
-    # for b in bullets:
-    #     b.name = re.sub(rf'{b.vendor.name} ', '', b.name)
-    #     b.save()
+    bullets = Bullet.objects.all()
+    for b in bullets:
+        b.metadata = {'source': 'strelok pro'}
+        b.save()
+
+    # set_bullets()
