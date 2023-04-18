@@ -1,4 +1,5 @@
 from watson import search as watson
+from watson.models import RelatedField
 import re
 from ebalapi_service.models import Bullet
 

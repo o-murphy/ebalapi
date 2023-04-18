@@ -48,6 +48,7 @@ class BulletAdmin(
 ):
 
     def _vendor(self, obj: Bullet):
+
         if obj.vendor:
             url = obj.vendor.get_absolute_url()
             return create_rel_link(url, obj.vendor.name)
@@ -78,6 +79,7 @@ class BulletAdmin(
         'id',
         'name',
         'vendor__name',
+        'diameter__diameter'
         # 'metadata',
     )
 
