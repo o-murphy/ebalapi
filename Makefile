@@ -28,3 +28,9 @@ makemigrations:
 migrate:
 	@python manage.py migrate
 
+
+.PHONY: buildwatson
+buildwatson:
+	@python manage.py buildwatson
+
+

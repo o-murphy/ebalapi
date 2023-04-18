@@ -18,20 +18,20 @@ class BulletSearchAdapter(watson.SearchAdapter):
 
     def get_indexed_fields(self):
         fields = (
-            ('name', 'name_no_punc'),
+            'name',
             'vendor__name',
-            ('comment', 'comment_no_punc'),
+            'comment',
             # 'metadata',
         )
         return fields
 
-    def prepare(self, obj):
-        prepared_data = super().prepare(obj)
-        # Remove punctuation from indexed fields
-        for field in ['name', 'comment']:
-            text = prepared_data[field]
-            no_punc_text = re.sub(r'[^\w\s]', '', text)
-            prepared_data[f"{field}_no_punc"] = no_punc_text
-        return prepared_data
+    # def prepare(self, obj):
+    #     prepared_data = super().prepare(obj)
+    #     # Remove punctuation from indexed fields
+    #     for field in ['name', 'comment']:
+    #         text = prepared_data[field]
+    #         no_punc_text = re.sub(r'[^\w\s]', '', text)
+    #         prepared_data[f"{field}_no_punc"] = no_punc_text
+    #     return prepared_data
 
 watson.register(Bullet, BulletSearchAdapter)

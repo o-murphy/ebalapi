@@ -1,10 +1,11 @@
-
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import *
 from django.urls import reverse
 
 from .diameter import Diameter
 
 # Create your models here.
+from .search_tag import SearchTag
 
 
 class Caliber(Model):
@@ -15,6 +16,8 @@ class Caliber(Model):
     comment = CharField(max_length=280, blank=True, null=True)
 
     diameter = ForeignKey(Diameter, related_name='calibers', on_delete=SET_NULL, null=True, blank=False)
+    tags = GenericRelation(SearchTag)
+
 
     def __str__(self):
         return self.name

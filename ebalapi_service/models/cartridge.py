@@ -1,7 +1,9 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import *
 from django.urls import reverse
 
 from ebalapi_service.models import Bullet, Caliber
+from .search_tag import SearchTag
 from .vendor import Vendor
 
 
@@ -15,7 +17,6 @@ class Cartridge(Model):
     name = CharField(max_length=40, null=False, unique=True, blank=False)
     vendor = ForeignKey(Vendor, related_name='cartridges', on_delete=SET_NULL, null=True, blank=False)
 
-    comment = CharField(max_length=280, blank=True, null=True)
 
     muzzle_velocity = FloatField(null=False, blank=False, default=800)
     temperature = FloatField(null=False, blank=False, default=15)
@@ -26,6 +27,9 @@ class Cartridge(Model):
     caliber = ForeignKey(Caliber, related_name='cartridges', on_delete=SET_NULL, null=True, blank=False)
 
     bullet = ForeignKey(Bullet, related_name='cartridges', on_delete=SET_NULL, null=True, blank=False)
+
+    comment = CharField(max_length=280, blank=True, null=True)
+    tags = GenericRelation(SearchTag)
 
     def __str__(self):
         return self.name

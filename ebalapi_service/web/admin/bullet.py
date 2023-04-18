@@ -8,6 +8,7 @@ from watson.admin import SearchAdmin
 from ebalapi_service.models import Bullet
 from .cartridge import CartridgeInline
 from .drag_function import DragFunctionInline
+from .search_tag import SearchTagInline
 from .tools import create_rel_link
 
 
@@ -75,7 +76,7 @@ class BulletAdmin(
 
     search_fields = (
         'id',
-        'name', 'name_no_punc',
+        'name',
         'vendor__name',
         # 'metadata',
     )
@@ -93,4 +94,4 @@ class BulletAdmin(
 
     form = BulletAdminForm
 
-    inlines = [CartridgeInline, DragFunctionInline]
+    inlines = [CartridgeInline, DragFunctionInline, SearchTagInline]

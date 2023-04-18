@@ -1,7 +1,9 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import *
 from django.urls import reverse
 
 from .caliber import Caliber
+from .search_tag import SearchTag
 from .vendor import Vendor
 
 
@@ -20,6 +22,7 @@ class Rifle(Model):
     vendor = ForeignKey(Vendor, related_name='rifles', on_delete=SET_NULL, null=True, blank=False)
 
     comment = TextField(blank=True, null=True)
+    tags = GenericRelation(SearchTag)
 
     barrel_length = FloatField(null=False, blank=False, default=61)
     rail_angle = FloatField(null=True, blank=True, default=None)

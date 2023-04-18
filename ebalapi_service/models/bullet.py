@@ -1,8 +1,10 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import *
 from django.urls import reverse
 
 from .vendor import Vendor
 from .diameter import Diameter
+from .search_tag import SearchTag
 
 
 # Create your models here.
@@ -24,11 +26,13 @@ class Bullet(Model):
 
     diameter = ForeignKey(Diameter, related_name='bullets', on_delete=SET_NULL, null=True, blank=False)
 
-    metadata = JSONField(blank=True, null=True, default={})
+    metadata = JSONField(blank=True, null=True, default=dict())
+
+    tags = GenericRelation(SearchTag)
 
     # for full text search
-    name_no_punc = CharField(max_length=40, null=True, blank=True)
-    comment_no_punc = CharField(max_length=280, null=True, blank=True)
+    # name_no_punc = CharField(max_length=40, null=True, blank=True)
+    # comment_no_punc = CharField(max_length=280, null=True, blank=True)
 
     def __str__(self):
         if self.vendor:

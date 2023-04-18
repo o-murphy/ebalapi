@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import *
 from django.urls import reverse
 
@@ -5,6 +6,7 @@ from .bullet import Bullet
 
 
 # Create your models here.
+from .search_tag import SearchTag
 
 
 class DragFunction(Model):
@@ -13,8 +15,6 @@ class DragFunction(Model):
     id = AutoField(primary_key=True, unique=True)
 
     bullet = ForeignKey(Bullet, related_name='drag_functions', on_delete=SET_NULL, null=True, blank=False)
-
-    comment = CharField(max_length=280, blank=True, null=True)
 
     class DragFunctionType(IntegerChoices):
         G1 = 1, 'G1'
@@ -35,7 +35,10 @@ class DragFunction(Model):
                            blank=False,
                            null=False)
 
-    df_data = JSONField(blank=False, null=False, default={"value": 0.175})
+    df_data = JSONField(blank=False, null=False, default=dict())
+
+    comment = CharField(max_length=280, blank=True, null=True)
+    tags = GenericRelation(SearchTag)
 
     def __str__(self):
         return self.id
