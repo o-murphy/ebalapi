@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from ebalapi_service.models import Caliber
 from ebalapi_service.views.rest.diameter import DiameterSerializer
-from ..custom_fields import HyperlinkedBackRefField
+from .custom_fields import HyperlinkedBackRefField
 
 
 class CaliberSerializer(serializers.ModelSerializer):

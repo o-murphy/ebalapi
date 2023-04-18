@@ -10,9 +10,9 @@ urlpatterns = [
     path('token/', views.rest.AuthView.as_view()),
     path('auth/', views.rest.CustomAuthToken.as_view()),
 
-    path('dragfuncs/', views.rest.DragFunctionView.as_view()),
-    path('dragfunc/', views.rest.DragFunctionCRUDView.as_view()),
-    path('dragfunc/<int:id>/', views.rest.DragFunctionCRUDView.as_view(), name='dragfunction-detail'),
+    path('dragfuncs/', views.rest.DragFunctionView.as_view(), name='drag_function-search'),
+    # path('dragfunc/', views.rest.DragFunctionCRUDView.as_view()),
+    path('dragfuncs/<int:id>/', views.rest.DragFunctionCRUDView.as_view(), name='drag_function-detail'),
 
     path('diameters/', views.rest.DiameterView.as_view()),
     path('diameters/<int:id>/', views.rest.DiameterCRUDView.as_view(), name='diameter-detail'),
@@ -20,9 +20,9 @@ urlpatterns = [
     path('calibers/', views.rest.CaliberView.as_view(), name='caliber-search'),
     path('calibers/<int:id>/', views.rest.CaliberCRUDView.as_view(), name='caliber-detail'),
 
-    path('vendor/<int:id>/', views.rest.VendorCRUDView.as_view(), name='vendor-detail'),
-    path('vendors/', views.rest.VendorView.as_view()),
-    path('vendor/', views.rest.VendorCRUDView.as_view()),
+    path('vendors/<int:id>/', views.rest.VendorCRUDView.as_view(), name='vendor-detail'),
+    path('vendors/', views.rest.VendorView.as_view(), name='vendor-search'),
+    # path('vendor/', views.rest.VendorCRUDView.as_view()),
 
     # path('vendor/<int:id>/', views.rest.VendorDetailView.as_view(), name='vendor-detail'),
 
