@@ -8,7 +8,6 @@ from . import cartridge
 from . import rifle
 from . import vendor
 from . import drag_function
-from . import search_tag
 
 
 # title settings

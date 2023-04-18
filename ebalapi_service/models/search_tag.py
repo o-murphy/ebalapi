@@ -22,7 +22,8 @@ class SearchTag(Model):
     content_objects = ContentObjectManager()
 
     def __str__(self):
-        return f'{self.text or "Untitled"} ({self.content_type}:{self.object_id})'
+        # return f'{self.text or "Untitled"} ({self.content_type}:{self.object_id})'
+        return self.text
 
     def get_absolute_url(self):
         return reverse(f'admin:{self._meta.app_label}_{self._meta.model_name}_change', args=[self.id])

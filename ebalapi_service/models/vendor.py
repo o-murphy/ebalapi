@@ -1,11 +1,7 @@
-from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import *
-
 
 # Create your models here.
 from django.urls import reverse
-
-from .search_tag import SearchTag
 
 
 class Vendor(Model):
@@ -15,7 +11,6 @@ class Vendor(Model):
     name = CharField(max_length=40, null=False, unique=True, blank=False)
 
     comment = CharField(max_length=280, blank=True, null=True)
-    tags = GenericRelation(SearchTag)
 
     def __str__(self):
         return self.name
