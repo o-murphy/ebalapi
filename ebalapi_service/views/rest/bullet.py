@@ -22,29 +22,37 @@ class BulletFilter(FilterSet):
 
 
 class BulletDetailView(generics.RetrieveAPIView):
+
+    authentication_classes = [
+        # SessionAuthentication,
+        BasicAuthentication,
+        TokenAuthentication,
+        GetTokenAuthentication
+    ]
+    permission_classes = [IsAuthenticated]
+
     serializer_class = BulletDetailSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     queryset = Bullet.objects.all()
     # lookup_field = 'pk'
 
-    @method_decorator(authentication_classes([BasicAuthentication, TokenAuthentication, GetTokenAuthentication]))
-    @method_decorator(permission_classes([IsAuthenticated]))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
 
 class BulletSearchView(generics.ListAPIView):
+
+    authentication_classes = [
+        # SessionAuthentication,
+        BasicAuthentication,
+        TokenAuthentication,
+        GetTokenAuthentication
+    ]
+    permission_classes = [IsAuthenticated]
+
     serializer_class = BulletSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_class = BulletFilter
     filterset_fields = ['id', 'name', 'vendor', 'diameter', 'diameter__diameter', 'weight', 'length']
     search_fields = ['name', 'comment', 'vendor__name']
     queryset = Bullet.objects.all()
-
-    @method_decorator(authentication_classes([BasicAuthentication, TokenAuthentication, GetTokenAuthentication]))
-    @method_decorator(permission_classes([IsAuthenticated]))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
