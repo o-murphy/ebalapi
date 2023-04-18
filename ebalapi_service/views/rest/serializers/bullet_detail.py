@@ -9,7 +9,10 @@ from ebalapi_service.views.rest.serializers.catridge import CartridgeSerializer
 
 class BulletDetailSerializer(serializers.ModelSerializer):
 
-    url = serializers.HyperlinkedIdentityField(view_name='ebalapi_service:bullet-detail', lookup_field='id')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:bullet-detail',
+        # lookup_field='pk'
+    )
 
     diameter = DiameterSerializer(many=False, read_only=True)
     cartridges = CartridgeSerializer(many=True, read_only=True)
@@ -20,14 +23,14 @@ class BulletDetailSerializer(serializers.ModelSerializer):
         view_name='ebalapi_service:drag_function-search',
         read_only=True,
         lookup_field='bullet',
-        source='id',
+        # source='pk',
     )
 
     cartridges_url = HyperlinkedBackRefField(
         view_name='ebalapi_service:cartridge-search',
         read_only=True,
         lookup_field='bullet',
-        source='id',
+        # source='pk',
     )
 
     class Meta:

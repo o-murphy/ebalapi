@@ -6,7 +6,10 @@ from ebalapi_service.views.rest.serializers.vendor import VendorSerializer
 
 
 class RifleSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='ebalapi_service:rifle-detail', lookup_field='id')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:rifle-detail',
+        # lookup_field='pk'
+    )
 
     twist_direction_type = serializers.SerializerMethodField(read_only=True)
 
@@ -21,7 +24,10 @@ class RifleSerializer(serializers.ModelSerializer):
 
 
 class RifleDetailSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='ebalapi_service:rifle-detail', lookup_field='id')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:rifle-detail',
+        # lookup_field='pk'
+    )
 
     twist_direction_type = serializers.SerializerMethodField(read_only=True)
 

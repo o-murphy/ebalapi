@@ -1,13 +1,16 @@
 from rest_framework import serializers
+
 from ebalapi_service.models import Vendor
-from .rifle import RifleSerializer
 from .bullet import BulletSerializer
 from .catridge import CartridgeSerializer
+from .rifle import RifleSerializer
 
 
 class VendorDetailSerializer(serializers.HyperlinkedModelSerializer):
-
-    url = serializers.HyperlinkedIdentityField(view_name='ebalapi_service:vendor-detail', lookup_field='id')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:vendor-detail',
+        # lookup_field='pk'
+    )
 
     cartridges = CartridgeSerializer(many=True, read_only=True)
     bullets = BulletSerializer(many=True, read_only=True)

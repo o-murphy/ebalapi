@@ -6,7 +6,10 @@ from .custom_fields import HyperlinkedBackRefField
 
 
 class CaliberSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='ebalapi_service:caliber-detail', lookup_field='id')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:caliber-detail',
+        # lookup_field='pk'
+    )
 
     diameter = DiameterSerializer(many=False, read_only=True)
 
@@ -14,14 +17,14 @@ class CaliberSerializer(serializers.ModelSerializer):
         view_name='ebalapi_service:cartridge-search',
         read_only=True,
         lookup_field='caliber',
-        source='id',
+        # source='pk',
     )
 
     rifles_url = HyperlinkedBackRefField(
         view_name='ebalapi_service:rifle-search',
         read_only=True,
         lookup_field='caliber',
-        source='id',
+        # source='pk',
     )
 
     class Meta:

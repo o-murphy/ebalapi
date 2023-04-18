@@ -24,4 +24,4 @@ class CaliberDetailView(RetrieveAPIView):
 
     queryset = Caliber.objects.all()
     serializer_class = CaliberDetailSerializer
-    lookup_field = 'id'
+    # lookup_field = 'id'

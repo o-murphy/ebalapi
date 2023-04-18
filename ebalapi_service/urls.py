@@ -1,43 +1,36 @@
 from django.urls import path
 
-from . import views
+from .views import rest
 
 
 app_name = 'ebalapi_service'
 
 urlpatterns = [
 
-    path('token/', views.rest.AuthView.as_view()),
-    path('auth/', views.rest.CustomAuthToken.as_view()),
+    path('token/', rest.AuthView.as_view()),
+    path('auth/', rest.CustomAuthToken.as_view()),
 
-    path('dragfuncs/', views.rest.DragFunctionView.as_view(), name='drag_function-search'),
-    # path('dragfunc/', views.rest.DragFunctionCRUDView.as_view()),
-    path('dragfuncs/<int:id>/', views.rest.DragFunctionCRUDView.as_view(), name='drag_function-detail'),
+    path('dragfuncs/', rest.DragFunctionView.as_view(), name='drag_function-search'),
+    path('dragfuncs/<int:pk>/', rest.DragFunctionCRUDView.as_view(), name='drag_function-detail'),
 
-    path('diameters/', views.rest.DiameterView.as_view()),
-    path('diameters/<int:id>/', views.rest.DiameterCRUDView.as_view(), name='diameter-detail'),
+    path('diameters/', rest.DiameterView.as_view()),
+    path('diameters/<int:pk>/', rest.DiameterCRUDView.as_view(), name='diameter-detail'),
 
-    path('calibers/', views.rest.CaliberView.as_view(), name='caliber-search'),
-    path('calibers/<int:id>/', views.rest.CaliberCRUDView.as_view(), name='caliber-detail'),
+    path('calibers/', rest.CaliberView.as_view(), name='caliber-search'),
+    path('calibers/<int:pk>/', rest.CaliberCRUDView.as_view(), name='caliber-detail'),
 
-    path('vendors/<int:id>/', views.rest.VendorCRUDView.as_view(), name='vendor-detail'),
-    path('vendors/', views.rest.VendorView.as_view(), name='vendor-search'),
-    # path('vendor/', views.rest.VendorCRUDView.as_view()),
+    path('vendors/', rest.VendorView.as_view(), name='vendor-search'),
+    path('vendors/<int:pk>/', rest.VendorCRUDView.as_view(), name='vendor-detail'),
 
-    # path('vendor/<int:id>/', views.rest.VendorDetailView.as_view(), name='vendor-detail'),
+    path('rifles/', rest.RifleView.as_view(), name='rifle-search'),
+    path('rifles/<int:pk>/', rest.RifleCRUDView.as_view(), name='rifle-detail'),
 
-    path('rifles/', views.rest.RifleView.as_view(), name='rifle-search'),
-    # path('rifle/', views.rest.RifleCRUDView.as_view()),
-    path('rifles/<int:id>/', views.rest.RifleCRUDView.as_view(), name='rifle-detail'),
+    path('bullets/', rest.BulletSearchView.as_view(), name='bullet-search'),
+    path('bullets/<int:pk>/', rest.BulletDetailView.as_view(), name='bullet-detail'),
 
-    # path('bullets/', views.rest.BulletView.as_view(), name='bullet-search'),
-    # path('bullet/', views.rest.BulletCRUDView.as_view()),
-    path('bullets/', views.rest.BulletSearchListView.as_view(), name='bullet-search'),
-    path('bullets/<int:id>/', views.rest.BulletCRUDView.as_view(), name='bullet-detail'),
-
-    path('cartridges/', views.rest.CartridgeView.as_view(), name='cartridge-search'),
-    # path('cartridge/', views.rest.CartridgeCRUDView.as_view()),
-    path('cartridges/<int:id>/', views.rest.CartridgeCRUDView.as_view(), name='cartridge-detail'),
-    # path('cartridges/', views.rest.CartridgeSearchListView.as_view(), name='cartridge-search'),
+    path('cartridges/', rest.CartridgeView.as_view(), name='cartridge-search'),
+    # path('cartridge/', rest.CartridgeCRUDView.as_view()),
+    path('cartridges/<int:pk>/', rest.CartridgeCRUDView.as_view(), name='cartridge-detail'),
+    # path('cartridges/', rest.CartridgeSearchListView.as_view(), name='cartridge-search'),
 
 ]

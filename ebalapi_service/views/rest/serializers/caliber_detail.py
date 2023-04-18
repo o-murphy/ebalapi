@@ -8,7 +8,10 @@ from ebalapi_service.views.rest.serializers.catridge import CartridgeSerializer
 
 
 class CaliberDetailSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='ebalapi_service:caliber-detail', lookup_field='id')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:caliber-detail',
+        # lookup_field='pk'
+    )
 
     rifles = RifleSerializer(many=True, read_only=True)
     diameter = DiameterSerializer(many=False, read_only=True)

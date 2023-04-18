@@ -5,7 +5,10 @@ from .custom_fields import HyperlinkedBackRefField
 
 
 class BulletSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='ebalapi_service:bullet-detail', lookup_field='id')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:bullet-detail',
+        # lookup_field='id'
+    )
 
     vendor_name = serializers.SerializerMethodField(read_only=True)
     diameter_value = serializers.SerializerMethodField(read_only=True)
@@ -19,7 +22,7 @@ class BulletSerializer(serializers.ModelSerializer):
     diameter_url = serializers.HyperlinkedRelatedField(
         view_name='ebalapi_service:diameter-detail',
         read_only=True,
-        lookup_field='id',
+        # lookup_field='pk',
         source='diameter',
     )
 
@@ -27,19 +30,15 @@ class BulletSerializer(serializers.ModelSerializer):
         view_name='ebalapi_service:drag_function-search',
         read_only=True,
         lookup_field='bullet',
-        source='id',
+        source='pk',
     )
 
     cartridges_url = HyperlinkedBackRefField(
         view_name='ebalapi_service:cartridge-search',
         read_only=True,
         lookup_field='bullet',
-        source='id',
+        source='pk',
     )
-
-    # diameter = DiameterSerializer(many=False, read_only=True)
-
-    # cartridges = CartridgeLinkSerializer(many=True, read_only=True)
 
     class Meta:
         model = Bullet

@@ -18,7 +18,10 @@ from ebalapi_service.views.rest.serializers import BulletSerializer
 
 
 class DragFunctionSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='ebalapi_service:rifle-detail', lookup_field='id')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:rifle-detail',
+        # lookup_field='pk'
+    )
 
     df_type_string = serializers.SerializerMethodField(read_only=True)
 
@@ -34,7 +37,10 @@ class DragFunctionDetailSerializer(serializers.ModelSerializer):
     # TODO:
     bullet = BulletSerializer(many=False, read_only=True)
 
-    url = serializers.HyperlinkedIdentityField(view_name='ebalapi_service:rifle-detail', lookup_field='id')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:rifle-detail',
+        # lookup_field='pk'
+    )
 
     df_type_string = serializers.SerializerMethodField(read_only=True)
 
