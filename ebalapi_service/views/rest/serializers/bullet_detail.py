@@ -23,14 +23,14 @@ class BulletDetailSerializer(serializers.ModelSerializer):
         view_name='ebalapi_service:drag_function-search',
         read_only=True,
         lookup_field='bullet',
-        # source='pk',
+        source='pk',
     )
 
     cartridges_url = HyperlinkedBackRefField(
         view_name='ebalapi_service:cartridge-search',
         read_only=True,
         lookup_field='bullet',
-        # source='pk',
+        source='pk',
     )
 
     class Meta:

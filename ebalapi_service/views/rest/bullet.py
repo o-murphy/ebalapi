@@ -20,14 +20,14 @@ class BulletDetailView(generics.RetrieveAPIView):
     serializer_class = BulletDetailSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     queryset = Bullet.objects.all()
-    # lookup_field = 'id'
+    # lookup_field = 'pk'
 
 
 class BulletSearchView(generics.ListAPIView):
     serializer_class = BulletSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_class = BulletFilter
-    filterset_fields = ['id', 'vendor', 'diameter', 'diameter__diameter', 'weight', 'length']
+    filterset_fields = ['id', 'name', 'vendor', 'diameter', 'diameter__diameter', 'weight', 'length']
     search_fields = ['name', 'comment', 'vendor__name']
     queryset = Bullet.objects.all()
 

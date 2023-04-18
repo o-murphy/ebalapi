@@ -1,6 +1,6 @@
 from .bullet import BulletSearchView, BulletDetailView
-from .caliber import CaliberCRUDView, CaliberView, CaliberDetailView
-from .catridge import CartridgeView, CartridgeCRUDView
+from .caliber import CaliberSearchView, CaliberDetailView
+from .catridge import CartridgeSearchView, CartridgeDetailView
 from .diameter import DiameterView, DiameterCRUDView
 from .drag_function import DragFunctionView, DragFunctionCRUDView
 from .rifle import RifleCRUDView, RifleView

@@ -17,14 +17,14 @@ class CaliberSerializer(serializers.ModelSerializer):
         view_name='ebalapi_service:cartridge-search',
         read_only=True,
         lookup_field='caliber',
-        # source='pk',
+        source='pk',
     )
 
     rifles_url = HyperlinkedBackRefField(
         view_name='ebalapi_service:rifle-search',
         read_only=True,
         lookup_field='caliber',
-        # source='pk',
+        source='pk',
     )
 
     class Meta:

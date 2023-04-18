@@ -22,6 +22,7 @@ class CartridgeSearchAdapter(watson.SearchAdapter):
             'vendor__name',
             'bullet__name',
             'caliber__name',
+            'caliber__short_name',
             'comment',
             # 'metadata',
         )
