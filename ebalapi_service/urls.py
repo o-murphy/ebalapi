@@ -13,8 +13,8 @@ urlpatterns = [
     path('dragfuncs/', rest.DragFunctionView.as_view(), name='drag_function-search'),
     path('dragfuncs/<int:pk>/', rest.DragFunctionCRUDView.as_view(), name='drag_function-detail'),
 
-    path('diameters/', rest.DiameterView.as_view()),
-    path('diameters/<int:pk>/', rest.DiameterCRUDView.as_view(), name='diameter-detail'),
+    path('diameters/', rest.DiameterSearchView.as_view()),
+    path('diameters/<int:pk>/', rest.DiameterDetailView.as_view(), name='diameter-detail'),
 
     path('calibers/', rest.CaliberSearchView.as_view(), name='caliber-search'),
     path('calibers/<int:pk>/', rest.CaliberDetailView.as_view(), name='caliber-detail'),

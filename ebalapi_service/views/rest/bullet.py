@@ -1,11 +1,16 @@
+from django.utils.decorators import method_decorator
 from django_filters import FilterSet, NumberFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework import generics
+from rest_framework.authentication import BasicAuthentication, TokenAuthentication
+from rest_framework.decorators import permission_classes, authentication_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from ebalapi_service.models import Bullet
 from .serializers import BulletSerializer, BulletDetailSerializer
+from .token_auth import GetTokenAuthentication
 
 
 class BulletFilter(FilterSet):
@@ -22,6 +27,11 @@ class BulletDetailView(generics.RetrieveAPIView):
     queryset = Bullet.objects.all()
     # lookup_field = 'pk'
 
+    @method_decorator(authentication_classes([BasicAuthentication, TokenAuthentication, GetTokenAuthentication]))
+    @method_decorator(permission_classes([IsAuthenticated]))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
 
 class BulletSearchView(generics.ListAPIView):
     serializer_class = BulletSerializer
@@ -30,6 +40,11 @@ class BulletSearchView(generics.ListAPIView):
     filterset_fields = ['id', 'name', 'vendor', 'diameter', 'diameter__diameter', 'weight', 'length']
     search_fields = ['name', 'comment', 'vendor__name']
     queryset = Bullet.objects.all()
+
+    @method_decorator(authentication_classes([BasicAuthentication, TokenAuthentication, GetTokenAuthentication]))
+    @method_decorator(permission_classes([IsAuthenticated]))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
