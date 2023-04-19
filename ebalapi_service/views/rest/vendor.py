@@ -1,16 +1,21 @@
-from rest_framework.generics import RetrieveAPIView
-from rest_framework.response import Response
+from rest_framework import generics
 
 from ebalapi_service.models import Vendor
-from .abstract_view import AbstractListItemView, AbstractCRUDView
+from .abstract_views import AbstractDetailView, AbstractListView
 from .serializers import VendorSerializer, VendorDetailSerializer
 
 
-class VendorCRUDView(AbstractCRUDView):
+class VendorDetailView(AbstractDetailView, generics.RetrieveAPIView):
+    name = 'Vendor Detail'
+
     serializer_class = VendorDetailSerializer
     queryset = Vendor.objects.all()
+    # lookup_field = 'pk'
 
 
-class VendorView(AbstractListItemView):
+class VendorSearchView(AbstractListView, generics.ListAPIView):
+    name = 'Vendor Search'
+
     serializer_class = VendorSerializer
+    filterset_fields = ['id', 'name']
     queryset = Vendor.objects.all()

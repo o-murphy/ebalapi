@@ -33,6 +33,20 @@ class BulletDetailSerializer(serializers.ModelSerializer):
         source='pk',
     )
 
+    diameter_url = serializers.HyperlinkedRelatedField(
+        view_name='ebalapi_service:diameter-detail',
+        read_only=True,
+        # lookup_field='pk',
+        source='diameter',
+    )
+
+    vendor_url = serializers.HyperlinkedRelatedField(
+        view_name='ebalapi_service:vendor-detail',
+        read_only=True,
+        # lookup_field='pk',
+        source='diameter',
+    )
+
     class Meta:
         model = Bullet
         fields = (
@@ -50,5 +64,9 @@ class BulletDetailSerializer(serializers.ModelSerializer):
             'cartridges',
             'drag_functions_url',
             'cartridges_url',
-            'metadata'
+            'metadata',
+            'vendor_url',
+            'diameter_url',
+            'drag_functions_url',
+            'cartridges_url',
         )

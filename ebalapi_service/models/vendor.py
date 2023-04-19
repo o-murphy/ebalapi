@@ -5,7 +5,7 @@ from django.urls import reverse
 
 
 class Vendor(Model):
-    __tablename__ = 'bullet_ven'
+    __tablename__ = 'vendor'
 
     id = AutoField(primary_key=True, unique=True)
     name = CharField(max_length=40, null=False, unique=True, blank=False)

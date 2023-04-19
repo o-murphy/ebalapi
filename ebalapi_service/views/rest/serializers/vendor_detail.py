@@ -18,4 +18,4 @@ class VendorDetailSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Vendor
-        fields = ('id', 'url', 'name', 'comment', 'cartridges', 'bullets', 'rifles',)
+        fields = ('id', 'url', 'name', 'comment', 'cartridges', 'bullets_url', 'rifles',)
