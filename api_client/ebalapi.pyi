@@ -26,8 +26,8 @@ except ImportError:
 
 
 class UrlSchema(StrEnum):
-    http = 'http://'
-    https = 'https://'
+    HTTP = 'http://'
+    HTTPS = 'https://'
 
 
 class EBalAPIError(Exception):

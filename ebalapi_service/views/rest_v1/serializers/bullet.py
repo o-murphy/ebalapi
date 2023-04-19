@@ -60,7 +60,7 @@ class BulletSerializer(serializers.ModelSerializer):
             'id',
             # 'url',
             'name',
-            'vendor',
+            'vendor_id',
             'vendor_name',
             'weight',
             'length',
