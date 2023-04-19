@@ -43,7 +43,8 @@ class AbstractSearchView(abc.ABC):
             serializer = self.get_serializer(queryset, many=True)
             content = {
                 "totalItems": queryset.count(),
-                "items": serializer.data
+                "model": self._get_model()._meta.model_name,  # TODO: get models or get types
+                "items": serializer.data,
             }
             return Response(content)
 

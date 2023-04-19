@@ -60,8 +60,9 @@ class AbstractEBalAPIObject:
         self.__api_client = api_client
         for key, val in kwargs.items():
             if validators.url(str(val)):
+                act = f"{key.replace('_url', '')}"
                 self.__setattr__(
-                    key, lambda action=f"{key.replace('_url', '')}", url=val: self.__call(action, url)
+                    f'get_{act}', lambda action=act, url=val: self.__call(action, url)
                 )
             else:
                 self.__setattr__(key, val)
@@ -187,8 +188,8 @@ if __name__ == '__main__':
 
     bullet = client.parse(res)
 
-    vendor = client.parse(bullet.vendor_url())
+    vendor = client.parse(bullet.get_vendor())
 
-    vb = client.parse(vendor.bullets_url())
+    vb = client.parse(vendor.get_bullets())
 
     print(bullet, vendor, vb[0])
