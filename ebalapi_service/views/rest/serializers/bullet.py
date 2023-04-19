@@ -1,10 +1,12 @@
 from rest_framework import serializers
 
+
 from ebalapi_service.models import Bullet
 from .custom_fields import HyperlinkedBackRefField
 
 
 class BulletSerializer(serializers.ModelSerializer):
+
     url = serializers.HyperlinkedIdentityField(
         view_name='ebalapi_service:bullet-detail',
         # lookup_field='id'

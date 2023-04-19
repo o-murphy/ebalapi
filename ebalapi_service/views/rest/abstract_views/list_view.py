@@ -22,12 +22,12 @@ class AbstractListView(abc.ABC):
 
     filter_backends = [DjangoFilterBackend]
 
-    def get_model(self):
+    def _get_model(self):
         return self.serializer_class.Meta.model
 
     def list(self, request: Request, *args, **kwargs):
         try:
-            model_fileds = self.get_model()._meta.get_fields()
+            model_fileds = self._get_model()._meta.get_fields()
             model_fields = [field.name for field in model_fileds]
             for rp in request.query_params:
                 if rp not in model_fields:
@@ -41,4 +41,8 @@ class AbstractListView(abc.ABC):
             return Response(content)
 
         except ValidationError as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+            detail = e.detail['id'][0]
+            # status_code = e.status_code
+            # return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': detail}, status=status.HTTP_400_BAD_REQUEST)

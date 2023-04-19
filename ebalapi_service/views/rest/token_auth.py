@@ -8,6 +8,19 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 
+from rest_framework import serializers
+
+from ebalapi_service.models import Diameter
+
+
+class TokenSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Token
+        fields = ('pk', )
+
+
+
 class GetTokenAuthentication(TokenAuthentication):
 
     def authenticate(self, request: Request):
@@ -47,6 +60,8 @@ class AuthView(generics.RetrieveAPIView):
         GetTokenAuthentication
     ]
     permission_classes = [IsAuthenticated]
+
+    serializer_class = TokenSerializer
 
     def get(self, request: Request, *args, **kwargs):
         content = {

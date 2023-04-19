@@ -8,8 +8,8 @@ from .serializers import RifleSerializer, RifleDetailSerializer
 
 
 class RifleFilter(FilterSet):
-    cd = NumberFilter(field_name='caliber__diameter', label='Diameter')
-    dd = NumberFilter(field_name='caliber__diameter__diameter', label='Diameter')
+    cdid = NumberFilter(field_name='caliber__diameter', label='Diameter')
+    cdd = NumberFilter(field_name='caliber__diameter__diameter', label='Diameter')
 
     class Meta:
         model = Rifle

@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-^h45_nqfne+ky331j8)rot#uz4)=j$+aet5=*d$(&xi#qar4-(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'gmmkjpcadciiokjpikmkkmapphbmdjok',
+    '91.219.60.84',
+    'portwineadmintest.ml'
+]
 
 # Application definition
 
@@ -44,7 +50,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'import_export',
     'watson',
-    'django_filters'
+    'django_filters',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -200,10 +207,17 @@ JAZZMIN_SETTINGS = {
     # # "language_chooser": True,
 }
 
+from drf_yasg.renderers import SwaggerUIRenderer, OpenAPIRenderer
+
 REST_FRAMEWORK = {
-    # 'DEFAULT_RENDERER_CLASSES': [
-    #     'rest_framework.renderers.JSONRenderer',
-    # ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        # 'drf_yasg.renderers.SwaggerUIRenderer',
+        # 'drf_yasg.renderers.OpenAPIRenderer',
+        SwaggerUIRenderer,
+        OpenAPIRenderer
+    ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
