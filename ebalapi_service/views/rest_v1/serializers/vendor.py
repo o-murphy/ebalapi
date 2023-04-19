@@ -5,10 +5,15 @@ from ebalapi_service.views.rest_v1.serializers.custom_fields import HyperlinkedB
 
 
 class VendorSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(
-        view_name='ebalapi_service:vendor-detail',
-        # lookup_field='pk'
-    )
+    # url = serializers.HyperlinkedIdentityField(
+    #     view_name='ebalapi_service:vendor-detail',
+    #     # lookup_field='pk'
+    # )
+
+    model_name = serializers.SerializerMethodField(read_only=True)
+
+    def get_model_name(self, obj: Vendor):
+        return obj._meta.model_name
 
     bullets_url = HyperlinkedBackRefField(
         view_name='ebalapi_service:bullet-search',
@@ -33,7 +38,10 @@ class VendorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vendor
-        fields = ('id', 'url', 'name', 'comment',
+        fields = ('model_name',
+                  'id',
+                  # 'url',
+                  'name', 'comment',
                   'cartridges_url',
                   'bullets_url',
                   'rifles_url',)

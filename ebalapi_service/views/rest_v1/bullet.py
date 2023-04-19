@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from ebalapi_service.models import Bullet
 from .abstract_views import AbstractSearchView, AbstractDetailView, AbstractListView
-from .serializers import BulletSerializer, BulletDetailSerializer
+from .serializers import BulletSerializer
 
 
 class BulletFilter(FilterSet):
@@ -20,7 +20,7 @@ class BulletFilter(FilterSet):
 class BulletDetailView(AbstractDetailView, generics.RetrieveAPIView):
     name = 'Bullet Detail'
 
-    serializer_class = BulletDetailSerializer
+    serializer_class = BulletSerializer
     queryset = Bullet.objects.all()
     # lookup_field = 'pk'
 

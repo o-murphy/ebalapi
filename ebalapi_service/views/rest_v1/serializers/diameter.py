@@ -5,10 +5,15 @@ from .custom_fields import HyperlinkedBackRefField
 
 
 class DiameterSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(
-        view_name='ebalapi_service:diameter-detail',
-        # lookup_field='pk'
-    )
+    # url = serializers.HyperlinkedIdentityField(
+    #     view_name='ebalapi_service:diameter-detail',
+    #     # lookup_field='pk'
+    # )
+
+    model_name = serializers.SerializerMethodField(read_only=True)
+
+    def get_model_name(self, obj: Diameter):
+        return obj._meta.model_name
 
     calibers_url = HyperlinkedBackRefField(
         view_name='ebalapi_service:caliber-search',
@@ -24,6 +29,21 @@ class DiameterSerializer(serializers.ModelSerializer):
         source='pk',
     )
 
+    rifles_url = HyperlinkedBackRefField(
+        view_name='ebalapi_service:rifle-search',
+        read_only=True,
+        lookup_field='diameter',
+        source='pk',
+    )
+
     class Meta:
         model = Diameter
-        fields = ('id', 'url', 'diameter', 'calibers_url', 'bullets_url')
+        fields = (
+            'model_name',
+            'id',
+            # 'url',
+            'diameter',
+            'calibers_url',
+            'bullets_url',
+            'rifles_url',
+        )

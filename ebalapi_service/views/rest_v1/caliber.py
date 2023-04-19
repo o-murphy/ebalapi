@@ -3,7 +3,7 @@ from rest_framework import generics
 
 from ebalapi_service.models import Caliber
 from .abstract_views import AbstractDetailView, AbstractSearchView
-from .serializers import CaliberSerializer, CaliberDetailSerializer
+from .serializers import CaliberSerializer
 
 
 class CaliberFilter(FilterSet):
@@ -18,7 +18,7 @@ class CaliberDetailView(AbstractDetailView, generics.RetrieveAPIView):
     name = 'Caliber Detail'
 
     queryset = Caliber.objects.all()
-    serializer_class = CaliberDetailSerializer
+    serializer_class = CaliberSerializer
     # lookup_field = 'pk'
 
 

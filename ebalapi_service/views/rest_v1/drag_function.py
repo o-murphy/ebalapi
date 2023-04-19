@@ -2,13 +2,13 @@ from rest_framework import generics
 
 from ebalapi_service.models import DragFunction
 from .abstract_views import AbstractDetailView, AbstractSearchView
-from .serializers import DragFunctionSerializer, DragFunctionDetailSerializer
+from .serializers import DragFunctionSerializer
 
 
 class DragFunctionDetailView(AbstractDetailView, generics.RetrieveAPIView):
     name = 'Drag Function Detail'
 
-    serializer_class = DragFunctionDetailSerializer
+    serializer_class = DragFunctionSerializer
     queryset = DragFunction.objects.all()
     # lookup_field = 'pk'
 

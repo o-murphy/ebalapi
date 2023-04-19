@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'import_export',
     'watson',
     'django_filters',
-    'drf_yasg'
+    # 'drf_yasg'
 ]
 
 MIDDLEWARE = [

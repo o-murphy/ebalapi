@@ -21,7 +21,7 @@ class RifleFilter(FilterSet):
 class RifleDetailView(AbstractDetailView, generics.RetrieveAPIView):
     name = 'Rifle Detail'
 
-    serializer_class = RifleDetailSerializer
+    serializer_class = RifleSerializer
     queryset = Rifle.objects.all()
     # lookup_field = 'pk'
 

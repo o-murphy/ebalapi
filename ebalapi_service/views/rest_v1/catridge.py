@@ -4,7 +4,7 @@ from rest_framework.generics import RetrieveAPIView
 
 from ebalapi_service.models import Cartridge
 from .abstract_views import AbstractDetailView, AbstractSearchView
-from .serializers import CartridgeSerializer, CartridgeDetailSerializer
+from .serializers import CartridgeSerializer
 
 
 class CartridgeFilter(FilterSet):
@@ -20,7 +20,7 @@ class CartridgeDetailView(AbstractDetailView, RetrieveAPIView):
     name = 'Cartridge Detail'
 
     queryset = Cartridge.objects.all()
-    serializer_class = CartridgeDetailSerializer
+    serializer_class = CartridgeSerializer
     # lookup_field = 'pk'
 
 
