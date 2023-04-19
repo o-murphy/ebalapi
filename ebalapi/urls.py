@@ -26,9 +26,9 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('api/', include(('ebalapi_service.urls', 'ebalapi_service'),
-                         namespace='ebalapi_service'
-                         )),
+    path('api/v1/', include(('ebalapi_service.urls', 'ebalapi_service'),
+                            namespace='ebalapi_service'
+                            )),
 ]
 
 urlpatterns += [
@@ -36,6 +36,5 @@ urlpatterns += [
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
 
 urlpatterns = format_suffix_patterns(urlpatterns)

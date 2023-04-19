@@ -4,7 +4,7 @@ from ebalapi_service.models import Bullet
 from .custom_fields import HyperlinkedBackRefField
 from .drag_function import DragFunctionSerializer
 from .diameter import DiameterSerializer
-from ebalapi_service.views.rest.serializers.catridge import CartridgeSerializer
+from ebalapi_service.views.rest_v1.serializers.catridge import CartridgeSerializer
 
 
 class BulletDetailSerializer(serializers.ModelSerializer):

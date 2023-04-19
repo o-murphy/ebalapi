@@ -207,7 +207,7 @@ JAZZMIN_SETTINGS = {
     # # "language_chooser": True,
 }
 
-from drf_yasg.renderers import SwaggerUIRenderer, OpenAPIRenderer
+# from drf_yasg.renderers import SwaggerUIRenderer, OpenAPIRenderer
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
@@ -215,8 +215,8 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
         # 'drf_yasg.renderers.SwaggerUIRenderer',
         # 'drf_yasg.renderers.OpenAPIRenderer',
-        SwaggerUIRenderer,
-        OpenAPIRenderer
+        # SwaggerUIRenderer,
+        # OpenAPIRenderer
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',

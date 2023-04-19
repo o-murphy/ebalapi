@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from ebalapi_service.models import Vendor
-from ebalapi_service.views.rest.serializers.custom_fields import HyperlinkedBackRefField
+from ebalapi_service.views.rest_v1.serializers.custom_fields import HyperlinkedBackRefField
 
 
 class VendorSerializer(serializers.ModelSerializer):

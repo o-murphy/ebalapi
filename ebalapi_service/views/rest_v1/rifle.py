@@ -8,14 +8,14 @@ from .serializers import RifleSerializer, RifleDetailSerializer
 
 
 class RifleFilter(FilterSet):
-    cdid = NumberFilter(field_name='caliber__diameter', label='Diameter')
-    cdd = NumberFilter(field_name='caliber__diameter__diameter', label='Diameter')
+    diameter = NumberFilter(field_name='caliber__diameter', label='Diameter')
+    diameter_value = NumberFilter(field_name='caliber__diameter__diameter', label='Diameter')
 
     class Meta:
         model = Rifle
         fields = ['id', 'name', 'vendor', 'barrel_length', 'rail_angle', 'caliber', 'twist_rate',
-                  'twist_direction', 'caliber__diameter',
-                  'caliber__diameter__diameter']
+                  'twist_direction', 'diameter',
+                  'diameter_value']
 
 
 class RifleDetailView(AbstractDetailView, generics.RetrieveAPIView):
@@ -31,5 +31,5 @@ class RifleSearchView(AbstractSearchView, generics.ListAPIView):
 
     serializer_class = RifleSerializer
     filterset_class = RifleFilter
-    search_fields = ['name', 'comment', 'vendor__name', 'caliber__name', 'caliber__short_name']
+    search_fields = ['name', 'vendor__name', 'caliber__name', 'caliber__short_name']
     queryset = Rifle.objects.all()

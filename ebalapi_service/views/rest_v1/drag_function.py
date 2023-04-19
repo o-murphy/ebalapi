@@ -17,6 +17,6 @@ class DragFunctionSearchView(AbstractSearchView, generics.ListAPIView):
     name = 'Drag Function Search'
 
     serializer_class = DragFunctionSerializer
-    filterset_fields = ['id', 'name', 'bullet', ]
-    search_fields = ['name', 'comment', 'bullet__name', ]
+    filterset_fields = ['id', 'bullet', ]
+    search_fields = ['bullet__name', ]
     queryset = DragFunction.objects.all()

@@ -1,1 +1,1 @@
-from . import rest
+from . import rest_v1

@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
 from ebalapi_service.models import Cartridge
-from ebalapi_service.views.rest.serializers.vendor import VendorSerializer
-from ebalapi_service.views.rest.serializers.caliber import CaliberSerializer
-from ebalapi_service.views.rest.serializers.bullet_detail import BulletDetailSerializer
+from ebalapi_service.views.rest_v1.serializers.vendor import VendorSerializer
+from ebalapi_service.views.rest_v1.serializers.caliber import CaliberSerializer
+from ebalapi_service.views.rest_v1.serializers.bullet_detail import BulletDetailSerializer
 
 
 class CartridgeDetailSerializer(serializers.ModelSerializer):

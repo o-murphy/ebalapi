@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
 from ebalapi_service.models import Rifle
-from ebalapi_service.views.rest.serializers.caliber import CaliberSerializer
-from ebalapi_service.views.rest.serializers.vendor import VendorSerializer
+from ebalapi_service.views.rest_v1.serializers.caliber import CaliberSerializer
+from ebalapi_service.views.rest_v1.serializers.vendor import VendorSerializer
 
 
 class RifleSerializer(serializers.ModelSerializer):

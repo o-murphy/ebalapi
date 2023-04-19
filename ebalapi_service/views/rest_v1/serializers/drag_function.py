@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from ebalapi_service.models import DragFunction
-from ebalapi_service.views.rest.serializers import BulletSerializer
+from ebalapi_service.views.rest_v1.serializers import BulletSerializer
 
 
 # class DragFunctionLinkSerializer(serializers.ModelSerializer):

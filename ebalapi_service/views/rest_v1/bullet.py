@@ -10,11 +10,11 @@ from .serializers import BulletSerializer, BulletDetailSerializer
 
 
 class BulletFilter(FilterSet):
-    dd = NumberFilter(field_name='diameter__diameter', label='Diameter')
+    diameter_value = NumberFilter(field_name='diameter__diameter', label='Diameter')
 
     class Meta:
         model = Bullet
-        fields = ['id', 'name', 'vendor', 'diameter', 'diameter__diameter', 'weight', 'length']
+        fields = ['id', 'name', 'vendor', 'diameter', 'diameter_value', 'weight', 'length']
 
 
 class BulletDetailView(AbstractDetailView, generics.RetrieveAPIView):
@@ -30,5 +30,5 @@ class BulletSearchView(AbstractSearchView, generics.ListAPIView):
 
     serializer_class = BulletSerializer
     filterset_class = BulletFilter
-    search_fields = ['name', 'comment', 'vendor__name']
+    search_fields = ['name', 'vendor__name']
     queryset = Bullet.objects.all()

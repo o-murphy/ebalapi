@@ -7,11 +7,11 @@ from .serializers import CaliberSerializer, CaliberDetailSerializer
 
 
 class CaliberFilter(FilterSet):
-    dd = NumberFilter(field_name='diameter__diameter', label='Diameter')
+    diameter_value = NumberFilter(field_name='diameter__diameter', label='Diameter')
 
     class Meta:
         model = Caliber
-        fields = ['id', 'name', 'diameter', 'diameter__diameter', ]
+        fields = ['id', 'name', 'diameter', 'diameter_value', ]
 
 
 class CaliberDetailView(AbstractDetailView, generics.RetrieveAPIView):
@@ -22,11 +22,10 @@ class CaliberDetailView(AbstractDetailView, generics.RetrieveAPIView):
     # lookup_field = 'pk'
 
 
-class CaliberSearchView(generics.ListAPIView, AbstractSearchView):
+class CaliberSearchView(AbstractSearchView, generics.ListAPIView):
     name = 'Caliber Search'
 
     serializer_class = CaliberSerializer
     filterset_class = CaliberFilter
-    # filterset_fields = ['id', 'name', 'diameter', 'diameter__diameter', ]
-    search_fields = ['name', 'comment', 'short_name']
+    search_fields = ['name', 'short_name']
     queryset = Caliber.objects.all()
