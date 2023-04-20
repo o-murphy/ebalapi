@@ -10,9 +10,9 @@ class DiameterSerializer(serializers.ModelSerializer):
     #     # lookup_field='pk'
     # )
 
-    model_name = serializers.SerializerMethodField(read_only=True)
+    content_type = serializers.SerializerMethodField(read_only=True)
 
-    def get_model_name(self, obj: Diameter):
+    def get_content_type(self, obj: Diameter):
         return obj._meta.model_name
 
     calibers_url = HyperlinkedBackRefField(
@@ -39,7 +39,7 @@ class DiameterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diameter
         fields = (
-            'model_name',
+            'content_type',
             'id',
             # 'url',
             'diameter',

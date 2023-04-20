@@ -12,12 +12,12 @@ class BulletSerializer(serializers.ModelSerializer):
     #     # lookup_field='id'
     # )
 
-    model_name = serializers.SerializerMethodField(read_only=True)
+    content_type = serializers.SerializerMethodField(read_only=True)
 
     vendor_name = serializers.SerializerMethodField(read_only=True)
     diameter_value = serializers.SerializerMethodField(read_only=True)
 
-    def get_model_name(self, obj: Bullet):
+    def get_content_type(self, obj: Bullet):
         return obj._meta.model_name
 
     def get_vendor_name(self, obj: Bullet):
@@ -56,7 +56,7 @@ class BulletSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bullet
         fields = (
-            'model_name',
+            'content_type',
             'id',
             # 'url',
             'name',

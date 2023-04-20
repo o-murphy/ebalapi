@@ -9,7 +9,7 @@ class CartridgeSerializer(serializers.ModelSerializer):
     #     # lookup_field='pk'
     # )
 
-    model_name = serializers.SerializerMethodField(read_only=True)
+    content_type = serializers.SerializerMethodField(read_only=True)
 
     bullet_name = serializers.SerializerMethodField(read_only=True)
     bullet_weight = serializers.SerializerMethodField(read_only=True)
@@ -18,7 +18,7 @@ class CartridgeSerializer(serializers.ModelSerializer):
     diameter_id = serializers.SerializerMethodField(read_only=True)
     diameter_value = serializers.SerializerMethodField(read_only=True)
 
-    def get_model_name(self, obj: Cartridge):
+    def get_content_type(self, obj: Cartridge):
         return obj._meta.model_name
 
     def get_bullet_name(self, obj: Cartridge):
@@ -62,7 +62,7 @@ class CartridgeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cartridge
-        fields = ('model_name',
+        fields = ('content_type',
                   'id',
                   # 'url',
                   'name',

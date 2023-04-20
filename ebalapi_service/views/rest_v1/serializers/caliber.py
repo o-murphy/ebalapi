@@ -13,11 +13,11 @@ class CaliberSerializer(serializers.ModelSerializer):
 
     # diameter = DiameterSerializer(many=False, read_only=True)
 
-    model_name = serializers.SerializerMethodField(read_only=True)
+    content_type = serializers.SerializerMethodField(read_only=True)
 
     diameter_value = serializers.SerializerMethodField(read_only=True)
 
-    def get_model_name(self, obj: Caliber):
+    def get_content_type(self, obj: Caliber):
         return obj._meta.model_name
 
     def get_diameter_value(self, obj: Caliber):
@@ -47,7 +47,7 @@ class CaliberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Caliber
         fields = (
-            'model_name',
+            'content_type',
             'id',
             # 'url',
             'name', 'short_name', 'comment',

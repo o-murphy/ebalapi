@@ -2,7 +2,7 @@ from django_filters import NumberFilter, FilterSet
 from rest_framework import generics
 
 from ebalapi_service.models import Caliber
-from .abstract_views import AbstractDetailView, AbstractSearchView
+from .abstract import AbstractDetailView, AbstractSearchView
 from .serializers import CaliberSerializer
 
 

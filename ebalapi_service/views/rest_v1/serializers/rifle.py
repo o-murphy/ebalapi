@@ -11,7 +11,7 @@ class RifleSerializer(serializers.ModelSerializer):
     #     # lookup_field='pk'
     # )
 
-    model_name = serializers.SerializerMethodField(read_only=True)
+    content_type = serializers.SerializerMethodField(read_only=True)
     twist_direction_type = serializers.SerializerMethodField(read_only=True)
 
     vendor_name = serializers.SerializerMethodField(read_only=True)
@@ -37,7 +37,7 @@ class RifleSerializer(serializers.ModelSerializer):
                 return obj.caliber.diameter.diameter
         return
 
-    def get_model_name(self, obj: Rifle):
+    def get_content_type(self, obj: Rifle):
         return obj._meta.model_name
 
     def get_twist_direction_type(self, obj: Rifle):
@@ -60,7 +60,7 @@ class RifleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rifle
         fields = (
-            'model_name',
+            'content_type',
             'id',
             # 'url',
             'name',

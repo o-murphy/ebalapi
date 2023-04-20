@@ -4,7 +4,7 @@ from urllib.parse import urlencode
 import requests
 from requests import RequestException, JSONDecodeError
 
-from api_client.types.types import AbstractEBalAPIObject
+from api_client.types import *
 
 
 class UrlSchema(StrEnum):
@@ -134,20 +134,20 @@ class EBalAPI:
 
     def parse(self, response: dict):
 
-        # model_name = response.get('model_name', None)
+        # content_type = response.get('content_type', None)
         items = response.get('items', None)
 
-        # if model_name:
+        # if content_type:
 
         if items:
             response_object = []
             for item in items:
-                model_name = item.get('model_name', 'EBalAPIObject')
-                EBalAPIObjectClass = type(model_name.capitalize(), (AbstractEBalAPIObject,), {})
+                content_type = item.get('content_type', 'EBalAPIObject')
+                EBalAPIObjectClass = type(content_type.capitalize(), (AbstractEBalAPIObject,), {})
                 response_object.append(EBalAPIObjectClass(self, **item))
         else:
-            model_name = response.get('model_name', 'EBalAPIObject')
-            EBalAPIObjectClass = type(model_name.capitalize(), (AbstractEBalAPIObject,), {})
+            content_type = response.get('content_type', 'EBalAPIObject')
+            EBalAPIObjectClass = type(content_type.capitalize(), (AbstractEBalAPIObject,), {})
             response_object = EBalAPIObjectClass(self, **response)
         return response_object
 
@@ -159,7 +159,6 @@ class EBalAPI:
 
         def get(self, *args, **kwargs):
             return self.call(action, *args, **kwargs)
-
         return get.__get__(self)
 
 
@@ -173,17 +172,9 @@ if __name__ == '__main__':
         schema=UrlSchema.HTTP,
     )
 
-    resp = client.bullets(5).vendor.bullets[0]
-    print(resp.diameter.bullets[0].drag_functions.json)
+    caliber: Caliber = client.calibers(2)
+    print(caliber.diameter)
+    # li = list(caliber.__dir__())
+    # li.sort()
+    # pprint(li)
 
-    # print(vendor.__api_client)
-
-    # pprint(bullet_0.json())
-
-    # print(client.parse(client.parse(bv).bullets()['items']))
-
-    # vendor = client.parse(bullet.vendor)
-    #
-    # vb = client.parse(vendor.bullets)
-
-    # print(bullet, vendor, vb[0])

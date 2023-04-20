@@ -3,7 +3,7 @@ from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView
 
 from ebalapi_service.models import Cartridge
-from .abstract_views import AbstractDetailView, AbstractSearchView
+from .abstract import AbstractDetailView, AbstractSearchView
 from .serializers import CartridgeSerializer
 
 

@@ -5,7 +5,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from ebalapi_service.models import Bullet
-from .abstract_views import AbstractSearchView, AbstractDetailView, AbstractListView
+from .abstract import AbstractSearchView, AbstractDetailView, AbstractListView
 from .serializers import BulletSerializer
 
 

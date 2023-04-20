@@ -9,10 +9,10 @@ class DragFunctionSerializer(serializers.ModelSerializer):
     #     # lookup_field='pk'
     # )
 
-    model_name = serializers.SerializerMethodField(read_only=True)
+    content_type = serializers.SerializerMethodField(read_only=True)
     df_type_string = serializers.SerializerMethodField(read_only=True)
 
-    def get_model_name(self, obj: DragFunction):
+    def get_content_type(self, obj: DragFunction):
         return obj._meta.model_name
 
     def get_df_type_string(self, obj: DragFunction):
@@ -21,7 +21,7 @@ class DragFunctionSerializer(serializers.ModelSerializer):
     class Meta:
         model = DragFunction
         fields = (
-            'model_name',
+            'content_type',
             'id',
             # 'url',
             'df_type',

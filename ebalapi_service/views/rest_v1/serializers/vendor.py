@@ -10,9 +10,9 @@ class VendorSerializer(serializers.ModelSerializer):
     #     # lookup_field='pk'
     # )
 
-    model_name = serializers.SerializerMethodField(read_only=True)
+    content_type = serializers.SerializerMethodField(read_only=True)
 
-    def get_model_name(self, obj: Vendor):
+    def get_content_type(self, obj: Vendor):
         return obj._meta.model_name
 
     bullets_url = HyperlinkedBackRefField(
@@ -38,7 +38,7 @@ class VendorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vendor
-        fields = ('model_name',
+        fields = ('content_type',
                   'id',
                   # 'url',
                   'name', 'comment',

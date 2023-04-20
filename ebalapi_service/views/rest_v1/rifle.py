@@ -3,7 +3,7 @@ from django_filters.rest_framework import FilterSet
 from rest_framework import generics
 
 from ebalapi_service.models import Rifle
-from .abstract_views import AbstractDetailView, AbstractSearchView
+from .abstract import AbstractDetailView, AbstractSearchView
 from .serializers import RifleSerializer
 
 

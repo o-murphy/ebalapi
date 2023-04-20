@@ -1,7 +1,7 @@
-from typing import Iterable
+from typing import Iterable, NamedTuple
 
 
-class AbstractEBalAPIObject(object):
+class AbstractEBalAPIObject:
 
     def __init__(self, api_client: 'EBalAPI', **kwargs):
         self.__api_client = api_client
@@ -15,11 +15,8 @@ class AbstractEBalAPIObject(object):
         """
         if action == '__api_client':
             return self.__api_client
-        elif hasattr(self, f'{action}_url'):
-            return self.__call(action)
-        elif hasattr(self, action):
-            return super(AbstractEBalAPIObject, self).__getattribute__(action)
-        raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{action}'")
+        return self.__call(action)
+        # raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{action}'")
 
     @property
     def json(self):
@@ -27,15 +24,78 @@ class AbstractEBalAPIObject(object):
         return output
 
     def __dir__(self) -> Iterable[str]:
-
         output: Iterable = super(AbstractEBalAPIObject, self).__dir__()
         output += [key.replace('_url', '') for key in self.__dict__.keys() if key.endswith('_url')]
         return set(output)
 
     def __call(self, action):
-        response = self.__api_client.request(
-            action, url=self.__getattribute__(f'{action}_url'),
-            params={'token': self.__api_client.token}
-        )
-
+        url = self.__getattribute__(f'{action}_url')
+        response = self.__api_client.request(action, url=url, params={'token': self.__api_client.token})
         return self.__api_client.parse(response)
+
+
+class Bullet(AbstractEBalAPIObject):
+    content_type: str
+    id: int
+    name: str
+    vendor_id: str
+    vendor_name: str
+    weight: float
+    length: float
+    g1: float
+    g7: float
+    comment: str
+    diameter_id: int
+    diameter_value: float
+
+    vendor_url: str
+    diameter_url: str
+    cartridges_url: str
+    drag_functions_url: str
+
+    metadata: str
+
+    @property
+    def diameter(self):
+        return self.diameter
+
+    @property
+    def vendor(self):
+        return self.vendor
+
+    @property
+    def cartridges(self):
+        return self.cartridges
+
+    @property
+    def drag_functions(self):
+        return self.drag_functions
+    
+
+class Caliber(AbstractEBalAPIObject):
+    content_type: str
+
+    id: int
+    name: str
+    short_name: str
+
+    comment: str
+    diameter_id: int
+    diameter_value: float
+
+    diameter_url: str
+    rifles_url: str
+    cartridges_url: str
+
+    @property
+    def cartridges(self):
+        return self.cartridges
+
+    @property
+    def diameter(self):
+        return self.diameter
+
+    @property
+    def rifles(self):
+        return self.rifles
+

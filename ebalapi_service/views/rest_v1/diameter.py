@@ -3,7 +3,7 @@ from rest_framework.generics import RetrieveAPIView
 
 from ebalapi_service.models import Diameter
 from ebalapi_service.views.rest_v1.serializers.diameter import DiameterSerializer
-from .abstract_views import AbstractDetailView, AbstractListView
+from .abstract import AbstractDetailView, AbstractListView
 
 
 class DiameterDetailView(AbstractDetailView, RetrieveAPIView):
