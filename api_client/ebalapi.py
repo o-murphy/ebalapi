@@ -1,8 +1,9 @@
+import json
 from enum import StrEnum
 from urllib.parse import urlencode
 
 import requests
-from requests import RequestException, JSONDecodeError
+from requests import RequestException
 
 from api_client.types import *
 
@@ -45,8 +46,8 @@ class EBalAPIError(Exception):
         if self._code in EBalAPIError.errors:
             explanation = " ".join([EBalAPIError.errors[self._code], self._text])
 
-        message = u'{error} ({code})'.format(error=explanation, code=self._code)
-        return u'eBallisticaError({message})'.format(message=message)
+        message = f'({self._code}) {explanation} '
+        return f'{message}'
 
     def __str__(self):
         return self.__unicode__()
@@ -91,6 +92,8 @@ class EBalAPI:
         Call the API method provided with the parameters supplied.
         """
 
+        action = action.replace('_', '/')
+
         if len(action) < 1:
             raise ValueError(f'Invalid action name {action}')
 
@@ -104,31 +107,36 @@ class EBalAPI:
             if isinstance(args, tuple) and len(args) == 1:
                 pk = args[0]
                 url = f'{url}{pk}/'
-            else:
-                raise ValueError(f'Invalid input. {action} {args, kwargs}')
         else:
             params.update(kwargs)
 
-        response = self.request(action, url, params)
+        response = self.request(url=url, params=params)
 
-        # return response
         return self.parse(response)
 
-    def request(self, action, url, params):
+    def request(self, url, params):
         print(url)
         url_params = urlencode(params)
         try:
             response = requests.get(url, params=url_params, headers=self.request_headers)
-        except RequestException as exc:
-            raise EBalAPIError(0, f"{exc}")
-
-        try:
             result = response.json()
-        except JSONDecodeError:
-            raise EBalAPIError(0, f"HTTP {response.status_code}")
 
-        if isinstance(result, dict) and 'detail' in result:
-            raise EBalAPIError(result['detail'], action)
+        except RequestException as error:
+            response = error.response
+
+            if not response:
+                raise EBalAPIError(
+                    0,
+                    f"{error}, url: {url}, params: {json.dumps(params)}"
+                )
+
+            result = {'detail': str(error)}
+
+        if not response.ok:
+            raise EBalAPIError(
+                response.status_code,
+                f"HTTP Error: {response.reason}, url: {url}, params: {json.dumps(params)}, result: {json.dumps(result)}"
+            )
 
         return result
 
@@ -159,25 +167,29 @@ class EBalAPI:
 
         def get(self, *args, **kwargs):
             return self.call(action, *args, **kwargs)
+
         return get.__get__(self)
+
+    # # TODO: create protect method
+    # def protect(self, func):
+    #     ...
 
 
 if __name__ == '__main__':
-
-    from pprint import pprint
-
     client = EBalAPI(
         base_url='127.0.0.1:8000', api_version=1,
         token='50dbd59b4078e42dceb65d142debd89c52106a69',
         schema=UrlSchema.HTTP,
     )
 
-    caliber: Caliber = client.calibers(2)
-    print(caliber.diameter)
+    # client.sdasa()
+
+    caliber: Bullet = client.bullets(id=5)
     print(caliber)
+
+    # print(caliber)
 
     # caliber.diameter.name = 'sada'
     # li = list(caliber.__dir__())
     # li.sort()
     # pprint(li)
-

@@ -42,7 +42,7 @@ class AbstractEBalAPIObject(ABC):
 
     def __call(self, action):
         url = self.__getattribute__(f'{action}_url')
-        response = self._api_client.request(action, url=url, params={'token': self._api_client.token})
+        response = self._api_client.request(url=url, params={'token': self._api_client.token})
         return self._api_client.parse(response)
 
     def update(self):

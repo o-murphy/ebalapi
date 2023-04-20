@@ -2,7 +2,7 @@ from django.db.models import QuerySet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, status
 from rest_framework.authentication import BasicAuthentication, TokenAuthentication
-from rest_framework.exceptions import ValidationError, ErrorDetail
+from rest_framework.exceptions import ValidationError, ErrorDetail, APIException
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -52,5 +52,8 @@ class AbstractSearchView(abc.ABC):
                 detail_list = list(e.detail.items())
                 key, value = detail_list[0]
                 return Response({'detail': f'{key}: {value[0]}'}, status=status.HTTP_400_BAD_REQUEST)
-            except (TypeError, KeyError):
-                return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            except (TypeError, KeyError, AttributeError):
+                return Response({'detail': str(e)}, status=e.status_code)
+        except APIException as e:
+            return Response({'detail': str(e)}, status=e.status_code)
+

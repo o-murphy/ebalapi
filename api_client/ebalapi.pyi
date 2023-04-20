@@ -101,7 +101,7 @@ class EBalAPI:
         """
         pass
 
-    def request(self, action_name, url, params) -> dict:
+    def request(self, url, params) -> dict:
         pass
 
     def __getattr__(self, action_name):

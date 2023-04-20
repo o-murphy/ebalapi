@@ -235,9 +235,17 @@ IMPORT_EXPORT_USE_TRANSACTIONS = True
 #         },
 #     },
 #     'loggers': {
-#         'django.db.backends': {
+#         'django': {
 #             'handlers': ['console'],
 #             'level': 'DEBUG',
 #         },
+#         'rest_framework': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         },
+#         # 'django.db.backends': {
+#         #     'handlers': ['console'],
+#         #     'level': 'DEBUG',
+#         # },
 #     },
 # }
