@@ -11,8 +11,8 @@ urlpatterns = [
     path('token/', rest.AuthView.as_view()),
     path('auth/', rest.CustomAuthToken.as_view()),
 
-    path('dragfuncs/', rest.DragFunctionSearchView.as_view(), name='drag_function-search'),
-    path('dragfuncs/<int:pk>/', rest.DragFunctionDetailView.as_view(), name='drag_function-detail'),
+    path('drag_functions/', rest.DragFunctionSearchView.as_view(), name='drag_function-search'),
+    path('drag_functions/<int:pk>/', rest.DragFunctionDetailView.as_view(), name='drag_function-detail'),
 
     path('diameters/', rest.DiameterSearchView.as_view()),
     path('diameters/<int:pk>/', rest.DiameterDetailView.as_view(), name='diameter-detail'),
