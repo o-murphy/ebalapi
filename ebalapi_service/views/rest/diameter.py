@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView
 
 from ebalapi_service.models import Diameter
-from ebalapi_service.views.rest_v1.serializers.diameter import DiameterSerializer
+from ebalapi_service.views.rest.serializers.diameter import DiameterSerializer
 from .abstract import AbstractDetailView, AbstractListView
 
 

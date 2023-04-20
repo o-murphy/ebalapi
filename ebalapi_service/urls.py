@@ -2,7 +2,7 @@ from django.urls import path
 # from drf_yasg.app_settings import swagger_settings
 from rest_framework import permissions
 
-from .views import rest_v1 as rest
+from .views import rest as rest
 
 app_name = 'ebalapi_service'
 
