@@ -110,7 +110,6 @@ class EBalAPI:
             params.update(kwargs)
 
         response = self.request(action, url, params)
-        response.update({'action': action})
 
         # return response
         return self.parse(response)
@@ -174,9 +173,8 @@ if __name__ == '__main__':
         schema=UrlSchema.HTTP,
     )
 
-    bullet = client.bullets(5)
-    vendor = bullet.vendor.name
-    print(vendor)
+    resp = client.bullets(5).vendor.bullets[0]
+    print(resp.diameter.bullets[0].drag_functions.json)
 
     # print(vendor.__api_client)
 

@@ -21,9 +21,9 @@ class AbstractEBalAPIObject(object):
             return super(AbstractEBalAPIObject, self).__getattribute__(action)
         raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{action}'")
 
+    @property
     def json(self):
         output: dict = {k: v for k, v in self.__dict__.items() if type(v) in [int, float, str]}
-        # output.pop('_AbstractEBalAPIObject__api_client')
         return output
 
     def __dir__(self) -> Iterable[str]:
@@ -38,7 +38,4 @@ class AbstractEBalAPIObject(object):
             params={'token': self.__api_client.token}
         )
 
-        response.update({'action': action})
-
-        # return response
         return self.__api_client.parse(response)

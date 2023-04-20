@@ -35,7 +35,7 @@ class AbstractListView(abc.ABC):
             queryset = self.filter_queryset(self.get_queryset())
             serializer = self.get_serializer(queryset, many=True)
             content = {
-                "totalItems": queryset.count(),
+                "total": queryset.count(),
                 "items": serializer.data
             }
             return Response(content)

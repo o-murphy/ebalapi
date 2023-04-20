@@ -66,7 +66,7 @@ class BulletSerializer(serializers.ModelSerializer):
             'length',
             'g1',
             'g7',
-            'diameter',
+            'diameter_id',
             'diameter_value',
             'comment',
             'vendor_url',
