@@ -174,6 +174,9 @@ if __name__ == '__main__':
 
     caliber: Caliber = client.calibers(2)
     print(caliber.diameter)
+    print(caliber)
+
+    # caliber.diameter.name = 'sada'
     # li = list(caliber.__dir__())
     # li.sort()
     # pprint(li)

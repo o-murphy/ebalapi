@@ -1,22 +1,34 @@
 from typing import Iterable, NamedTuple
+from abc import ABC, abstractmethod
 
 
-class AbstractEBalAPIObject:
+class AbstractEBalAPIObject(ABC):
 
     def __init__(self, api_client: 'EBalAPI', **kwargs):
-        self.__api_client = api_client
+        object.__setattr__(self, '_api_client', api_client)
         for key, val in kwargs.items():
-            self.__setattr__(key, val)
+            object.__setattr__(self, key, val)
+
+    def __new__(cls, *args, **kwargs):
+        if cls is AbstractEBalAPIObject:
+            raise TypeError("Cannot instantiate AbstractEBalAPIObjectABC directly.")
+        return object.__new__(cls)
+
+    def __setattr__(self, name, value):
+        raise NotImplementedError(f'{self.__class__.__name__} object is immutable, use update method instead')
 
     def __getattr__(self, action):
         """
         Enable the calling of eBallistica API methods through Python method calls
         of the same name.
         """
-        if action == '__api_client':
-            return self.__api_client
+        if action == '_api_client':
+            return self._api_client
         return self.__call(action)
         # raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{action}'")
+
+    def __class__(self):
+        return AbstractEBalAPIObject
 
     @property
     def json(self):
@@ -30,8 +42,14 @@ class AbstractEBalAPIObject:
 
     def __call(self, action):
         url = self.__getattribute__(f'{action}_url')
-        response = self.__api_client.request(action, url=url, params={'token': self.__api_client.token})
-        return self.__api_client.parse(response)
+        response = self._api_client.request(action, url=url, params={'token': self._api_client.token})
+        return self._api_client.parse(response)
+
+    def update(self):
+        ...
+
+    def create(self):
+        ...
 
 
 class Bullet(AbstractEBalAPIObject):
