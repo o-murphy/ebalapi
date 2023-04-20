@@ -112,7 +112,8 @@ class EBalAPI:
         pass
 
     def bullets(self, id: int = None, search: str = None, name: str = None, vendor: int = None, weight: float = None,
-                length: float = None, diameter: int = None, diameter_value: float = None, *args, **kwargs) -> dict:
+                length: float = None, diameter: int = None, diameter_value: float = None, *args,
+                **kwargs) -> 'AbstractEBalAPIObject':
         """
         id: int - bullet id (optional)
         search: str - full text search string (optional)
@@ -127,24 +128,24 @@ class EBalAPI:
 
     def calibers(self, id: int = None, search: str = None, name: str = None, diameter: int = None,
                  diameter_value: float = None,
-                 *args, **kwargs) -> dict:
+                 *args, **kwargs) -> 'AbstractEBalAPIObject':
         pass
 
     def cartridges(self, id: int = None, search: str = None, name: str = None, vendor: int = None, caliber: int = None,
                    bullet: int = None, diameter: int = None, diameter_value: float = None,
-                   *args, **kwargs) -> dict:
+                   *args, **kwargs) -> 'AbstractEBalAPIObject':
         pass
 
-    def diameters(self, id: int = None, diameter: int = None, *args, **kwargs) -> dict:
+    def diameters(self, id: int = None, diameter: int = None, *args, **kwargs) -> 'AbstractEBalAPIObject':
         pass
 
-    def dragfuncs(self, id: int = None, search: str = None, bullet: int = None, *args, **kwargs) -> dict:
+    def dragfuncs(self, id: int = None, search: str = None, bullet: int = None, *args, **kwargs) -> 'AbstractEBalAPIObject':
         pass
 
     def rifles(self, id: int = None, search: str = None, name: str = None, vendor: int = None,
                barrel_length: float = None, rail_angle: float = None, caliber: int = None, twist_rate: float = None,
                twist_direction: int = None, diameter: int = None, diameter_value: float = None,
-               *args, **kwargs) -> dict:
+               *args, **kwargs) -> 'AbstractEBalAPIObject':
         pass
 
     def vendors(self, id: int = None, name: str = None, *args, **kwargs) -> dict:

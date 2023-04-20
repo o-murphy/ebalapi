@@ -2,8 +2,9 @@ from enum import StrEnum
 from urllib.parse import urlencode
 
 import requests
-import validators
 from requests import RequestException, JSONDecodeError
+
+from api_client.types.types import AbstractEBalAPIObject
 
 
 class UrlSchema(StrEnum):
@@ -52,47 +53,6 @@ class EBalAPIError(Exception):
 
     def __repr__(self):
         return str(self)
-
-
-class AbstractEBalAPIObject:
-
-    def __init__(self, api_client: 'EBalAPI', **kwargs):
-        self.__api_client = api_client
-        for key, val in kwargs.items():
-            self.__setattr__(key, val)
-
-            # if validators.url(str(val)):
-            #     act = f"{key.replace('_url', '')}"
-            #     # self.__setattr__(
-            #     #     f'{act}', lambda action=act, url=val: self.__call(action, url)
-            #     # )
-            #
-            #     self.__setattr__(
-            #         # f'{act}', property(lambda action=act, url=val: self.__call(action, url))
-            #         f'{act}',
-            #         property(lambda: self.__call(key)),
-            #     )
-
-    def __getattr__(self, action):
-        """
-        Enable the calling of eBallistica API methods through Python method calls
-        of the same name.
-        """
-
-        def get(self, *args, **kwargs):
-            return self.__call(action, *args, **kwargs)
-
-        return get.__get__(self)
-
-    def __call(self, action):
-        response = self.__api_client.request(
-            action, url=self.__getattribute__(f'{action}_url'),
-            params={'token': self.__api_client.token}
-        )
-
-        response.update({'action': action})
-
-        return response
 
 
 class EBalAPI:
@@ -152,9 +112,11 @@ class EBalAPI:
         response = self.request(action, url, params)
         response.update({'action': action})
 
-        return response
+        # return response
+        return self.parse(response)
 
     def request(self, action, url, params):
+        print(url)
         url_params = urlencode(params)
         try:
             response = requests.get(url, params=url_params, headers=self.request_headers)
@@ -173,19 +135,22 @@ class EBalAPI:
 
     def parse(self, response: dict):
 
-        model_name = response.get('model_name', None)
+        # model_name = response.get('model_name', None)
         items = response.get('items', None)
 
-        if model_name:
+        # if model_name:
+
+        if items:
+            response_object = []
+            for item in items:
+                model_name = item.get('model_name', 'EBalAPIObject')
+                EBalAPIObjectClass = type(model_name.capitalize(), (AbstractEBalAPIObject,), {})
+                response_object.append(EBalAPIObjectClass(self, **item))
+        else:
+            model_name = response.get('model_name', 'EBalAPIObject')
             EBalAPIObjectClass = type(model_name.capitalize(), (AbstractEBalAPIObject,), {})
-
-            if items:
-                return [EBalAPIObjectClass(self, **item) for item in items]
-
-            else:
-
-                response_object = EBalAPIObjectClass(self, **response)
-                return response_object
+            response_object = EBalAPIObjectClass(self, **response)
+        return response_object
 
     def __getattr__(self, action):
         """
@@ -200,19 +165,24 @@ class EBalAPI:
 
 
 if __name__ == '__main__':
+
+    from pprint import pprint
+
     client = EBalAPI(
         base_url='127.0.0.1:8000', api_version=1,
         token='50dbd59b4078e42dceb65d142debd89c52106a69',
         schema=UrlSchema.HTTP,
     )
 
-    res = client.bullets(5)
+    bullet = client.bullets(5)
+    vendor = bullet.vendor.name
+    print(vendor)
 
-    bullet = client.parse(res)
-    bv = bullet.vendor()
+    # print(vendor.__api_client)
 
-    print(client.parse(client.parse(bv).bullets()['items']))
+    # pprint(bullet_0.json())
 
+    # print(client.parse(client.parse(bv).bullets()['items']))
 
     # vendor = client.parse(bullet.vendor)
     #
