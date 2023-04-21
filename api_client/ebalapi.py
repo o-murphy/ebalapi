@@ -1,5 +1,4 @@
-from api_client.crud_api_client import CrudApiClient
-from api_client.types import UrlSchema
+from api_client.types import CrudApiClient, UrlSchema
 
 
 class EBalAPI(CrudApiClient):
