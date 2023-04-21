@@ -1,15 +1,16 @@
-from api_client.types import *
+from api_client.crud_api_client import CrudApiClient
+from api_client.types import UrlSchema
 
 
-class EBalAPI(EBalAPIClient):
+class EBalAPI(CrudApiClient):
     ...
 
 
 if __name__ == '__main__':
     client = EBalAPI(
-        base_url='127.0.0.1:8000', api_version=1,
+        base_url='127.0.0.1:8000/api', api_version=1,
         token='50dbd59b4078e42dceb65d142debd89c52106a69',
         schema=UrlSchema.HTTP,
     )
 
-    print(client.bullets(5))
+    print(client.bullet.get(5))
