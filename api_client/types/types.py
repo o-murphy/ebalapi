@@ -1,5 +1,44 @@
-from typing import Iterable, NamedTuple
-from abc import ABC, abstractmethod
+from abc import ABC
+from enum import StrEnum
+from typing import Iterable
+
+
+class UrlSchema(StrEnum):
+    HTTP = 'http://'
+    HTTPS = 'https://'
+
+
+class EBalAPIError(Exception):
+    """
+    Exception raised when an eBallistica API call fails due to a network
+    related error or for a eBallistica specific reason.
+    """
+    errors = {
+        # 1: 'Invalid session',
+        # 2: 'Invalid service',
+    }
+
+    def __init__(self, code, text):
+        self._text = text
+        self._code = code
+        try:
+            self._code = int(code)
+        except ValueError:
+            pass
+
+    def __unicode__(self):
+        explanation = self._text
+        if self._code in EBalAPIError.errors:
+            explanation = " ".join([EBalAPIError.errors[self._code], self._text])
+
+        message = f'({self._code}) {explanation} '
+        return f'{message}'
+
+    def __str__(self):
+        return self.__unicode__()
+
+    def __repr__(self):
+        return str(self)
 
 
 class AbstractEBalAPIObject(ABC):
@@ -27,9 +66,6 @@ class AbstractEBalAPIObject(ABC):
         return self.__call(action)
         # raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{action}'")
 
-    def __class__(self):
-        return AbstractEBalAPIObject
-
     @property
     def json(self):
         output: dict = {k: v for k, v in self.__dict__.items() if type(v) in [int, float, str]}
@@ -45,15 +81,16 @@ class AbstractEBalAPIObject(ABC):
         response = self._api_client.request(url=url, params={'token': self._api_client.token})
         return self._api_client.parse(response)
 
-    def update(self):
-        ...
+    def update(self):  # TODO
+        raise NotImplementedError(f'{self.__class__.__name__}.{self.update.__name__} method not implemented')
 
-    def create(self):
-        ...
+    def create(self):  # TODO
+        raise NotImplementedError(f'{self.__class__.__name__}.{self.create.__name__} method not implemented')
 
 
 class Bullet(AbstractEBalAPIObject):
     content_type: str
+    url: str
     id: int
     name: str
     vendor_id: str
@@ -88,12 +125,14 @@ class Bullet(AbstractEBalAPIObject):
     @property
     def drag_functions(self):
         return self.drag_functions
-    
+
 
 class Caliber(AbstractEBalAPIObject):
     content_type: str
 
     id: int
+    url: str
+
     name: str
     short_name: str
 
@@ -116,4 +155,3 @@ class Caliber(AbstractEBalAPIObject):
     @property
     def rifles(self):
         return self.rifles
-

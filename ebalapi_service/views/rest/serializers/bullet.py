@@ -7,10 +7,10 @@ from .custom_fields import HyperlinkedBackRefField
 
 class BulletSerializer(serializers.ModelSerializer):
 
-    # url = serializers.HyperlinkedIdentityField(
-    #     view_name='ebalapi_service:bullet-detail',
-    #     # lookup_field='id'
-    # )
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:bullet-detail',
+        # lookup_field='id'
+    )
 
     content_type = serializers.SerializerMethodField(read_only=True)
 
@@ -58,7 +58,7 @@ class BulletSerializer(serializers.ModelSerializer):
         fields = (
             'content_type',
             'id',
-            # 'url',
+            'url',
             'name',
             'vendor_id',
             'vendor_name',

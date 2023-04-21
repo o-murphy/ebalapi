@@ -4,10 +4,10 @@ from ebalapi_service.models import DragFunction
 
 
 class DragFunctionSerializer(serializers.ModelSerializer):
-    # url = serializers.HyperlinkedIdentityField(
-    #     view_name='ebalapi_service:rifle-detail',
-    #     # lookup_field='pk'
-    # )
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:rifle-detail',
+        # lookup_field='pk'
+    )
 
     content_type = serializers.SerializerMethodField(read_only=True)
     df_type_string = serializers.SerializerMethodField(read_only=True)
@@ -23,7 +23,7 @@ class DragFunctionSerializer(serializers.ModelSerializer):
         fields = (
             'content_type',
             'id',
-            # 'url',
+            'url',
             'df_type',
             'df_type_string',
             'df_data',

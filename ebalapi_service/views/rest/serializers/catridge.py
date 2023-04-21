@@ -4,10 +4,10 @@ from ebalapi_service.models import Cartridge
 
 
 class CartridgeSerializer(serializers.ModelSerializer):
-    # url = serializers.HyperlinkedIdentityField(
-    #     view_name='ebalapi_service:cartridge-detail',
-    #     # lookup_field='pk'
-    # )
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:cartridge-detail',
+        # lookup_field='pk'
+    )
 
     content_type = serializers.SerializerMethodField(read_only=True)
 
@@ -64,7 +64,7 @@ class CartridgeSerializer(serializers.ModelSerializer):
         model = Cartridge
         fields = ('content_type',
                   'id',
-                  # 'url',
+                  'url',
                   'name',
                   'vendor_id',
                   'vendor_name',

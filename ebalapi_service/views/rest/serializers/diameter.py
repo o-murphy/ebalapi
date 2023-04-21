@@ -5,10 +5,10 @@ from .custom_fields import HyperlinkedBackRefField
 
 
 class DiameterSerializer(serializers.ModelSerializer):
-    # url = serializers.HyperlinkedIdentityField(
-    #     view_name='ebalapi_service:diameter-detail',
-    #     # lookup_field='pk'
-    # )
+    url = serializers.HyperlinkedIdentityField(
+        view_name='ebalapi_service:diameter-detail',
+        # lookup_field='pk'
+    )
 
     content_type = serializers.SerializerMethodField(read_only=True)
 
@@ -41,7 +41,7 @@ class DiameterSerializer(serializers.ModelSerializer):
         fields = (
             'content_type',
             'id',
-            # 'url',
+            'url',
             'diameter',
             'calibers_url',
             'bullets_url',
