@@ -1,6 +1,5 @@
 from django_filters import NumberFilter
 from django_filters.rest_framework import FilterSet
-from rest_framework import generics
 
 from ebalapi_service.models import Rifle
 from .abstract import AbstractDetailView, AbstractSearchView
@@ -18,7 +17,7 @@ class RifleFilter(FilterSet):
                   'diameter_value']
 
 
-class RifleDetailView(AbstractDetailView, generics.RetrieveAPIView):
+class RifleDetailView(AbstractDetailView):
     name = 'Rifle Detail'
 
     serializer_class = RifleSerializer
@@ -26,7 +25,7 @@ class RifleDetailView(AbstractDetailView, generics.RetrieveAPIView):
     # lookup_field = 'pk'
 
 
-class RifleSearchView(AbstractSearchView, generics.ListAPIView):
+class RifleSearchView(AbstractSearchView):
     name = 'Rifle Search'
 
     serializer_class = RifleSerializer

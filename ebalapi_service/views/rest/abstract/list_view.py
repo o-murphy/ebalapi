@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, status
+from rest_framework import filters, status, generics
 from rest_framework.authentication import BasicAuthentication, TokenAuthentication
 from rest_framework.exceptions import ValidationError, ErrorDetail, APIException
 from rest_framework.permissions import IsAuthenticated
@@ -11,7 +11,7 @@ from ..token_auth import GetTokenAuthentication
 import abc
 
 
-class AbstractListView(abc.ABC):
+class AbstractListView(abc.ABC, generics.ListCreateAPIView):
     authentication_classes = [
         # SessionAuthentication,
         BasicAuthentication,
@@ -34,11 +34,6 @@ class AbstractListView(abc.ABC):
                     raise ValidationError
             queryset = self.filter_queryset(self.get_queryset())
             serializer = self.get_serializer(queryset, many=True)
-            # content = {
-            #     "total": queryset.count(),
-            #     "items": serializer.data
-            # }
-            # return Response(content)
             return Response(serializer.data)
 
 

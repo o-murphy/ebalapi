@@ -82,3 +82,9 @@ class CartridgeSerializer(serializers.ModelSerializer):
                   'vendor_url',
                   'bullet_url',
                   'comment')
+
+        write_only_fields = (
+            'vendor',
+            'caliber',
+            'bullet',
+        )

@@ -1,12 +1,9 @@
-from rest_framework import generics
-from rest_framework.generics import RetrieveAPIView
-
 from ebalapi_service.models import Diameter
 from ebalapi_service.views.rest.serializers.diameter import DiameterSerializer
 from .abstract import AbstractDetailView, AbstractListView
 
 
-class DiameterDetailView(AbstractDetailView, RetrieveAPIView):
+class DiameterDetailView(AbstractDetailView):
     name = 'Diameter Detail'
 
     queryset = Diameter.objects.all()
@@ -14,7 +11,7 @@ class DiameterDetailView(AbstractDetailView, RetrieveAPIView):
     # lookup_field = 'pk'
 
 
-class DiameterSearchView(AbstractListView, generics.ListAPIView):
+class DiameterSearchView(AbstractListView):
     name = 'Diameter Search'
 
     serializer_class = DiameterSerializer

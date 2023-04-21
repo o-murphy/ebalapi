@@ -1,11 +1,7 @@
 from django_filters import FilterSet, NumberFilter
-from rest_framework import generics, status
-from rest_framework.exceptions import ValidationError
-from rest_framework.request import Request
-from rest_framework.response import Response
 
 from ebalapi_service.models import Bullet
-from .abstract import AbstractSearchView, AbstractDetailView, AbstractListView
+from .abstract import AbstractSearchView, AbstractDetailView
 from .serializers import BulletSerializer
 
 
@@ -17,7 +13,7 @@ class BulletFilter(FilterSet):
         fields = ['id', 'name', 'vendor', 'diameter', 'diameter_value', 'weight', 'length']
 
 
-class BulletDetailView(AbstractDetailView, generics.RetrieveAPIView):
+class BulletDetailView(AbstractDetailView):
     name = 'Bullet Detail'
 
     serializer_class = BulletSerializer
@@ -25,7 +21,7 @@ class BulletDetailView(AbstractDetailView, generics.RetrieveAPIView):
     # lookup_field = 'pk'
 
 
-class BulletSearchView(AbstractSearchView, generics.ListAPIView):
+class BulletSearchView(AbstractSearchView):
     name = 'Bullet Search'
 
     serializer_class = BulletSerializer

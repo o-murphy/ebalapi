@@ -1,11 +1,9 @@
-from rest_framework import generics
-
 from ebalapi_service.models import Vendor
 from .abstract import AbstractDetailView, AbstractSearchView
 from .serializers import VendorSerializer
 
 
-class VendorDetailView(AbstractDetailView, generics.RetrieveAPIView):
+class VendorDetailView(AbstractDetailView):
     name = 'Vendor Detail'
 
     serializer_class = VendorSerializer
@@ -13,7 +11,7 @@ class VendorDetailView(AbstractDetailView, generics.RetrieveAPIView):
     # lookup_field = 'pk'
 
 
-class VendorSearchView(AbstractSearchView, generics.ListAPIView):
+class VendorSearchView(AbstractSearchView):
     name = 'Vendor Search'
 
     serializer_class = VendorSerializer

@@ -70,6 +70,7 @@ class RifleSerializer(serializers.ModelSerializer):
             'twist_direction',
             'twist_direction_type',
             'diameter_value',
+            'diameter',
             'diameter_id',
             'vendor_id',
             'vendor_name',
@@ -78,5 +79,10 @@ class RifleSerializer(serializers.ModelSerializer):
             'comment',
             'vendor_url',
             'caliber_url',
+        )
+
+        write_only_fields = (
+            'caliber',
+            'vendor',
         )
 

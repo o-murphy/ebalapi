@@ -1,6 +1,4 @@
 from django_filters import NumberFilter, FilterSet
-from rest_framework import generics
-from rest_framework.generics import RetrieveAPIView
 
 from ebalapi_service.models import Cartridge
 from .abstract import AbstractDetailView, AbstractSearchView
@@ -16,7 +14,7 @@ class CartridgeFilter(FilterSet):
         fields = ['id', 'name', 'vendor', 'caliber', 'bullet', 'diameter', 'diameter_value']
 
 
-class CartridgeDetailView(AbstractDetailView, RetrieveAPIView):
+class CartridgeDetailView(AbstractDetailView):
     name = 'Cartridge Detail'
 
     queryset = Cartridge.objects.all()
@@ -24,7 +22,7 @@ class CartridgeDetailView(AbstractDetailView, RetrieveAPIView):
     # lookup_field = 'pk'
 
 
-class CartridgeSearchView(AbstractSearchView, generics.ListAPIView):
+class CartridgeSearchView(AbstractSearchView):
     name = 'Cartridge Search'
 
     serializer_class = CartridgeSerializer

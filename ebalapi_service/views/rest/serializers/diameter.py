@@ -42,8 +42,12 @@ class DiameterSerializer(serializers.ModelSerializer):
             'content_type',
             'id',
             'url',
-            'diameter',
+            'diameter_id',
             'calibers_url',
             'bullets_url',
             'rifles_url',
+        )
+
+        write_only_fields = (
+            'diameter',
         )

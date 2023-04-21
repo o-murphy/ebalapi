@@ -1,6 +1,5 @@
 import requests
 
-
 from api_client.types import UrlSchema, HttpMethod
 
 
@@ -12,11 +11,14 @@ class RelatedResource:
     def __repr__(self):
         return f"<RelatedResource: {self.resource.name.capitalize()} for {self.instance}>"
 
-    def get(self) -> 'ResourceInstance':
-
+    def get(self, **extra_params) -> 'ResourceInstance':
+        print(self.resource.name)
+        print(self.instance.__dict__)
         resource_id = self.instance.__getattribute__(f'{self.resource.name}_id')
         response = self.resource.api_client.request(
-            HttpMethod.GET, f"{self.resource.url()}{resource_id}"
+            HttpMethod.GET,
+            f"{self.resource.url()}{resource_id}",
+            json=extra_params
         )
         return self.resource.from_dict(response)
 
@@ -24,7 +26,7 @@ class RelatedResource:
         response = self.resource.api_client.request(
             HttpMethod.GET,
             f"{self.resource.url()}?{self.instance.resource.name}={self.instance.id}",
-            **extra_params
+            json=extra_params
         )
         return [self.resource.from_dict(item) for item in response]
 
@@ -73,24 +75,28 @@ class Resource:
         return url
 
     def list(self, **extra_params) -> list['ResourceInstance']:
-        response = self.api_client.request(HttpMethod.GET, self.url(), **extra_params)
+        response = self.api_client.request(
+            HttpMethod.GET,
+            self.url(),
+            json=extra_params
+        )
         return [self.from_dict(item) for item in response]
 
     def get(self, id: int) -> 'ResourceInstance':
         response = self.api_client.request(HttpMethod.GET, self.url(id))
         return self.from_dict(response)
 
-    def create(self, data: dict) -> 'ResourceInstance':
-        response = self.api_client.request(HttpMethod.POST, self.url(), json=data)
+    def create(self, **extra_params) -> 'ResourceInstance':
+        response = self.api_client.request(HttpMethod.POST, self.url(), json=extra_params)
         return self.from_dict(response)
 
-    def update(self, id: int, data: dict) -> 'ResourceInstance':
-        response = self.api_client.request(HttpMethod.PUT, self.url(id), json=data)
+    def update(self, id: int, **extra_params) -> 'ResourceInstance':
+        response = self.api_client.request(HttpMethod.PUT, self.url(id), json=extra_params)
         return self.from_dict(response)
 
-    def delete(self, id: int) -> bool:
+    def delete(self, id: int) -> dict:
         response = self.api_client.request(HttpMethod.DELETE, self.url(id))
-        return response.status_code == 204
+        return response
 
     def from_dict(self, data: dict) -> 'ResourceInstance':
         return ResourceInstance(self, data)
@@ -112,13 +118,16 @@ class CrudApiClient:
     def __getattr__(self, name):
         return Resource(self, name)
 
-    def request(self, method: HttpMethod, url: str, **extra_params) -> dict:
+    def request(self, method: HttpMethod, url: str, **extra_params) -> [dict | requests.Response]:
         params = self.default_params.copy()
-        params.update(extra_params)
         print(url)
-        response = self.session.request(method, url, params=params)
+        response = self.session.request(method, url, params=params, **extra_params)
+        print(response)
         response.raise_for_status()
-        return response.json()
+        try:
+            return response.json()
+        except requests.exceptions.JSONDecodeError:
+            return response
 
 
 if __name__ == '__main__':
@@ -128,6 +137,21 @@ if __name__ == '__main__':
         schema=UrlSchema.HTTP,
     )
 
-    bullet = client.bullet.list(id=5)
+    # bullet_res: Resource = client.bullet
+    # bullet: ResourceInstance = bullet_res.get(id=1706)
+    # print(bullet.vendor)
+    # cartridge_res: Resource = bullet.cartridge
+    # cartridges: list[ResourceInstance] = cartridge_res.list()
+    # print(cartridges)
 
-    print(bullet)
+    # caliber_res: Resource = client.caliber
+    # c: ResourceInstance = caliber_res.get(2)
+    # print(c.name)
+    #
+
+    # client.caliber.create(name='test', short_name='test', diameter=5)
+
+    c = client.caliber.get(52)
+    print(c.diameter.get())
+    # new = client.caliber.delete(51)
+    # print(new)

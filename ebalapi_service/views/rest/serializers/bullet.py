@@ -75,3 +75,8 @@ class BulletSerializer(serializers.ModelSerializer):
             'cartridges_url',
             'metadata'
         )
+
+        write_only_fields = (
+            'vendor',
+            'diameter',
+        )

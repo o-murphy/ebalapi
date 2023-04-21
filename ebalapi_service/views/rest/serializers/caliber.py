@@ -21,7 +21,7 @@ class CaliberSerializer(serializers.ModelSerializer):
         return obj._meta.model_name
 
     def get_diameter_value(self, obj: Caliber):
-        return obj.diameter.diameter
+        return obj.diameter.diameter if obj.diameter else None
 
     diameter_url = serializers.HyperlinkedRelatedField(
         view_name='ebalapi_service:diameter-detail',
@@ -51,9 +51,14 @@ class CaliberSerializer(serializers.ModelSerializer):
             'id',
             'url',
             'name', 'short_name', 'comment',
-            'diameter_id', 'diameter_value',
+            'diameter_id',
+            'diameter_value',
             'cartridges_url',
             'rifles_url',
             'diameter_url',
             'comment'
+        )
+
+        write_only_fields = (
+            'diameter',
         )
