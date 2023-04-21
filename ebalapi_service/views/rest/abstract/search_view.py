@@ -41,11 +41,12 @@ class AbstractSearchView(abc.ABC):
 
             queryset: QuerySet = self.filter_queryset(self.get_queryset())
             serializer = self.get_serializer(queryset, many=True)
-            content = {
-                "total": queryset.count(),
-                "items": serializer.data,
-            }
-            return Response(content)
+            # content = {
+            #     "total": queryset.count(),
+            #     "items": serializer.data,
+            # }
+            # return Response(content)
+            return Response(serializer.data)
 
         except ValidationError as e:
             try:

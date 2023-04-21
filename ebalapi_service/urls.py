@@ -11,25 +11,27 @@ urlpatterns = [
     path('token/', rest.AuthView.as_view()),
     path('auth/', rest.CustomAuthToken.as_view()),
 
-    path('drag_functions/', rest.DragFunctionSearchView.as_view(), name='drag_function-search'),
+    path('drag_function/', rest.DragFunctionSearchView.as_view(), name='drag_function-search'),
     path('drag_function/<int:pk>/', rest.DragFunctionDetailView.as_view(), name='drag_function-detail'),
+    path('drag_function/<int:pk>/', rest.DragFunctionDetailView.as_view()),
 
-    path('diameters/', rest.DiameterSearchView.as_view()),
+    path('diameter/', rest.DiameterSearchView.as_view()),
     path('diameter/<int:pk>/', rest.DiameterDetailView.as_view(), name='diameter-detail'),
+    path('diameter/<int:pk>/', rest.DiameterDetailView.as_view()),
 
-    path('calibers/', rest.CaliberSearchView.as_view(), name='caliber-search'),
+    path('caliber/', rest.CaliberSearchView.as_view(), name='caliber-search'),
     path('caliber/<int:pk>/', rest.CaliberDetailView.as_view(), name='caliber-detail'),
 
-    path('vendors/', rest.VendorSearchView.as_view(), name='vendor-search'),
+    path('vendor/', rest.VendorSearchView.as_view(), name='vendor-search'),
     path('vendor/<int:pk>/', rest.VendorDetailView.as_view(), name='vendor-detail'),
 
-    path('rifles/', rest.RifleSearchView.as_view(), name='rifle-search'),
+    path('rifle/', rest.RifleSearchView.as_view(), name='rifle-search'),
     path('rifle/<int:pk>/', rest.RifleDetailView.as_view(), name='rifle-detail'),
 
-    path('bullets/', rest.BulletSearchView.as_view(), name='bullet-search'),
+    path('bullet/', rest.BulletSearchView.as_view(), name='bullet-search'),
     path('bullet/<int:pk>/', rest.BulletDetailView.as_view(), name='bullet-detail'),
 
-    path('cartridges/', rest.CartridgeSearchView.as_view(), name='cartridge-search'),
+    path('cartridge/', rest.CartridgeSearchView.as_view(), name='cartridge-search'),
     path('cartridge/<int:pk>/', rest.CartridgeDetailView.as_view(), name='cartridge-detail'),
 
 ]

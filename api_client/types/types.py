@@ -1,4 +1,5 @@
 from abc import ABC
+from dataclasses import dataclass, FrozenInstanceError
 from enum import StrEnum
 from typing import Iterable
 
