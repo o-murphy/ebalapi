@@ -1,10 +1,11 @@
 import requests
 
-from api_client.types import UrlSchema
+
+from api_client.types import UrlSchema, HttpMethod
 
 
 class RelatedResource:
-    def __init__(self, instance, name):
+    def __init__(self, instance: 'ResourceInstance', name: str):
         self.instance = instance
         self.resource = Resource(instance.resource.api_client, name)
 
@@ -15,26 +16,26 @@ class RelatedResource:
 
         resource_id = self.instance.__getattribute__(f'{self.resource.name}_id')
         response = self.resource.api_client.request(
-            "GET", f"{self.resource.url()}{resource_id}"
+            HttpMethod.GET, f"{self.resource.url()}{resource_id}"
         )
         return self.resource.from_dict(response)
 
-    def list(self, **extra_params):
+    def list(self, **extra_params) -> list['ResourceInstance']:
         response = self.resource.api_client.request(
-            "GET",
+            HttpMethod.GET,
             f"{self.resource.url()}?{self.instance.resource.name}={self.instance.id}",
             **extra_params
         )
         return [self.resource.from_dict(item) for item in response]
 
-    def create(self, data):
-        data[self.instance.name + "_id"] = self.instance.id
-        response = self.resource.api_client.request("POST", self.resource.url(), json=data)
-        return self.resource.from_dict(response)
+    # def create(self, **extra_params) -> 'ResourceInstance':
+    #     extra_params[self.instance.name + "_id"] = self.instance.id
+    #     response = self.resource.api_client.request(HttpMethod.POST, self.resource.url(), json=extra_params)
+    #     return self.resource.from_dict(response)
 
 
 class ResourceInstance:
-    def __init__(self, resource, data):
+    def __init__(self, resource: 'Resource', data: dict):
         self.resource = resource
         self.id = data["id"]
         self.__dict__.update(data)
@@ -42,14 +43,18 @@ class ResourceInstance:
     def __repr__(self):
         return f"<ResourceInstance: {self.resource.name.capitalize()}, id: {self.id}>"
 
-    def update(self, data):
-        updated_data = self.resource.update(self.id, data)
-        self.__dict__.update(updated_data.__dict__)
+    # def update(self, data: dict):
+    #     updated_data = self.resource.update(self.id, data)
+    #     self.__dict__.update(updated_data.__dict__)
+
+    # def delete(self, id: int) -> bool:
+    #     response = self.api_client.request(HttpMethod.DELETE, self.url(id))
+    #     return response.status_code == 204
 
     # def related(self, name):
     #     return RelatedResource(self, name)
 
-    def __getattr__(self, name):
+    def __getattr__(self, name) -> 'RelatedResource':
         return RelatedResource(self, name)
 
 
@@ -67,27 +72,27 @@ class Resource:
             url += f"{id}/"
         return url
 
-    def list(self, **extra_params) -> list[ResourceInstance]:
-        response = self.api_client.request("GET", self.url(), **extra_params)
+    def list(self, **extra_params) -> list['ResourceInstance']:
+        response = self.api_client.request(HttpMethod.GET, self.url(), **extra_params)
         return [self.from_dict(item) for item in response]
 
-    def get(self, id: int) -> ResourceInstance:
-        response = self.api_client.request("GET", self.url(id))
+    def get(self, id: int) -> 'ResourceInstance':
+        response = self.api_client.request(HttpMethod.GET, self.url(id))
         return self.from_dict(response)
 
-    def create(self, data: dict) -> ResourceInstance:
-        response = self.api_client.request("POST", self.url(), json=data)
+    def create(self, data: dict) -> 'ResourceInstance':
+        response = self.api_client.request(HttpMethod.POST, self.url(), json=data)
         return self.from_dict(response)
 
-    def update(self, id: int, data: dict) -> ResourceInstance:
-        response = self.api_client.request("PUT", self.url(id), json=data)
+    def update(self, id: int, data: dict) -> 'ResourceInstance':
+        response = self.api_client.request(HttpMethod.PUT, self.url(id), json=data)
         return self.from_dict(response)
 
     def delete(self, id: int) -> bool:
-        response = self.api_client.request("DELETE", self.url(id))
+        response = self.api_client.request(HttpMethod.DELETE, self.url(id))
         return response.status_code == 204
 
-    def from_dict(self, data: dict) -> ResourceInstance:
+    def from_dict(self, data: dict) -> 'ResourceInstance':
         return ResourceInstance(self, data)
 
 
@@ -107,7 +112,7 @@ class CrudApiClient:
     def __getattr__(self, name):
         return Resource(self, name)
 
-    def request(self, method, url, **extra_params):
+    def request(self, method: HttpMethod, url: str, **extra_params) -> dict:
         params = self.default_params.copy()
         params.update(extra_params)
         print(url)
@@ -123,8 +128,6 @@ if __name__ == '__main__':
         schema=UrlSchema.HTTP,
     )
 
-    bullet = client.bullet.get(id=5)
+    bullet = client.bullet.list(id=5)
 
-    print(bullet.__dict__)
-    print(bullet.vendor)
-    print(bullet.vendor.get().bullet.list())
+    print(bullet)

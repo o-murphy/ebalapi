@@ -9,6 +9,13 @@ class UrlSchema(StrEnum):
     HTTPS = 'https://'
 
 
+class HttpMethod(StrEnum):
+    GET = 'GET'
+    POST = 'POST'
+    PUT = 'PUT'
+    PATCH = 'PATCH'
+    DELETE = 'DELETE'
+
 class EBalAPIError(Exception):
     """
     Exception raised when an eBallistica API call fails due to a network
