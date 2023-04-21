@@ -66,6 +66,9 @@ class CartridgeSerializer(serializers.ModelSerializer):
                   'id',
                   'url',
                   'name',
+                  'vendor',
+                  'caliber',
+                  'bullet',
                   'vendor_id',
                   'vendor_name',
                   'caliber_id',
@@ -82,9 +85,3 @@ class CartridgeSerializer(serializers.ModelSerializer):
                   'vendor_url',
                   'bullet_url',
                   'comment')
-
-        write_only_fields = (
-            'vendor',
-            'caliber',
-            'bullet',
-        )

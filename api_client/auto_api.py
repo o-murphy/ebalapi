@@ -45,16 +45,22 @@ class ResourceInstance:
     def __repr__(self):
         return f"<ResourceInstance: {self.resource.name.capitalize()}, id: {self.id}>"
 
-    # def update(self, data: dict):
-    #     updated_data = self.resource.update(self.id, data)
-    #     self.__dict__.update(updated_data.__dict__)
+    def update(self, **extra_params) -> 'ResourceInstance':
+        print(self.resource, self.id)
+        response = self.resource.update(self.id, **extra_params)
+        return response
 
-    # def delete(self, id: int) -> bool:
-    #     response = self.api_client.request(HttpMethod.DELETE, self.url(id))
-    #     return response.status_code == 204
+    def delete(self, **extra_params) -> dict:
+        response = self.resource.delete(self.id, **extra_params)
+        return response
 
-    # def related(self, name):
-    #     return RelatedResource(self, name)
+    def __getattribute__(self, name):
+        try:
+            if object.__getattribute__(self, f'{name}_url'):
+                return RelatedResource(self, name)
+            raise AttributeError
+        except AttributeError:
+            return super(ResourceInstance, self).__getattribute__(name)
 
     def __getattr__(self, name) -> 'RelatedResource':
         return RelatedResource(self, name)
@@ -78,7 +84,7 @@ class Resource:
         response = self.api_client.request(
             HttpMethod.GET,
             self.url(),
-            json=extra_params
+            **extra_params
         )
         return [self.from_dict(item) for item in response]
 
@@ -87,15 +93,15 @@ class Resource:
         return self.from_dict(response)
 
     def create(self, **extra_params) -> 'ResourceInstance':
-        response = self.api_client.request(HttpMethod.POST, self.url(), json=extra_params)
+        response = self.api_client.request(HttpMethod.POST, self.url(), data=extra_params)
         return self.from_dict(response)
 
     def update(self, id: int, **extra_params) -> 'ResourceInstance':
-        response = self.api_client.request(HttpMethod.PUT, self.url(id), json=extra_params)
+        response = self.api_client.request(HttpMethod.PATCH, self.url(id), data=extra_params)
         return self.from_dict(response)
 
-    def delete(self, id: int) -> dict:
-        response = self.api_client.request(HttpMethod.DELETE, self.url(id))
+    def delete(self, id: int, **extra_params) -> dict:
+        response = self.api_client.request(HttpMethod.DELETE, self.url(id), data=extra_params)
         return response
 
     def from_dict(self, data: dict) -> 'ResourceInstance':
@@ -121,8 +127,13 @@ class CrudApiClient:
     def request(self, method: HttpMethod, url: str, **extra_params) -> [dict | requests.Response]:
         params = self.default_params.copy()
         print(url)
-        response = self.session.request(method, url, params=params, **extra_params)
-        print(response)
+
+        request = self.session.request
+        if method == HttpMethod.GET:
+            params.update(extra_params)
+            response = request(method, url, params=params)
+        else:
+            response = request(method, url, params=params, **extra_params)
         response.raise_for_status()
         try:
             return response.json()
@@ -137,21 +148,6 @@ if __name__ == '__main__':
         schema=UrlSchema.HTTP,
     )
 
-    # bullet_res: Resource = client.bullet
-    # bullet: ResourceInstance = bullet_res.get(id=1706)
-    # print(bullet.vendor)
-    # cartridge_res: Resource = bullet.cartridge
-    # cartridges: list[ResourceInstance] = cartridge_res.list()
-    # print(cartridges)
-
-    # caliber_res: Resource = client.caliber
-    # c: ResourceInstance = caliber_res.get(2)
-    # print(c.name)
-    #
-
-    # client.caliber.create(name='test', short_name='test', diameter=5)
-
-    c = client.caliber.get(52)
-    print(c.diameter.get())
-    # new = client.caliber.delete(51)
-    # print(new)
+    caliber_res: Resource = client.caliber
+    c: [ResourceInstance] = caliber_res.list()
+    print(c[0])

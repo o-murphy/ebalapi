@@ -16,4 +16,4 @@ class AbstractDetailView(abc.ABC, generics.RetrieveUpdateDestroyAPIView):
         GetTokenAuthentication
     ]
     permission_classes = [IsAuthenticated]
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+

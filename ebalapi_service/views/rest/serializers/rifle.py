@@ -64,6 +64,8 @@ class RifleSerializer(serializers.ModelSerializer):
             'id',
             'url',
             'name',
+            'caliber',
+            'vendor',
             'caliber_id',
             'caliber_name',
             'twist_rate',
@@ -80,9 +82,3 @@ class RifleSerializer(serializers.ModelSerializer):
             'vendor_url',
             'caliber_url',
         )
-
-        write_only_fields = (
-            'caliber',
-            'vendor',
-        )
-

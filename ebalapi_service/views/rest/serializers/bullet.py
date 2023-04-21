@@ -60,12 +60,14 @@ class BulletSerializer(serializers.ModelSerializer):
             'id',
             'url',
             'name',
+            'vendor',
             'vendor_id',
             'vendor_name',
             'weight',
             'length',
             'g1',
             'g7',
+            'diameter',
             'diameter_id',
             'diameter_value',
             'comment',
@@ -76,7 +78,3 @@ class BulletSerializer(serializers.ModelSerializer):
             'metadata'
         )
 
-        write_only_fields = (
-            'vendor',
-            'diameter',
-        )

@@ -51,6 +51,7 @@ class CaliberSerializer(serializers.ModelSerializer):
             'id',
             'url',
             'name', 'short_name', 'comment',
+            'diameter',
             'diameter_id',
             'diameter_value',
             'cartridges_url',
@@ -59,6 +60,3 @@ class CaliberSerializer(serializers.ModelSerializer):
             'comment'
         )
 
-        write_only_fields = (
-            'diameter',
-        )
