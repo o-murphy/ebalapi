@@ -2,6 +2,12 @@ import requests
 
 from api_client.types import UrlSchema, HttpMethod
 
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+log = logging.getLogger('api_crud_client')
+
 
 class RelatedResource:
     def __init__(self, instance: 'ResourceInstance', name: str):
@@ -12,8 +18,6 @@ class RelatedResource:
         return f"<RelatedResource: {self.resource.name.capitalize()} for {self.instance}>"
 
     def get(self, **extra_params) -> 'ResourceInstance':
-        print(self.resource.name)
-        print(self.instance.__dict__)
         resource_id = self.instance.__getattribute__(f'{self.resource.name}_id')
         response = self.resource.api_client.request(
             HttpMethod.GET,
@@ -46,7 +50,6 @@ class ResourceInstance:
         return f"<ResourceInstance: {self.resource.name.capitalize()}, id: {self.id}>"
 
     def update(self, **extra_params) -> 'ResourceInstance':
-        print(self.resource, self.id)
         response = self.resource.update(self.id, **extra_params)
         return response
 
@@ -126,7 +129,7 @@ class CrudApiClient:
 
     def request(self, method: HttpMethod, url: str, **extra_params) -> [dict | requests.Response]:
         params = self.default_params.copy()
-        print(url)
+        log.info(url)
 
         request = self.session.request
         if method == HttpMethod.GET:

@@ -1,0 +1,13 @@
+ModuleNotFoundError: This error is raised if the api_client.types module is not found.
+
+ImportError: This error is raised if the UrlSchema and HttpMethod classes are not imported from the api_client.types module.
+
+AttributeError: This error can be raised in multiple places, such as when trying to access a related resource that doesn't exist, or when trying to access an attribute that doesn't exist in a ResourceInstance object.
+
+requests.exceptions.HTTPError: This error is raised if the API returns a response with a status code that indicates an error.
+
+requests.exceptions.ConnectionError: This error is raised if there is a problem connecting to the API server.
+
+requests.exceptions.Timeout: This error is raised if the request times out before receiving a response from the API server.
+
+requests.exceptions.RequestException: This is a catch-all exception that is raised if there is any other problem with the request or response that is not covered by the other exceptions.
