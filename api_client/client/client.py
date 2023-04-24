@@ -5,6 +5,8 @@ import requests
 from .flags import UrlSchema, HttpMethod
 from .types import *
 
+__all__ = ['EBalApiClient', 'CrudApiClient']
+
 logging.basicConfig(level=logging.INFO)
 
 log = logging.getLogger('api_crud_client')
@@ -44,13 +46,13 @@ class CrudApiClient:
 
 
 class EBalApiClient(CrudApiClient):
-    diameter: DiameterResource
-    caliber: CaliberResource
-    rifle: RifleResource
-    vendor: VendorResource
-    bullet: BulletResource
-    drag_function: DragFunctionResource
-    cartridge: CartridgeResource
+    diameters: DiameterResource
+    calibers: CaliberResource
+    rifles: RifleResource
+    vendors: VendorResource
+    bullets: BulletResource
+    drag_functions: DragFunctionResource
+    cartridges: CartridgeResource
 
     def __init__(self,
                  base_url='127.0.0.1:8000/api',

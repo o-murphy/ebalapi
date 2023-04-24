@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from .resourse import ResourceInstance, RelatedResource, Resource
+from .resourse import ResourceInstance, RelatedList, RelatedRetrieve, Resource
 
 
 class CaliberResource(ABC, Resource):
@@ -26,11 +26,14 @@ class CaliberResource(ABC, Resource):
         ...
 
 
-class RelatedCaliber(RelatedResource):
+class RelatedCaliberRetrieve(RelatedRetrieve):
 
     @abstractmethod
-    def get(self, id: int) -> 'CaliberInstance':
+    def get(self, **extra_params) -> 'CaliberInstance':
         ...
+
+
+class RelatedCaliberList(RelatedList):
 
     @abstractmethod
     def list(self, **extra_params) -> list['CaliberInstance']:
@@ -38,6 +41,7 @@ class RelatedCaliber(RelatedResource):
 
 
 class CaliberInstance(ABC, ResourceInstance):
+
     content_type: str
     id: int
     name: str
@@ -53,17 +57,17 @@ class CaliberInstance(ABC, ResourceInstance):
 
     @property
     @abstractmethod
-    def rifle(self) -> 'RelatedRifle':
+    def rifles(self) -> 'RelatedRifleList':
         ...
 
     @property
     @abstractmethod
-    def diameter(self) -> 'RelatedDiameter':
+    def diameters(self) -> 'RelatedDiameterRetrieve':
         ...
 
     @property
     @abstractmethod
-    def cartridge(self) -> 'RelatedCartridge':
+    def cartridges(self) -> 'RelatedCartridgeList':
         ...
 
 
@@ -90,11 +94,14 @@ class DiameterResource(ABC, Resource):
         ...
 
 
-class RelatedDiameter(RelatedResource):
+class RelatedDiameterRetrieve(RelatedRetrieve):
 
     @abstractmethod
-    def get(self, id: int) -> 'DiameterInstance':
+    def get(self, **extra_params) -> 'DiameterInstance':
         ...
+
+
+class RelatedDiameterList(RelatedList):
 
     @abstractmethod
     def list(self, **extra_params) -> list['DiameterInstance']:
@@ -112,17 +119,17 @@ class DiameterInstance(ABC, ResourceInstance):
 
     @property
     @abstractmethod
-    def rifle(self) -> 'RelatedRifle':
+    def rifles(self) -> 'RelatedRifleList':
         ...
 
     @property
     @abstractmethod
-    def caliber(self) -> 'RelatedCaliber':
+    def calibers(self) -> 'RelatedCaliberList':
         ...
 
     @property
     @abstractmethod
-    def bullet(self) -> 'RelatedBullet':
+    def bullets(self) -> 'RelatedBulletList':
         ...
 
 
@@ -149,11 +156,14 @@ class RifleResource(ABC, Resource):
         ...
 
 
-class RelatedRifle(RelatedResource):
+class RelatedRifleRetrieve(RelatedRetrieve):
 
     @abstractmethod
-    def get(self, id: int) -> 'RifleInstance':
+    def get(self, **extra_params) -> 'RifleInstance':
         ...
+
+
+class RelatedRifleList(RelatedList):
 
     @abstractmethod
     def list(self, **extra_params) -> list['RifleInstance']:
@@ -184,12 +194,12 @@ class RifleInstance(ABC, ResourceInstance):
 
     @property
     @abstractmethod
-    def vendor(self) -> 'RelatedVendor':
+    def vendor(self) -> 'RelatedVendorRetrieve':
         ...
 
     @property
     @abstractmethod
-    def caliber(self) -> 'RelatedCaliber':
+    def caliber(self) -> 'RelatedCaliberRetrieve':
         ...
 
 
@@ -216,11 +226,14 @@ class VendorResource(ABC, Resource):
         ...
 
 
-class RelatedVendor(RelatedResource):
+class RelatedVendorRetrieve(RelatedRetrieve):
 
     @abstractmethod
-    def get(self, id: int) -> 'VendorInstance':
+    def get(self, **extra_params) -> 'VendorInstance':
         ...
+
+
+class RelatedVendorList(RelatedList):
 
     @abstractmethod
     def list(self, **extra_params) -> list['VendorInstance']:
@@ -238,17 +251,17 @@ class VendorInstance(ABC, ResourceInstance):
 
     @property
     @abstractmethod
-    def cartridge(self) -> 'RelatedCartridge':
+    def cartridges(self) -> 'RelatedCartridgeList':
         ...
 
     @property
     @abstractmethod
-    def bullet(self) -> 'RelatedBullet':
+    def bullets(self) -> 'RelatedBulletList':
         ...
 
     @property
     @abstractmethod
-    def rifle(self) -> 'RelatedRifle':
+    def rifles(self) -> 'RelatedRifleList':
         ...
 
 
@@ -275,11 +288,14 @@ class BulletResource(ABC, Resource):
         ...
 
 
-class RelatedBullet(RelatedResource):
+class RelatedBulletRetrieve(RelatedRetrieve):
 
     @abstractmethod
-    def get(self, id: int) -> 'BulletInstance':
+    def get(self, **extra_params) -> 'BulletInstance':
         ...
+
+
+class RelatedBulletList(RelatedList):
 
     @abstractmethod
     def list(self, **extra_params) -> list['BulletInstance']:
@@ -310,22 +326,22 @@ class BulletInstance(ABC, ResourceInstance):
 
     @property
     @abstractmethod
-    def vendor(self) -> 'RelatedVendor':
+    def vendor(self) -> 'RelatedVendorRetrieve':
         ...
 
     @property
     @abstractmethod
-    def diameter(self) -> 'RelatedDiameter':
+    def diameter(self) -> 'RelatedDiameterRetrieve':
         ...
 
     @property
     @abstractmethod
-    def drag_function(self) -> 'RelatedDragFunction':
+    def drag_functions(self) -> 'RelatedDragFunctionList':
         ...
 
     @property
     @abstractmethod
-    def cartridge(self) -> 'RelatedCartridge':
+    def cartridges(self) -> 'RelatedCartridgeList':
         ...
 
 
@@ -352,11 +368,14 @@ class CartridgeResource(ABC, Resource):
         ...
 
 
-class RelatedCartridge(RelatedResource):
+class RelatedCartridgeRetrieve(RelatedRetrieve):
 
     @abstractmethod
-    def get(self, id: int) -> 'CartridgeInstance':
+    def get(self, **extra_params) -> 'CartridgeInstance':
         ...
+
+
+class RelatedCartridgeList(RelatedList):
 
     @abstractmethod
     def list(self, **extra_params) -> list['CartridgeInstance']:
@@ -388,17 +407,17 @@ class CartridgeInstance(ABC, ResourceInstance):
 
     @property
     @abstractmethod
-    def vendor(self) -> 'RelatedVendor':
+    def vendors(self) -> 'RelatedVendorList':
         ...
 
     @property
     @abstractmethod
-    def bullet(self) -> 'RelatedBullet':
+    def bullets(self) -> 'RelatedBulletList':
         ...
 
     @property
     @abstractmethod
-    def caliber(self) -> 'RelatedCaliber':
+    def calibers(self) -> 'RelatedCaliberList':
         ...
 
 
@@ -425,11 +444,14 @@ class DragFunctionResource(ABC, Resource):
         ...
 
 
-class RelatedDragFunction(RelatedResource):
+class RelatedDragFunctionRetrieve(RelatedRetrieve):
 
     @abstractmethod
-    def get(self, id: int) -> 'DragFunctionInstance':
+    def get(self, **extra_params) -> 'DragFunctionInstance':
         ...
+
+
+class RelatedDragFunctionList(RelatedList):
 
     @abstractmethod
     def list(self, **extra_params) -> list['DragFunctionInstance']:
@@ -449,6 +471,5 @@ class DragFunctionInstance(ABC, ResourceInstance):
 
     @property
     @abstractmethod
-    def bullet(self) -> 'RelatedBullet':
+    def bullet(self) -> 'RelatedBulletRetrieve':
         ...
-

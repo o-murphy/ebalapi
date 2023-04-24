@@ -1,7 +1,9 @@
+from dataclasses import dataclass
+
 from .flags import HttpMethod
 
 
-class RelatedResource:
+class AbstractRelatedResource:
     def __init__(self, instance: 'ResourceInstance', name: str):
         self.instance = instance
         self.resource = Resource(instance.resource.api_client, name)
@@ -9,6 +11,18 @@ class RelatedResource:
     def __repr__(self):
         return f"<RelatedResource: {self.resource.name.capitalize()} for {self.instance}>"
 
+
+class RelatedList(AbstractRelatedResource):
+    def list(self, **extra_params) -> list['ResourceInstance']:
+        response = self.resource.api_client.request(
+            HttpMethod.GET,
+            f"{self.resource.url()}?{self.instance.resource.name}={self.instance.id}",
+            json=extra_params
+        )
+        return [self.resource.from_dict(item) for item in response]
+
+
+class RelatedRetrieve(AbstractRelatedResource):
     def get(self, **extra_params) -> 'ResourceInstance':
         resource_id = self.instance.__getattribute__(f'{self.resource.name}_id')
         response = self.resource.api_client.request(
@@ -18,24 +32,17 @@ class RelatedResource:
         )
         return self.resource.from_dict(response)
 
-    def list(self, **extra_params) -> list['ResourceInstance']:
-        response = self.resource.api_client.request(
-            HttpMethod.GET,
-            f"{self.resource.url()}?{self.instance.resource.name}={self.instance.id}",
-            json=extra_params
-        )
-        return [self.resource.from_dict(item) for item in response]
 
-    # def create(self, **extra_params) -> 'ResourceInstance':
-    #     extra_params[self.instance.name + "_id"] = self.instance.id
-    #     response = self.resource.api_client.request(HttpMethod.POST, self.resource.url(), json=extra_params)
-    #     return self.resource.from_dict(response)
+class RelatedResource(RelatedList, RelatedRetrieve):
+    ...
 
 
 class ResourceInstance:
+
     def __init__(self, resource: 'Resource', data: dict):
         self.resource = resource
-        self.id = data["id"]
+        self.id = data['id']
+
         self.__dict__.update(data)
 
     def __repr__(self):
@@ -51,14 +58,15 @@ class ResourceInstance:
 
     def __getattribute__(self, name):
         try:
-            print(name)
             if object.__getattribute__(self, f'{name}_url'):
-                print(f'{name}_url')
 
                 return RelatedResource(self, name)
-            raise AttributeError
+            raise AttributeError(f'{self.__repr__()} has no attribute {name}')
         except AttributeError:
-            return super(ResourceInstance, self).__getattribute__(name)
+            try:
+                return super(ResourceInstance, self).__getattribute__(name)
+            except AttributeError as err:
+                raise AttributeError(f'{self.__repr__()} has no attribute {err.name}')
 
     def __getattr__(self, name) -> 'RelatedResource':
         return RelatedResource(self, name)
