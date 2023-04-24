@@ -1,5 +1,5 @@
 from enum import StrEnum
-from api_client.types.crud_client import Resource, ResourceInstance, RelatedResource
+
 
 class UrlSchema(StrEnum):
     HTTP = 'http://'

@@ -72,7 +72,6 @@ class RifleSerializer(serializers.ModelSerializer):
             'twist_direction',
             'twist_direction_type',
             'diameter_value',
-            'diameter',
             'diameter_id',
             'vendor_id',
             'vendor_name',

@@ -1,15 +1,20 @@
-from api_client.types import CrudApiClient, UrlSchema
+from api_client.client import EBalApiClient, UrlSchema, DiameterInstance
 
 
-class EBalAPI(CrudApiClient):
+class EBallisticaAPI(EBalApiClient):
     ...
 
 
 if __name__ == '__main__':
-    client = EBalAPI(
+    client = EBallisticaAPI(
         base_url='127.0.0.1:8000/api', api_version=1,
         token='50dbd59b4078e42dceb65d142debd89c52106a69',
         schema=UrlSchema.HTTP,
     )
 
-    print(client.bullet.get(5))
+    diameter = client.caliber.get(5).rifle
+    # print(diameter.rifle.get())
+
+    cal = client.caliber.get(5)
+    print(diameter)
+
