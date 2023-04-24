@@ -1,5 +1,5 @@
-from api_client.client.client import EBalApiClient
-from api_client.client import flags, types
+from py_eballistica_api.client.client import EBalApiClient
+from py_eballistica_api.client import flags, types
 
 
 class EBallisticaAPI(EBalApiClient):
@@ -13,6 +13,4 @@ if __name__ == '__main__':
         schema=flags.UrlSchema.HTTP,
     )
     bullets = client.bullets.get(5)
-    d = bullets.diameter
-
-    d = d.get()
+    d: types.DiameterInstance = bullets.diameter.get()
