@@ -1,6 +1,13 @@
 from abc import ABC, abstractmethod
+from typing import NamedTuple
 
 from .resourse import ResourceInstance, RelatedList, RelatedRetrieve, Resource
+
+
+class AuthData(NamedTuple):
+    token: str
+    user_id: int
+    email: str
 
 
 class CaliberResource(ABC, Resource):

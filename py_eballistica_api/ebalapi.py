@@ -12,5 +12,8 @@ if __name__ == '__main__':
         token='50dbd59b4078e42dceb65d142debd89c52106a69',
         schema=flags.UrlSchema.HTTP,
     )
+
+    print(client.login('login', 'pass'))
+
     bullets = client.bullets.get(5)
     d: types.DiameterInstance = bullets.diameter.get()

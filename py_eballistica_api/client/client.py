@@ -2,8 +2,8 @@ import logging
 
 import requests
 
+from . import types
 from .flags import UrlSchema, HttpMethod
-from .types import *
 
 __all__ = ['EBalApiClient', 'CrudApiClient']
 
@@ -26,7 +26,7 @@ class CrudApiClient:
         self.session = requests.Session()
 
     def __getattr__(self, name):
-        return Resource(self, name)
+        return types.Resource(self, name)
 
     def request(self, method: HttpMethod, url: str, **extra_params) -> [dict | requests.Response]:
         params = self.default_params.copy()
@@ -46,13 +46,25 @@ class CrudApiClient:
 
 
 class EBalApiClient(CrudApiClient):
-    diameters: DiameterResource
-    calibers: CaliberResource
-    rifles: RifleResource
-    vendors: VendorResource
-    bullets: BulletResource
-    drag_functions: DragFunctionResource
-    cartridges: CartridgeResource
+    diameters: types.DiameterResource
+    calibers: types.CaliberResource
+    rifles: types.RifleResource
+    vendors: types.VendorResource
+    bullets: types.BulletResource
+    drag_functions: types.DragFunctionResource
+    cartridges: types.CartridgeResource
+
+    def login(self, username: str, password: str, **kwargs):
+        result = self.session.request(
+            HttpMethod.POST, f'{self.base_url}/auth/', json={"username": username, "password": password}
+        )
+
+        if not result:
+            return None
+        auth_data = types.AuthData(**result.json())
+        self.token = auth_data.token
+        log.info('Auth success')
+        return auth_data
 
     def __init__(self,
                  base_url='127.0.0.1:8000/api',
